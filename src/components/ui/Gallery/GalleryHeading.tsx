@@ -24,8 +24,8 @@ const GalleryHeading = () => {
   <GalleryMasonry />
 </div>
 
-    
-    </div>
+</div>
+
    
   );
 };
