@@ -5,9 +5,9 @@ import GalleryMasonry from "./galleryImg";
 const GalleryHeading = () => {
   return (
     <div
-      className="h-[1180px] w-full"
+      className=" w-full"
       style={{
-        background: "linear-gradient(180deg, #020B1B 0%, #031433 50%, #010E25 100%)",
+        // background: "linear-gradient(180deg, #020B1B 0%, #031433 50%, #010E25 100%)",
       }}
     >
             <div className="flex justify-center items-center w-full">
