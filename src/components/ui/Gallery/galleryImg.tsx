@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Masonry from "./Masonry";
 
 const items = [
@@ -85,25 +88,55 @@ const items = [
     url: "https://example.com/three",
     height: 600,
   },
-
- 
-  
 ];
 
 const GalleryMasonry = () => {
+  const [isVisible, setIsVisible] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+          }
+        })
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
+      }
+    }
+  }, [])
+
   return (
-    <Masonry
-      items={items}
-      ease="power3.out"
-      duration={0.2}
-      stagger={0.09}
-      animateFrom="bottom"
-      scaleOnHover
-      hoverScale={0.95}
-      blurToFocus
-      colorShiftOnHover
-    />
-  );
-};
+    <div ref={containerRef} className="w-full">
+      {isVisible && (
+        <Masonry
+          items={items}
+          ease="power3.out"
+          duration={0.2}
+          stagger={0.09}
+          animateFrom="bottom"
+          scaleOnHover
+          hoverScale={0.95}
+          blurToFocus
+          colorShiftOnHover
+        />
+      )}
+    </div>
+  )
+}
 
 export default GalleryMasonry;
