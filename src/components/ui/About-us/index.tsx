@@ -6,7 +6,7 @@ export const AboutUs = () => (
       {/* Heading */}
       <h1 
         className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight pb-12"
-        style={{ fontFamily: 'Montserrat, sans-serif' }}
+        style={{ fontFamily: 'Eagle Lake' }}
       >
         ABOUT US
       </h1>
@@ -18,7 +18,7 @@ export const AboutUs = () => (
         <div className="w-full lg:w-1/2">
           <div style={{ height: '400px', position: 'relative' }} className="md:h-[500px] lg:h-[600px]">
             <Carousel
-              baseWidth={300}
+              baseWidth={500}
               autoplay={true}
               autoplayDelay={3000}
               pauseOnHover={true}

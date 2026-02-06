@@ -4,8 +4,8 @@ export const Faq = () => (
   <div className="flex w-full items-start justify-center">
     <div className="w-full max-w-[850px] flex flex-col items-center">
       <h1 
-        className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight pt-12 pb-8"
-        style={{ fontFamily: 'Montserrat, sans-serif' }}
+        className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight pt-12 pb-12"
+        style={{ fontFamily: 'Eagle Lake' }}
       >
         FAQ
       </h1>
@@ -15,7 +15,7 @@ export const Faq = () => (
             return (
               <Tab key={i}>
                 <Trigger className="text-white">{e.question}</Trigger>
-                <Content className="text-white">{e.answer}</Content>
+                <Content className="text-white/60">{e.answer}</Content>
               </Tab>
             )
           })}
@@ -27,12 +27,19 @@ export const Faq = () => (
 
 const questions = [
   {
-    question: "What's the best manga ever written and why?",
-    answer: `Berserk. It's about a warrior born from a dead flesh of a hanged mother, marked by the brand of sacrifice by apostles of the devil themselves. But he never gave a fuck and fought them as if he were immortal, despite the unending enemies and absence of hope for escape. Through his endless struggle, he became a creator of his own destiny and escaped unavoidable death at the Eclipse.`
+    question: "What is this tech event about?",
+    answer: `A college-organized tech event focused on innovation, learning, and hands-on activities like workshops and competitions.`
   },
-  { question: 'How to get kawai waifu?', answer: 'stop watching anime, hit the gym, go to japan' },
+  { question: 'Who can participate?', answer: 'All college students can participate, regardless of branch or year.' },
   {
-    question: 'Who is behind this project?',
-    answer: 'Dude named Luka Donadze (@lukachodonadze)'
-  }
+    question: 'Do I need prior technical knowledge?',
+    answer: 'No, the event includes sessions for both beginners and advanced learners.'
+  },
+  { question: 'How can I register?', answer: 'You can register through the official event website using the registration form.' },
+  {
+    question: 'Is there any registration fee?',
+    answer: 'Most events are free; some may have a small fee mentioned in the details.'
+  },
+
+  
 ]

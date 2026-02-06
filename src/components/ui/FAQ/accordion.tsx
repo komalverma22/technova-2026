@@ -44,7 +44,7 @@ export const Trigger: React.FC<{ children: React.ReactNode; className?: string }
         aria-expanded={isOpen}
         onClick={() => setOpenState((e) => !e)}
         className={cn(
-          'flex w-full items-center justify-between gap-2 text-start text-xl font-normal',
+          'flex w-full items-center justify-between gap-2 text-start text-xl font-semibold',
           className
         )}>
         <span>{children}</span>

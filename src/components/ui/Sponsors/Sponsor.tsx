@@ -2,8 +2,8 @@ export const Sponsors = () => (
   <div className="flex w-full items-start justify-center py-12">
     <div className="w-full max-w-[850px] flex flex-col items-center">
       <h1 
-        className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight pb-8"
-        style={{ fontFamily: 'Montserrat, sans-serif' }}
+        className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight pb-12"
+        style={{ fontFamily: 'Eagle Lake' }}
       >
         SPONSORS
       </h1>
