@@ -6,20 +6,18 @@ import {
   FiGlobe,
   FiMapPin,
 } from "react-icons/fi";
+import { ShootingStarsAndStarsBackgroundDemo } from "./ShootingStars";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative isolate overflow-hidden bg-gradient-to-b from-[#050608] via-[#050608] to-[#020307] text-white">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-60"
-        aria-hidden
-        style={{
-          background:
-            "radial-gradient(circle at 20% 0%, rgba(199,255,94,0.08), transparent 55%), radial-gradient(circle at 80% 15%, rgba(199,255,94,0.12), transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.05), transparent 45%)",
-        }}
-      />
+      {/* ShootingStars and StarsBackground replacing the radial gradient */}
+     <ShootingStarsAndStarsBackgroundDemo/>
+      
+      {/* Optional: Agar thoda original gradient effect bhi rakhna ho */}
+      
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-12 py-12 sm:py-14 md:py-16">
         <div className="grid gap-10 sm:gap-12 md:grid-cols-[1.25fr_1fr_1fr]">
           <div className="space-y-5 sm:space-y-6">
