@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { TextGenerateEffect } from './components/ui/text-generate-effect.tsx';
+// import { TextGenerateEffect } from './components/ui/text-generate-effect.tsx';
 // import Gallery from './components/ui/Gallery/index.tsx';
 // import GalleryHeading from './components/ui/Gallery/GalleryHeading.tsx';
 import { Faq } from './components/ui/FAQ/faq.tsx';
@@ -11,6 +11,7 @@ import { Sponsors } from './components/ui/Sponsors/Sponsor.tsx';
 import { AboutUs } from './components/ui/About-us/index.tsx';
 import Example from './components/ui/Gallery/Gallery.tsx';
 import FloatingLines from './components/ui/bg.tsx';// Import your BG component
+import Footer from './components/ui/Footer/Footer.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -29,6 +30,7 @@ createRoot(document.getElementById('root')!).render(
         <Example/>
         <Sponsors/>
         <Faq/>
+        <Footer/>
         {/* <Sponsors/> */}
       </div>
     </div>
