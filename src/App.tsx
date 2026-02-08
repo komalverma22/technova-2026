@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ShoppingBag, Menu, X } from 'lucide-react';
-
+import { Link } from 'react-router-dom';
 function App() {
   const [heroImage, setHeroImage] = useState('/hero1.png');
   const [heroIndex, setHeroIndex] = useState(1);
@@ -137,9 +137,11 @@ function App() {
                 Layer up with confidence and<br />
                 stylish all season
               </p>
-              <button className="bg-slate-400/70 hover:bg-slate-400/85 text-slate-900 font-semibold text-[10px] sm:text-[16px] px-4 sm:px-[22.4px] py-2 sm:py-[11.2px] rounded-lg transition-all">
-                Register Here
-              </button>
+             <Link to="/signup">
+  <button className="bg-white hover:bg-slate-400/85 text-slate-900 font-semibold text-[10px] sm:text-[16px] px-4 sm:px-[22.4px] py-2 sm:py-[11.2px] rounded-lg transition-all">
+    Register Here
+  </button>
+</Link>
             </div>
           </div>
         </div>
