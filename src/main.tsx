@@ -13,6 +13,8 @@ import Register from './components/ui/SignIn/Form.tsx'; // Register page import
 import AccountPage from './components/ui/Account/AccountPage.tsx';
 import LoginPage from './components/ui/SignIn/Login.tsx';
 import EventsPage from './components/ui/Events/EventsPage.tsx';
+import AdminDashboard from './components/ui/Admin/AdminDashboard.tsx';
+import AdminEventsPage from './components/ui/Admin/AdminEventsPage.tsx';
 
 // Home page component banao
 function HomePage() {
@@ -45,6 +47,8 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/events" element={<EventsPage />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/dashboard/events" element={<AdminEventsPage />} />
           </Routes>
         </div>
       </div>
