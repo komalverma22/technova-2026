@@ -10,6 +10,8 @@ import Example from './components/ui/Gallery/Gallery.tsx';
 import FloatingLines from './components/ui/bg.tsx';
 import Footer from './components/ui/Footer/Footer.tsx';
 import Register from './components/ui/SignIn/Form.tsx'; // Register page import
+import AccountPage from './components/ui/Account/AccountPage.tsx';
+import LoginPage from './components/ui/SignIn/Login.tsx';
 
 // Home page component banao
 function HomePage() {
@@ -39,6 +41,8 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Register />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </div>
       </div>

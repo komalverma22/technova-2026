@@ -16,7 +16,7 @@ import {
 } from "../field";
 import { Input } from "../input";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "http://localhost:3005";
 
 export function SignupForm({
   className,
@@ -202,7 +202,6 @@ function OtpVerification({ email }: { email: string }) {
       const response = await fetch(`${API_URL}/verify-otp`, {
         method: "POST",
         headers: {
-            
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, otp }),
@@ -215,6 +214,12 @@ function OtpVerification({ email }: { email: string }) {
       }
 
       console.log("OTP verified:", data);
+
+      // If backend sends token on successful OTP verification, save it in cookie
+      if (data.token) {
+        document.cookie = `token=${data.token}; path=/;`;
+      }
+
       setSuccess(true);
 
       // Redirect to home after 2 seconds
