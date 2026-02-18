@@ -83,7 +83,7 @@ export default function EditEventModal({ event, onClose, onSuccess }: Props) {
       }
 
       const token = getAuthToken();
-      const res = await fetch(`${API_URL}/api/events/${eventId}`, {
+      const res = await fetch(`${API_URL}/api/events/update/${eventId}`, {
         method: "PUT",
         headers: token ? { Authorization: token } : {},
         body: formData,

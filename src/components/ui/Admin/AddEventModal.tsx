@@ -7,17 +7,95 @@ type Props = {
   onSuccess: () => void;
 };
 
-const DEPARTMENTS = [
-  "Computer Science",
-  "Information Technology",
-  "Electronics",
-  "Mechanical",
-  "Civil",
-  "Electrical",
-  "Other",
+// ─── Department → Events mapping ─────────────────────────────────────────────
+const DEPARTMENT_EVENTS: { department: string; events: string[] }[] = [
+  {
+    department: "CSE Department",
+    events: ["Hackathon", "Code Sprint", "Bug Bounty", "AI Challenge", "Web Dev Contest"],
+  },
+  {
+    department: "SEE (EED)",
+    events: ["Circuit Design", "Power Systems Quiz", "Electrical Innovation", "Energy Audit"],
+  },
+  {
+    department: "INTEC (ECE)",
+    events: ["PCB Design", "Signal Processing", "Embedded Systems", "IoT Showcase"],
+  },
+  {
+    department: "SOMEC (MED)",
+    events: ["CAD Design", "Robo Wars", "Mechanical Quiz", "3D Printing Challenge"],
+  },
+  {
+    department: "MANTHAN (CHE)",
+    events: ["Chemical Process Design", "Green Chemistry", "Lab Safety Quiz"],
+  },
+  {
+    department: "MEDITRONICA (BME)",
+    events: ["Medical Device Design", "Bio-Signal Processing", "Health Tech Hackathon"],
+  },
+  {
+    department: "ENGENISIS (BT)",
+    events: ["Biotech Poster Presentation", "Gene Editing Quiz", "Fermentation Challenge"],
+  },
+  {
+    department: "NIRMAN (CIVIL)",
+    events: ["Bridge Building", "Concrete Mix Design", "AutoCAD Contest", "Surveying Challenge"],
+  },
+  {
+    department: "RAMAN (Physics)",
+    events: ["Physics Olympiad", "Optics Experiment", "Astronomy Quiz"],
+  },
+  {
+    department: "RASAYANAM (Chemistry)",
+    events: ["Chemistry Olympiad", "Titration Challenge", "Periodic Table Quiz"],
+  },
+  {
+    department: "MATHEMAGICIANS (Mathematics)",
+    events: ["Math Olympiad", "Puzzle Hunt", "Statistics Challenge"],
+  },
+  {
+    department: "YOUNG THESPIANS (DMS)",
+    events: ["Street Play", "Mono Act", "Debate", "Nukkad Natak"],
+  },
+  {
+    department: "CEEES",
+    events: ["Environmental Awareness Drive", "Eco Innovation", "Sustainability Quiz"],
+  },
+  {
+    department: "LISOCI Literary Society",
+    events: ["Creative Writing", "Poetry Slam", "Extempore", "Book Review"],
+  },
+  {
+    department: "SUNSHINE",
+    events: ["Dance Competition", "Fashion Show", "Talent Hunt"],
+  },
+  {
+    department: "SAVERA",
+    events: ["Classical Music", "Western Music", "Band Performance", "Solo Singing"],
+  },
+  {
+    department: "E-Cell",
+    events: ["Startup Pitch", "Business Plan", "Case Study", "Elevator Pitch"],
+  },
+  {
+    department: "THINKBOTS",
+    events: ["Robo Soccer", "Line Follower", "Drone Racing", "Bot Building"],
+  },
+  {
+    department: "DCRUST ODC",
+    events: ["Open Innovation", "Research Paper Presentation", "Project Expo"],
+  },
+  {
+    department: "Centralized Events",
+    events: ["Inauguration", "Closing Ceremony", "Cultural Night", "Prize Distribution"],
+  },
 ];
 
+// ─── Component ────────────────────────────────────────────────────────────────
+
 export default function AddEventModal({ onClose, onSuccess }: Props) {
+    // console.log("COOKIE",);
+    
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -34,10 +112,21 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Events available for the currently selected department
+  const availableEvents =
+    DEPARTMENT_EVENTS.find((d) => d.department === form.department)?.events ?? [];
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => {
+      // When department changes, reset title so user must re-pick
+      if (name === "department") {
+        return { ...prev, department: value, title: "" };
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,10 +179,7 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
       <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-slate-900 border border-slate-700/60 shadow-2xl">
@@ -115,21 +201,15 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
             </div>
           )}
 
-          {/* Image Upload */}
+          {/* ── Image Upload ─────────────────────────────────────────────── */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
-              Event Image
-            </label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Event Image</label>
             <div
-              className="relative flex flex-col items-center justify-center w-full h-40 rounded-xl border-2 border-dashed border-slate-600 hover:border-indigo-500 bg-slate-800/50 cursor-pointer transition-colors group"
+              className="relative flex flex-col items-center justify-center w-full h-40 rounded-xl border-2 border-dashed border-slate-600 hover:border-indigo-500 bg-slate-800/50 cursor-pointer transition-colors group overflow-hidden"
               onClick={() => fileInputRef.current?.click()}
             >
               {imagePreview ? (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="h-full w-full object-cover rounded-xl"
-                />
+                <img src={imagePreview} alt="Preview" className="h-full w-full object-cover" />
               ) : (
                 <div className="flex flex-col items-center gap-2 text-slate-500 group-hover:text-indigo-400 transition-colors">
                   <ImageIcon className="w-8 h-8" />
@@ -152,22 +232,53 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
             )}
           </div>
 
-          {/* Title */}
+          {/* ── Department ───────────────────────────────────────────────── */}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">
-              Title <span className="text-red-400">*</span>
+              Department <span className="text-red-400">*</span>
             </label>
-            <input
+            <select
+              name="department"
+              value={form.department}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+            >
+              <option value="" disabled>Select department</option>
+              {DEPARTMENT_EVENTS.map(({ department }) => (
+                <option key={department} value={department}>{department}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* ── Event Title (cascades from department) ───────────────────── */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1">
+              Event Title <span className="text-red-400">*</span>
+            </label>
+            <select
               name="title"
               value={form.title}
               onChange={handleChange}
               required
-              placeholder="e.g. Hackathon 2026"
-              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-            />
+              disabled={!form.department}
+              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <option value="" disabled>
+                {form.department ? "Select event title" : "Select a department first"}
+              </option>
+              {availableEvents.map((ev) => (
+                <option key={ev} value={ev}>{ev}</option>
+              ))}
+            </select>
+            {!form.department && (
+              <p className="mt-1 text-xs text-slate-500">
+                Choose a department above to see available events.
+              </p>
+            )}
           </div>
 
-          {/* Description */}
+          {/* ── Description ──────────────────────────────────────────────── */}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">
               Description <span className="text-red-400">*</span>
@@ -183,26 +294,7 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
             />
           </div>
 
-          {/* Department */}
-          <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1">
-              Department <span className="text-red-400">*</span>
-            </label>
-            <select
-              name="department"
-              value={form.department}
-              onChange={handleChange}
-              required
-              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-            >
-              <option value="" disabled>Select department</option>
-              {DEPARTMENTS.map((d) => (
-                <option key={d} value={d}>{d}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Team Size */}
+          {/* ── Team Size ────────────────────────────────────────────────── */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-1">
@@ -234,7 +326,7 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
             </div>
           </div>
 
-          {/* Date */}
+          {/* ── Date & Time ──────────────────────────────────────────────── */}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">
               Date & Time <span className="text-red-400">*</span>
@@ -249,7 +341,7 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
             />
           </div>
 
-          {/* Venue */}
+          {/* ── Venue ────────────────────────────────────────────────────── */}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">
               Venue <span className="text-red-400">*</span>
@@ -264,7 +356,7 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
             />
           </div>
 
-          {/* Rules */}
+          {/* ── Rules ────────────────────────────────────────────────────── */}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">
               Rules <span className="text-red-400">*</span>
@@ -280,7 +372,7 @@ export default function AddEventModal({ onClose, onSuccess }: Props) {
             />
           </div>
 
-          {/* Actions */}
+          {/* ── Actions ──────────────────────────────────────────────────── */}
           <div className="flex gap-3 pt-2">
             <button
               type="button"

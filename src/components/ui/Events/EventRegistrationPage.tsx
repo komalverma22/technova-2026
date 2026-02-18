@@ -55,7 +55,7 @@ export default function EventRegistrationPage() {
 
     const hasToken = getAuthToken();
     if (!hasToken) {
-      window.location.href = `/login?redirect=/events/${id}/register`;
+      window.location.href = `/login?redirect=/api/registrations/register/${id}`;
       return;
     }
 
