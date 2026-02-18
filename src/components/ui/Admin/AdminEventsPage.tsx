@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "../card";
 import { FieldDescription, FieldGroup } from "../field";
-import { API_URL } from "../../../lib/api";
+import { API_URL, apiFetch } from "../../../lib/api";
 
 type Event = {
   id?: string;
@@ -31,16 +31,9 @@ export default function AdminEventsPage() {
     const fetchEvents = async () => {
       setError("");
       try {
-        const response = await fetch(
-          `${API_URL}/api/events`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
+        const response = await apiFetch(`${API_URL}/api/events`, {
+          method: "GET",
+        });
 
         const data = await response.json();
 

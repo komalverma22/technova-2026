@@ -17,7 +17,7 @@ import {
   FieldLabel,
 } from "../field";
 import { Input } from "../input";
-import { API_URL } from "../../../lib/api";
+import { API_URL, apiFetch } from "../../../lib/api";
 
 export default function LoginPage() {
   return (
@@ -69,11 +69,8 @@ function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/login`, {
+      const response = await apiFetch(`${API_URL}/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,

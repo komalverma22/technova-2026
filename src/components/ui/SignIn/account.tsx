@@ -15,7 +15,7 @@ import {
   FieldLabel,
 } from "../field";
 import { Input } from "../input";
-import { API_URL } from "../../../lib/api";
+import { API_URL, apiFetch } from "../../../lib/api";
 
 export function SignupForm({
   className,
@@ -57,11 +57,8 @@ export function SignupForm({
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/signup`, {
+      const response = await apiFetch(`${API_URL}/signup`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -198,11 +195,8 @@ function OtpVerification({ email }: { email: string }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/verify-otp`, {
+      const response = await apiFetch(`${API_URL}/verify-otp`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ email, otp }),
       });
 

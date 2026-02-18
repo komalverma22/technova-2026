@@ -10,7 +10,7 @@ import {
 } from "../card";
 import { Button } from "../button";
 import { FieldDescription, FieldGroup } from "../field";
-import { API_URL } from "../../../lib/api";
+import { API_URL, apiFetch } from "../../../lib/api";
 
 type Event = {
   id: string;
@@ -38,12 +38,8 @@ export default function AccountPage() {
 
     const fetchEvents = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/registrations/myEvents`, {
+        const response = await apiFetch(`${API_URL}/api/registrations/myEvents`, {
           method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
         });
 
         const data = await response.json();
