@@ -8,8 +8,8 @@ export type Event = {
   minTeamSize: number;
   maxTeamSize: number;
   date: string;
-  venue?: string;
-  rules?: string;
+  venue: string;
+  rules: string;
   imagePath?: string;
   createdAt?: string;
 };

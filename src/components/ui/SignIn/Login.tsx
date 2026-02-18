@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { GalleryVerticalEnd } from "lucide-react";
 
 import { cn } from "../utils/cn";
@@ -36,6 +37,8 @@ export default function LoginPage() {
 }
 
 function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -91,7 +94,7 @@ function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
       }
 
       // Redirect after successful login
-      window.location.href = "/";
+      window.location.href = redirectTo;
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");
     } finally {
