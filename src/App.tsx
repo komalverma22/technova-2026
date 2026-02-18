@@ -55,12 +55,12 @@ function App() {
             >
               About
             </a>
-            <a
-              href="#"
+            <Link
+              to="/events"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
               Event
-            </a>
+            </Link>
             <a
               href="#"
               className="text-slate-900 hover:text-black transition-colors font-medium"

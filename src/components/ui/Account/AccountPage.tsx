@@ -10,7 +10,7 @@ import {
 } from "../card";
 import { Button } from "../button";
 import { FieldDescription, FieldGroup } from "../field";
-import { API_URL, apiFetch } from "../../../lib/api";
+import { API_URL, apiFetch, getAuthToken } from "../../../lib/api";
 
 type Event = {
   id: string;
@@ -35,22 +35,35 @@ export default function AccountPage() {
       setLoading(false);
       return;
     }
+    // console.log("THE AUTH TOKEN IS:",getAuthToken());
 
     const fetchEvents = async () => {
       try {
-        const response = await apiFetch(`${API_URL}/api/registrations/myEvents`, {
-          method: "GET",
-        });
+        const response = await apiFetch(
+          `${API_URL}/api/registrations/myEvents`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: ` ${getAuthToken()}`,
+              "Content-Type": "application/json",
+            },
+          },
+        );
 
         const data = await response.json();
+        // console.log("THE DATA IS:", data[0]);
 
         if (!response.ok) {
           throw new Error(data.message || "Failed to load events");
         }
 
-        setEvents(data.events || []);
+        setEvents(data || []);
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : "Failed to load events. Please try again.");
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load events. Please try again.",
+        );
       } finally {
         setLoading(false);
       }
@@ -132,4 +145,3 @@ export default function AccountPage() {
     </div>
   );
 }
-

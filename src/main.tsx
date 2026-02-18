@@ -13,6 +13,9 @@ import Register from './components/ui/SignIn/Form.tsx'; // Register page import
 import AccountPage from './components/ui/Account/AccountPage.tsx';
 import LoginPage from './components/ui/SignIn/Login.tsx';
 import EventsPage from './components/ui/Events/EventsPage.tsx';
+import EventDetailPage from './components/ui/Events/EventDetailPage.tsx';
+import EventRegistrationPage from './components/ui/Events/EventRegistrationPage.tsx';
+import { HomeEventsSection } from './components/ui/Events/HomeEventsSection.tsx';
 import AdminDashboard from './components/ui/Admin/AdminDashboard.tsx';
 import AdminEventsPage from './components/ui/Admin/AdminEventsPage.tsx';
 
@@ -23,6 +26,7 @@ function HomePage() {
       <App />
       <AboutUs/>
       <Example/>
+      <HomeEventsSection/>
       <Sponsors/>
       <Faq/>
       <Footer/>
@@ -45,6 +49,8 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/events/:id" element={<EventDetailPage />} />
+            <Route path="/events/:id/register" element={<EventRegistrationPage />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
