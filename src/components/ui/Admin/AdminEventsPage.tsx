@@ -9,8 +9,7 @@ import {
   CardTitle,
 } from "../card";
 import { FieldDescription, FieldGroup } from "../field";
-
-const API_URL = "http://localhost:3005";
+import { API_URL } from "../../../lib/api";
 
 type Event = {
   id?: string;

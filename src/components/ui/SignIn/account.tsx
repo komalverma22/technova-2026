@@ -15,8 +15,7 @@ import {
   FieldLabel,
 } from "../field";
 import { Input } from "../input";
-
-const API_URL = "http://localhost:3005";
+import { API_URL } from "../../../lib/api";
 
 export function SignupForm({
   className,

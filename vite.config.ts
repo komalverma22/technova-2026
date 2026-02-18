@@ -7,4 +7,13 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  server: {
+    proxy: {
+      '/technova-api': {
+        target: 'https://technova.indiesoft.cloud',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/technova-api/, ''),
+      },
+    },
+  },
 });

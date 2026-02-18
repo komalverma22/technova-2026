@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { LogOut } from "lucide-react";
 
 import {
   Card,
@@ -7,9 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../card";
+import { Button } from "../button";
 import { FieldDescription, FieldGroup } from "../field";
-
-const API_URL = "http://localhost:3000";
+import { API_URL } from "../../../lib/api";
 
 type Event = {
   id: string;
@@ -37,7 +38,7 @@ export default function AccountPage() {
 
     const fetchEvents = async () => {
       try {
-        const response = await fetch(`${API_URL}/user/events`, {
+        const response = await fetch(`${API_URL}/api/registrations/myEvents`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -52,8 +53,8 @@ export default function AccountPage() {
         }
 
         setEvents(data.events || []);
-      } catch (err: any) {
-        setError(err.message || "Failed to load events. Please try again.");
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Failed to load events. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -62,15 +63,31 @@ export default function AccountPage() {
     fetchEvents();
   }, []);
 
+  const handleLogout = () => {
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    window.location.href = "/";
+  };
+
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-3xl flex-col gap-6">
         <Card>
-          <CardHeader>
-            <CardTitle>Your Dashboard</CardTitle>
-            <CardDescription>
-              Events in which you have registered.
-            </CardDescription>
+          <CardHeader className="flex flex-row items-start justify-between gap-4">
+            <div>
+              <CardTitle>Your Dashboard</CardTitle>
+              <CardDescription>
+                Events in which you have registered.
+              </CardDescription>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              className="gap-2 shrink-0"
+            >
+              <LogOut className="size-4" />
+              Log out
+            </Button>
           </CardHeader>
           <CardContent>
             <FieldGroup>

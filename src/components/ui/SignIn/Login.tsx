@@ -17,8 +17,7 @@ import {
   FieldLabel,
 } from "../field";
 import { Input } from "../input";
-
-const API_URL = "http://localhost:3005";
+import { API_URL } from "../../../lib/api";
 
 export default function LoginPage() {
   return (
@@ -62,10 +61,10 @@ function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
       return;
     }
 
-    if (formData.password.length < 8) {
-      setError("Password must be at least 8 characters long!");
-      return;
-    }
+    // if (formData.password.length < 8) {
+    //   setError("Password must be at least 8 characters long!");
+    //   return;
+    // }
 
     setLoading(true);
 
@@ -82,7 +81,7 @@ function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
       }
