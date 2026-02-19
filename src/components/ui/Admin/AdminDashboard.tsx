@@ -654,7 +654,7 @@ function RegistrationsTab({
                                 <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
                                 <span className="font-medium">{m.name}</span>
                                 {m.mobileNumber && <span className="text-slate-500">· {m.mobileNumber}</span>}
-                                {m.mobileNumber && <span className="text-slate-500">· {m.mobileNumber}</span>}
+                                {m.email && <span className="text-slate-500">· {m.email}</span>}
                               </div>
                             ))}
                           </div>
