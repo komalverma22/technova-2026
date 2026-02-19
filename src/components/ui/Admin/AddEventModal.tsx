@@ -11,85 +11,107 @@ type Props = {
 const DEPARTMENT_EVENTS: { department: string; events: string[] }[] = [
   {
     department: "CSE Department",
-    events: ["Hackathon", "Code Sprint", "Bug Bounty", "AI Challenge", "Web Dev Contest"],
+    events: ["Web Master", "Techno Quiz", "Think Future"]
   },
   {
     department: "SEE (EED)",
-    events: ["Circuit Design", "Power Systems Quiz", "Electrical Innovation", "Energy Audit"],
+    events: ["Tech Charades", "Tech Bid", "Machine Mantra"]
   },
   {
     department: "INTEC (ECE)",
-    events: ["PCB Design", "Signal Processing", "Embedded Systems", "IoT Showcase"],
+    events: [
+      "Circuit Design and Debugging Competition",
+      "Roast Verse",
+      "Prompt2Poster"
+    ]
   },
   {
     department: "SOMEC (MED)",
-    events: ["CAD Design", "Robo Wars", "Mechanical Quiz", "3D Printing Challenge"],
+    events: ["Design Minds", "Aero Modeling (Sky Glider)"]
   },
   {
     department: "MANTHAN (CHE)",
-    events: ["Chemical Process Design", "Green Chemistry", "Lab Safety Quiz"],
+    events: [
+      "Knowledge Knockout Quiz (Mind Clash)",
+      "Get Recognised for Your Personality (GRYP)",
+      "Chem Spark"
+    ]
   },
   {
     department: "MEDITRONICA (BME)",
-    events: ["Medical Device Design", "Bio-Signal Processing", "Health Tech Hackathon"],
+    events: [
+      "Poster Making Competition",
+      "Biomedical Tech Quiz",
+      "Biomedical Debate Competition"
+    ]
   },
   {
     department: "ENGENISIS (BT)",
-    events: ["Biotech Poster Presentation", "Gene Editing Quiz", "Fermentation Challenge"],
+    events: ["Brainy Brawl", "Brain Quest Arena"]
   },
   {
     department: "NIRMAN (CIVIL)",
-    events: ["Bridge Building", "Concrete Mix Design", "AutoCAD Contest", "Surveying Challenge"],
+    events: ["Chakravyuh", "Bridge it Right", "Think & Sprint"]
   },
   {
     department: "RAMAN (Physics)",
-    events: ["Physics Olympiad", "Optics Experiment", "Astronomy Quiz"],
+    events: ["Physi-Hunt", "The Escape Room", "Inno Vision"]
   },
   {
     department: "RASAYANAM (Chemistry)",
-    events: ["Chemistry Olympiad", "Titration Challenge", "Periodic Table Quiz"],
+    events: [
+      "Science Quiz",
+      "Magic of Chemistry",
+      "The Alchemist's Cipher"
+    ]
   },
   {
     department: "MATHEMAGICIANS (Mathematics)",
-    events: ["Math Olympiad", "Puzzle Hunt", "Statistics Challenge"],
+    events: ["Poster Making", "Debate", "Quiz"]
   },
   {
     department: "YOUNG THESPIANS (DMS)",
-    events: ["Street Play", "Mono Act", "Debate", "Nukkad Natak"],
+    events: ["Team Titans", "Brand Storm", "Business Hunt"]
   },
   {
     department: "CEEES",
-    events: ["Environmental Awareness Drive", "Eco Innovation", "Sustainability Quiz"],
+    events: ["Idea-Thon", "Agri-Technictionary", "Seed Sorting Race"]
   },
   {
     department: "LISOCI Literary Society",
-    events: ["Creative Writing", "Poetry Slam", "Extempore", "Book Review"],
+    events: ["Student of the Year", "BPD (British Parliamentary Debate)"]
   },
   {
     department: "SUNSHINE",
-    events: ["Dance Competition", "Fashion Show", "Talent Hunt"],
+    events: ["Gaming Event", "Treasure Hunt"]
   },
   {
     department: "SAVERA",
-    events: ["Classical Music", "Western Music", "Band Performance", "Solo Singing"],
+    events: ["Innovation Odyssey Challenge", "Tech Titans Trivia"]
   },
   {
     department: "E-Cell",
-    events: ["Startup Pitch", "Business Plan", "Case Study", "Elevator Pitch"],
+    events: ["Mix-Matched", "The Corporate Clash"]
   },
   {
     department: "THINKBOTS",
-    events: ["Robo Soccer", "Line Follower", "Drone Racing", "Bot Building"],
+    events: ["Walking-Dead", "Dungeon-Drive"]
   },
   {
     department: "DCRUST ODC",
-    events: ["Open Innovation", "Research Paper Presentation", "Project Expo"],
+    events: ["CodeBug", "SQL Master"]
   },
   {
     department: "Centralized Events",
-    events: ["Inauguration", "Closing Ceremony", "Cultural Night", "Prize Distribution"],
-  },
+    events: [
+      "Project Expo",
+      "Poster Presentation",
+      "Hobby Expo",
+      "Robotics"
+    ]
+  }
 ];
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
