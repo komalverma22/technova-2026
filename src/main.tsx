@@ -8,6 +8,7 @@ import { Sponsors } from './components/ui/Sponsors/Sponsor.tsx';
 import { AboutUs } from './components/ui/About-us/index.tsx';
 import Example from './components/ui/Gallery/Gallery.tsx';
 import GalleryPage from './components/ui/Gallery/GalleryPage.tsx';
+import GettingHerePage from './components/ui/Getting-here/gettingHere.tsx';
 import FloatingLines from './components/ui/bg.tsx';
 import Footer from './components/ui/Footer/Footer.tsx';
 import Register from './components/ui/SignIn/Form.tsx'; // Register page import
@@ -50,6 +51,7 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/getting-here" element={<GettingHerePage />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/:id" element={<EventDetailPage />} />

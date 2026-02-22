@@ -73,13 +73,13 @@ const Footer = () => {
                 <span>Event</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </a>
-              <a 
-                href="#contact" 
+              <Link 
+                to="/getting-here" 
                 className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
               >
-                <span>Contact</span>
+                <span>Getting Here</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
-              </a>
+              </Link>
               <a 
                 href="/brochure-technova_compressed.pdf" 
                 download="brochure-technova_compressed.pdf"

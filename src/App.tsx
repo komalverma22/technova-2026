@@ -35,7 +35,7 @@ function App() {
           </div>
         </div>
       </div>
-
+{/* navbar */}
       <nav className="fixed top-[42px] sm:top-[50.4px] left-0 right-0 z-40 px-3 sm:px-4 md:px-6">
         <div className="max-w-3xl mx-auto bg-slate-300/95 backdrop-blur-md rounded-xl sm:rounded-2xl px-4 sm:px-[28.8px] py-3 sm:py-[14.4px] flex items-center justify-between">
           <div className="text-lg sm:text-[21.6px] font-bold text-slate-900 tracking-tight">
@@ -61,12 +61,12 @@ function App() {
             >
               Event
             </a>
-            <a
-              href="#"
+            <Link
+              to="/getting-here"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
-              Contact
-            </a>
+              Getting Here
+            </Link>
             <a
               href="/brochure-technova_compressed.pdf"
               download="brochure-technova_compressed.pdf"
@@ -127,12 +127,12 @@ function App() {
               >
                 Event
               </a>
-              <a
-                href="#"
+              <Link
+                to="/getting-here"
                 className="text-slate-900 hover:text-black transition-colors font-medium py-2"
               >
-                Contact
-              </a>
+                Getting Here
+              </Link>
               <a
                 href="/brochure-technova_compressed.pdf"
                 download="brochure-technova_compressed.pdf"
