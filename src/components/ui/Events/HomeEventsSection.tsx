@@ -32,7 +32,7 @@ export function HomeEventsSection() {
 
   if (loading) {
     return (
-      <section className="relative w-full px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+      <section id="events" className="relative w-full px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <h2
             className="mb-12 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl"
@@ -56,7 +56,7 @@ export function HomeEventsSection() {
   if (events.length === 0) return null;
 
   return (
-    <section className="relative w-full px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+    <section id="events" className="relative w-full px-4 py-16 sm:px-6 md:py-24 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <h2
           className="mb-4 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl"

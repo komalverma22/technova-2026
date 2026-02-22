@@ -7,6 +7,7 @@ import { Faq } from './components/ui/FAQ/faq.tsx';
 import { Sponsors } from './components/ui/Sponsors/Sponsor.tsx';
 import { AboutUs } from './components/ui/About-us/index.tsx';
 import Example from './components/ui/Gallery/Gallery.tsx';
+import GalleryPage from './components/ui/Gallery/GalleryPage.tsx';
 import FloatingLines from './components/ui/bg.tsx';
 import Footer from './components/ui/Footer/Footer.tsx';
 import Register from './components/ui/SignIn/Form.tsx'; // Register page import
@@ -48,6 +49,7 @@ createRoot(document.getElementById('root')!).render(
         <div className="relative z-10">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/:id" element={<EventDetailPage />} />

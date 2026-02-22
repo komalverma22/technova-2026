@@ -42,25 +42,25 @@ function App() {
             TÉCHNOVA
           </div>
 
-          <div className="hidden lg:flex items-center gap-4 xl:gap-[25.2px] text-[13.5px]">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-[25.2px] text-[13.5px] ml-auto">
             <a
-              href="#"
+              href="/"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
               Home
             </a>
-            <a
-              href="#"
+            <Link
+              to="/gallery"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
-              About
-            </a>
-            <Link
-              to="/events"
+              Gallery
+            </Link>
+            <a
+              href="/#events"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
               Event
-            </Link>
+            </a>
             <a
               href="#"
               className="text-slate-900 hover:text-black transition-colors font-medium"
@@ -68,17 +68,13 @@ function App() {
               Contact
             </a>
             <a
-              href="#"
+              href="/brochure-technova_compressed.pdf"
+              download="brochure-technova_compressed.pdf"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
               Brochure
             </a>
-            <a
-              href="#"
-              className="text-slate-900 hover:text-black transition-colors font-medium"
-            >
-              Schedule
-            </a>
+          
             {/* <a href="#" className="text-slate-900 hover:text-black transition-colors flex items-center gap-2 font-medium">
               <ShoppingBag className="w-[16.2px] h-[16.2px]" />
               Bag
@@ -114,22 +110,22 @@ function App() {
           <div className="lg:hidden mt-2 max-w-3xl mx-auto bg-slate-300/95 backdrop-blur-md rounded-xl px-4 py-4">
             <div className="flex flex-col gap-3 text-sm">
               <a
-                href="#"
+                href="/"
                 className="text-slate-900 hover:text-black transition-colors font-medium py-2"
               >
-                Shop
+                Home
               </a>
-              <a
-                href="#"
+              <Link
+                to="/gallery"
                 className="text-slate-900 hover:text-black transition-colors font-medium py-2"
               >
-                About
-              </a>
+                Gallery
+              </Link>
               <a
-                href="#"
+                href="/#events"
                 className="text-slate-900 hover:text-black transition-colors font-medium py-2"
               >
-                Blogs
+                Event
               </a>
               <a
                 href="#"
@@ -138,16 +134,11 @@ function App() {
                 Contact
               </a>
               <a
-                href="#"
+                href="/brochure-technova_compressed.pdf"
+                download="brochure-technova_compressed.pdf"
                 className="text-slate-900 hover:text-black transition-colors font-medium py-2"
               >
-                Favorites
-              </a>
-              <a
-                href="#"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Search
+                Brochure
               </a>
             </div>
           </div>
