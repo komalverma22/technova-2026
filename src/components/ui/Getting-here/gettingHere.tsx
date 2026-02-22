@@ -4,8 +4,8 @@ import { Menu, User, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 
-const ACCENT = "#F7CE53";
-const ACCENT_RGB = "247,206,83";
+const ACCENT = "#3B82F6";
+const ACCENT_RGB = "59,130,246";
 
 const stats = [
   { value: "50 KM", label: "Delhi -> Murthal" },
@@ -265,7 +265,7 @@ export default function GettingHerePage() {
                 href="https://maps.google.com/maps?q=DCRUST%20Murthal%20University&t=&z=14&ie=UTF8&iwloc"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-3 rounded-full border border-[rgba(247,206,83,0.4)] bg-[rgba(247,206,83,0.12)] px-6 py-3 text-sm font-semibold uppercase text-white transition hover:bg-[rgba(247,206,83,0.2)]"
+                className="inline-flex items-center gap-3 rounded-full border border-[rgba(59,130,246,0.4)] bg-[rgba(59,130,246,0.12)] px-6 py-3 text-sm font-semibold uppercase text-white transition hover:bg-[rgba(59,130,246,0.2)]"
                 style={{ fontFamily: "var(--font-inter)" }}
               >
                 Launch maps
@@ -332,7 +332,7 @@ export default function GettingHerePage() {
                   return (
                     <div
                       key={step.label}
-                      className="flex items-center gap-4 rounded-2xl border border-white/10 bg-[#121214]/70 px-5 py-4 transition hover:border-[rgba(247,206,83,0.5)] hover:bg-[rgba(247,206,83,0.08)]"
+                      className="flex items-center gap-4 rounded-2xl border border-white/10 bg-[#121214]/70 px-5 py-4 transition hover:border-[rgba(59,130,246,0.5)] hover:bg-[rgba(59,130,246,0.08)]"
                     >
                       <span
                         className="flex h-12 w-12 items-center justify-center rounded-xl"
@@ -376,7 +376,7 @@ export default function GettingHerePage() {
                 return (
                   <article
                     key={mode.title}
-                    className="rounded-3xl border border-white/10 bg-[#111113]/90 p-8 transition hover:border-[rgba(247,206,83,0.4)] hover:bg-[#14151c]"
+                    className="rounded-3xl border border-white/10 bg-[#111113]/90 p-8 transition hover:border-[rgba(59,130,246,0.4)] hover:bg-[#14151c]"
                   >
                     <div className="flex items-center gap-4">
                       <span
@@ -482,7 +482,7 @@ export default function GettingHerePage() {
                   {/* ✅ Replaced next/link <Link> with standard <a> */}
                   <a
                     href="/#contact"
-                    className="inline-flex items-center gap-2 rounded-full border border-[rgba(247,206,83,0.3)] bg-[rgba(247,206,83,0.12)] px-5 py-2 text-xs uppercase text-white transition hover:bg-[rgba(247,206,83,0.2)]"
+                    className="inline-flex items-center gap-2 rounded-full border border-[rgba(59,130,246,0.3)] bg-[rgba(59,130,246,0.12)] px-5 py-2 text-xs uppercase text-white transition hover:bg-[rgba(59,130,246,0.2)]"
                     style={{ fontFamily: "var(--font-inter)" }}
                   >
                     Contact Form
