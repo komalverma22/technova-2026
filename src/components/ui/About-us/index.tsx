@@ -1,4 +1,6 @@
-import Carousel from './Carousel'
+// import Carousel from './Carousel'
+
+import Carousel from "./Carousel";
 
 export const AboutUs = () => (
   <div className="flex w-full items-center justify-center py-12 px-4">
@@ -15,16 +17,17 @@ export const AboutUs = () => (
       <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start">
         
         {/* Carousel - Left Side */}
-        <div className="w-full lg:w-1/2">
-          <div style={{ height: '400px', position: 'relative' }} className="md:h-[500px] lg:h-[600px]">
-            <Carousel
+        <div className="w-full sm:w-[85%] md:w-[75%] lg:w-1/2">
+          <div className="relative h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px]">
+            {/* <Carousel
               baseWidth={500}
               autoplay={true}
               autoplayDelay={3000}
               pauseOnHover={true}
               loop={true}
               round={false}
-            />
+            /> */}
+            <Carousel autoplay={true} autoplayDelay={3000} pauseOnHover={true} loop={true} />
           </div>
         </div>
 

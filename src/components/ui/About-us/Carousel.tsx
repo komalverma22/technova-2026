@@ -1,291 +1,154 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, PanInfo, useMotionValue, useTransform } from 'motion/react';
-import React, { JSX } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
-export interface CarouselItem {
-  id: number;
-  imageUrl: string;
-}
-
-export interface CarouselProps {
-  items?: CarouselItem[];
-  baseWidth?: number;
-  baseHeight?: number;
-  autoplay?: boolean;
-  autoplayDelay?: number;
-  pauseOnHover?: boolean;
-  loop?: boolean;
-  round?: boolean;
-}
-
-const DEFAULT_ITEMS: CarouselItem[] = [
-  {
-    id: 1,
-    imageUrl: '/technova-img1.JPG'
-  },
-  {
-    id: 2,
-    imageUrl: '/technova-img2.JPG'
-  },
-  {
-    id: 3,
-    imageUrl: '/technova-img3.JPG'
-  },
-  {
-    id: 4,
-    imageUrl: '/technova-img4.JPG'
-  },
-  {
-    id: 5,
-    imageUrl: '/technova-img5.JPG'
-  }
+const images = [
+  { id: 1, imageUrl: '/technova-img1.JPG' },
+  { id: 2, imageUrl: '/technova-img2.JPG' },
+  { id: 3, imageUrl: '/technova-img3.JPG' },
+  { id: 4, imageUrl: '/technova-img4.JPG' },
+  { id: 5, imageUrl: '/technova-img5.JPG' },
 ];
 
-const DRAG_BUFFER = 0;
-const VELOCITY_THRESHOLD = 500;
-const GAP = 16;
-const SPRING_OPTIONS = { type: 'spring' as const, stiffness: 300, damping: 30 };
-
-interface CarouselItemProps {
-  item: CarouselItem;
-  index: number;
-  itemWidth: number;
-  itemHeight: number;
-  round: boolean;
-  trackItemOffset: number;
-  x: any;
-  transition: any;
-}
-
-function CarouselItem({ item, index, itemWidth, itemHeight, round, trackItemOffset, x, transition }: CarouselItemProps) {
-  const range = [-(index + 1) * trackItemOffset, -index * trackItemOffset, -(index - 1) * trackItemOffset];
-  const outputRange = [90, 0, -90];
-  const rotateY = useTransform(x, range, outputRange, { clamp: false });
-
-  return (
-    <motion.div
-      key={`${item?.id ?? index}-${index}`}
-      className={`relative shrink-0 overflow-hidden cursor-grab active:cursor-grabbing ${
-        round ? 'rounded-full' : 'rounded-[12px]'
-      }`}
-      style={{
-        width: itemWidth,
-        height: round ? itemWidth : itemHeight,
-        rotateY: rotateY,
-      }}
-      transition={transition}
-    >
-      <img
-        src={item.imageUrl}
-        alt={`Carousel item ${item.id}`}
-        className="w-full h-full object-cover"
-        draggable={false}
-      />
-    </motion.div>
-  );
-}
-
 export default function Carousel({
-  items = DEFAULT_ITEMS,
-  baseWidth = 300,
-  baseHeight = 500,
-  autoplay = false,
+  autoplay = true,
   autoplayDelay = 3000,
-  pauseOnHover = false,
-  loop = false,
-  round = false
-}: CarouselProps): JSX.Element {
-  const containerPadding = 16;
-  const itemWidth = baseWidth - containerPadding * 2;
-  const itemHeight = baseHeight - containerPadding * 2 - 40; // Extra space for dots
-  const trackItemOffset = itemWidth + GAP;
-  
-  const itemsForRender = useMemo(() => {
-    if (!loop) return items;
-    if (items.length === 0) return [];
-    return [items[items.length - 1], ...items, items[0]];
-  }, [items, loop]);
+  pauseOnHover = true,
+  loop = true,
+}) {
+  const [current, setCurrent] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const timerRef = useRef(null);
+  const total = images.length;
 
-  const [position, setPosition] = useState<number>(loop ? 1 : 0);
-  const x = useMotionValue(0);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isJumping, setIsJumping] = useState<boolean>(false);
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const goTo = useCallback(
+    (index) => {
+      if (loop) {
+        setCurrent((index + total) % total);
+      } else {
+        setCurrent(Math.max(0, Math.min(index, total - 1)));
+      }
+    },
+    [loop, total]
+  );
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  
+  const next = useCallback(() => goTo(current + 1), [current, goTo]);
+  const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+
+  // Autoplay
   useEffect(() => {
-    if (pauseOnHover && containerRef.current) {
-      const container = containerRef.current;
-      const handleMouseEnter = () => setIsHovered(true);
-      const handleMouseLeave = () => setIsHovered(false);
-      container.addEventListener('mouseenter', handleMouseEnter);
-      container.addEventListener('mouseleave', handleMouseLeave);
-      return () => {
-        container.removeEventListener('mouseenter', handleMouseEnter);
-        container.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    }
-  }, [pauseOnHover]);
+    if (!autoplay) return;
+    if (pauseOnHover && isHovered) return;
 
-  useEffect(() => {
-    if (!autoplay || itemsForRender.length <= 1) return undefined;
-    if (pauseOnHover && isHovered) return undefined;
+    timerRef.current = setInterval(next, autoplayDelay);
+    return () => clearInterval(timerRef.current);
+  }, [autoplay, autoplayDelay, pauseOnHover, isHovered, next]);
 
-    const timer = setInterval(() => {
-      setPosition(prev => Math.min(prev + 1, itemsForRender.length - 1));
-    }, autoplayDelay);
-
-    return () => clearInterval(timer);
-  }, [autoplay, autoplayDelay, isHovered, pauseOnHover, itemsForRender.length]);
-
-  useEffect(() => {
-    const startingPosition = loop ? 1 : 0;
-    setPosition(startingPosition);
-    x.set(-startingPosition * trackItemOffset);
-  }, [items.length, loop, trackItemOffset, x]);
-
-  useEffect(() => {
-    if (!loop && position > itemsForRender.length - 1) {
-      setPosition(Math.max(0, itemsForRender.length - 1));
-    }
-  }, [itemsForRender.length, loop, position]);
-
-  const effectiveTransition = isJumping ? { duration: 0 } : SPRING_OPTIONS;
-
-  const handleAnimationStart = () => {
-    setIsAnimating(true);
+  // Touch / mouse drag
+  const handleDragStart = (clientX) => {
+    setIsDragging(true);
+    setDragStartX(clientX);
+    setDragOffset(0);
   };
 
-  const handleAnimationComplete = () => {
-    if (!loop || itemsForRender.length <= 1) {
-      setIsAnimating(false);
-      return;
-    }
-    const lastCloneIndex = itemsForRender.length - 1;
-
-    if (position === lastCloneIndex) {
-      setIsJumping(true);
-      const target = 1;
-      setPosition(target);
-      x.set(-target * trackItemOffset);
-      requestAnimationFrame(() => {
-        setIsJumping(false);
-        setIsAnimating(false);
-      });
-      return;
-    }
-
-    if (position === 0) {
-      setIsJumping(true);
-      const target = items.length;
-      setPosition(target);
-      x.set(-target * trackItemOffset);
-      requestAnimationFrame(() => {
-        setIsJumping(false);
-        setIsAnimating(false);
-      });
-      return;
-    }
-
-    setIsAnimating(false);
+  const handleDragMove = (clientX) => {
+    if (!isDragging) return;
+    setDragOffset(clientX - dragStartX);
   };
 
-  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void => {
-    const { offset, velocity } = info;
-    const direction =
-      offset.x < -DRAG_BUFFER || velocity.x < -VELOCITY_THRESHOLD
-        ? 1
-        : offset.x > DRAG_BUFFER || velocity.x > VELOCITY_THRESHOLD
-          ? -1
-          : 0;
-
-    if (direction === 0) return;
-
-    setPosition(prev => {
-      const next = prev + direction;
-      const max = itemsForRender.length - 1;
-      return Math.max(0, Math.min(next, max));
-    });
+  const handleDragEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (dragOffset < -50) next();
+    else if (dragOffset > 50) prev();
+    setDragOffset(0);
   };
-
-  const dragProps = loop
-    ? {}
-    : {
-        dragConstraints: {
-          left: -trackItemOffset * Math.max(itemsForRender.length - 1, 0),
-          right: 0
-        }
-      };
-
-  const activeIndex =
-    items.length === 0 ? 0 : loop ? (position - 1 + items.length) % items.length : Math.min(position, items.length - 1);
 
   return (
     <div
-      ref={containerRef}
-      className={`relative overflow-hidden p-4 flex flex-col ${
-        round ? 'rounded-full border border-white' : 'rounded-[24px] border border-[#ffffff94]'
-      }`}
-      style={{
-        width: `${baseWidth}px`,
-        height: `${baseHeight}px`,
-      }}
+      className="relative w-full h-full select-none overflow-hidden rounded-2xl"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => { setIsHovered(false); handleDragEnd(); }}
+      // Mouse drag
+      onMouseDown={(e) => handleDragStart(e.clientX)}
+      onMouseMove={(e) => handleDragMove(e.clientX)}
+      onMouseUp={handleDragEnd}
+      // Touch swipe
+      onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+      onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+      onTouchEnd={handleDragEnd}
     >
-      {/* Carousel Images */}
-      <div className="flex-1 overflow-hidden">
-        <motion.div
-          className="flex items-center h-full"
-          drag={isAnimating ? false : 'x'}
-          {...dragProps}
-          style={{
-            width: itemWidth,
-            gap: `${GAP}px`,
-            perspective: 1000,
-            perspectiveOrigin: `${position * trackItemOffset + itemWidth / 2}px 50%`,
-            x
-          }}
-          onDragEnd={handleDragEnd}
-          animate={{ x: -(position * trackItemOffset) }}
-          transition={effectiveTransition}
-          onAnimationStart={handleAnimationStart}
-          onAnimationComplete={handleAnimationComplete}
-        >
-          {itemsForRender.map((item, index) => (
-            <CarouselItem
-              key={`${item?.id ?? index}-${index}`}
-              item={item}
-              index={index}
-              itemWidth={itemWidth}
-              itemHeight={itemHeight}
-              round={round}
-              trackItemOffset={trackItemOffset}
-              x={x}
-              transition={effectiveTransition}
+      {/* Image Track */}
+      <div
+        className="flex h-full transition-transform duration-500 ease-in-out"
+        style={{
+          width: `${total * 100}%`,
+          transform: `translateX(calc(-${(current * 100) / total}% + ${dragOffset / total}px))`,
+          transition: isDragging ? 'none' : 'transform 0.5s ease-in-out',
+          cursor: isDragging ? 'grabbing' : 'grab',
+        }}
+      >
+        {images.map((img) => (
+          <div
+            key={img.id}
+            className="relative h-full flex-shrink-0"
+            style={{ width: `${100 / total}%` }}
+          >
+            <img
+              src={img.imageUrl}
+              alt={`Slide ${img.id}`}
+              draggable={false}
+              className="w-full h-full object-cover rounded-2xl"
             />
-          ))}
-        </motion.div>
+            {/* Subtle gradient overlay at bottom */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+          </div>
+        ))}
       </div>
 
-      {/* Dots Navigation */}
-      <div className="flex w-full justify-center items-center mt-4 pb-2">
-        <div className="flex gap-2">
-          {items.map((_, index) => (
-            <motion.div
-              key={index}
-              className={`h-2.5 w-2.5 rounded-full cursor-pointer transition-all duration-300 ${
-                activeIndex === index
-                  ? 'bg-white w-8'
-                  : 'bg-white/40 hover:bg-white/60'
-              }`}
-              animate={{
-                scale: activeIndex === index ? 1.1 : 1
-              }}
-              onClick={() => setPosition(loop ? index + 1 : index)}
-              transition={{ duration: 0.2 }}
-            />
-          ))}
-        </div>
+      {/* Prev Arrow */}
+      <button
+        onClick={(e) => { e.stopPropagation(); prev(); }}
+        aria-label="Previous"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 text-white hover:bg-black/60 transition-all duration-200 hover:scale-110"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+
+      {/* Next Arrow */}
+      <button
+        onClick={(e) => { e.stopPropagation(); next(); }}
+        aria-label="Next"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 text-white hover:bg-black/60 transition-all duration-200 hover:scale-110"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+
+      {/* Dot Indicators */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 sm:gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className="transition-all duration-300 rounded-full"
+            style={{
+              width: i === current ? '20px' : '8px',
+              height: '8px',
+              background: i === current ? 'white' : 'rgba(255,255,255,0.45)',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Slide counter */}
+      <div className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/15 text-white/80 text-xs font-medium tabular-nums">
+        {current + 1} / {total}
       </div>
     </div>
   );
