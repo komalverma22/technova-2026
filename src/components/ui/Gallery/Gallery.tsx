@@ -1,4 +1,3 @@
-'use client'
 
 import { motion, useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
@@ -9,7 +8,7 @@ const HorizontalGallery = () => {
       {/* Heading */}
       <div className="flex justify-center items-center w-full">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 
+          <h1
             className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight pt-12 "
             style={{ fontFamily: 'Eagle Lake' }}
           >
@@ -33,8 +32,8 @@ const HorizontalScrollCarousel = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["1%", "-95%"]);
 
   return (
-    <section ref={targetRef} className="relative h-[200vh] sm:h-[250vh] md:h-[300vh]">
-      <div className="sticky top-0 flex h-[60vh] sm:h-[70vh] md:h-screen items-center overflow-hidden">
+    <section ref={targetRef} className="relative h-[150vh] sm:h-[200vh] md:h-[280vh]">
+      <div className="sticky top-0 flex h-[65vh] sm:h-[70vh] md:h-screen items-center overflow-hidden">
         <motion.div style={{ x }} className="flex gap-3 sm:gap-4 md:gap-6 px-4">
           {cards.map((card, index) => {
             return <Card card={card} index={index} key={card.id} />;

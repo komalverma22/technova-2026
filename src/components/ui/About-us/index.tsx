@@ -6,16 +6,16 @@ export const AboutUs = () => (
   <div className="flex w-full items-center justify-center py-12 px-4">
     <div className="w-full max-w-[1200px] flex flex-col items-center">
       {/* Heading */}
-      <h1 
+      <h1
         className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight pb-12"
         style={{ fontFamily: 'Eagle Lake' }}
       >
         ABOUT US
       </h1>
-      
+
       {/* Carousel and Text Container */}
       <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start">
-        
+
         {/* Carousel - Left Side */}
         <div className="w-full sm:w-[85%] md:w-[75%] lg:w-1/2">
           <div className="relative h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px]">
@@ -33,32 +33,11 @@ export const AboutUs = () => (
 
         {/* Text Content - Right Side */}
         <div className="w-full lg:w-1/2 text-white flex flex-col justify-center">
-          <h2 
-            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
-            Who We Are
-          </h2>
           <div className="space-y-4 text-base md:text-lg leading-relaxed text-gray-200">
             <p>
-              We are a passionate team dedicated to creating exceptional experiences 
-              and pushing the boundaries of what's possible. Our journey began with 
-              a simple vision: to make a difference through innovation and creativity.
-            </p>
-            <p>
-              With years of experience and a commitment to excellence, we've built 
-              a community that shares our values and vision. Every project we undertake 
-              is driven by our dedication to quality and our desire to exceed expectations.
-            </p>
-            <p>
-              Our team brings together diverse talents and perspectives, united by 
-              a common goal: to deliver outstanding results and create lasting impact. 
-              We believe in continuous learning, collaboration, and staying ahead of 
-              the curve.
-            </p>
-            <p>
-              Join us on this exciting journey as we continue to grow, innovate, 
-              and shape the future together.
+              TECHNOVA is the Annual Technical Symposium of DCRUST and is one of the largest of its kind in Haryana. Technova has grown by leaps and bounds over the years. It is held over 2 day in the month of November/December and has consistently attracted participants from all over NCR. Technova is all about technical creativity and innovation. Innovation in students is always cherished and supported. In its previous editions. Technova brought participation pool of over 600 students from the colleges under DCRUST.
+            </p><p>
+              Many technical and entrepreneurship events are held during the fest including Robotics, Coding marathons, quizzes events. These are broadly classified into various Departmental Events. Apart from this, Workshops and exhibitions are also held. To high- light the social responsibility of Engineers, social/environmental awareness initiatives are undertaken under the banner of CEEES. Project Expo is also organised in order to encourage the practical knowledge and Hobby Expo is another major attraction.
             </p>
           </div>
         </div>

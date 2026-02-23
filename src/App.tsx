@@ -1,6 +1,71 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, User, X } from "lucide-react";
 import { Link } from "react-router-dom";
+
+// ── Registration deadline ─────────────────────────────────────────────────────
+// Update this date to match the real registration closing date/time (ISO 8601).
+const REGISTRATION_DEADLINE = new Date("2026-03-15T23:59:59+05:30");
+
+function useCountdown(target: Date) {
+  const calc = () => {
+    const diff = Math.max(0, target.getTime() - Date.now());
+    return {
+      days: Math.floor(diff / 86_400_000),
+      hours: Math.floor((diff % 86_400_000) / 3_600_000),
+      minutes: Math.floor((diff % 3_600_000) / 60_000),
+      seconds: Math.floor((diff % 60_000) / 1_000),
+      expired: diff === 0,
+    };
+  };
+  const [time, setTime] = useState(calc);
+  const ref = useRef<ReturnType<typeof setInterval> | null>(null);
+  useEffect(() => {
+    ref.current = setInterval(() => setTime(calc()), 1000);
+    return () => { if (ref.current) clearInterval(ref.current); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return time;
+}
+
+function CountdownUnit({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="rounded-lg bg-white/15 backdrop-blur-sm border border-white/20 px-2.5 py-1.5 text-center">
+        <span className="text-xl sm:text-2xl font-bold text-white tabular-nums leading-none">
+          {String(value).padStart(2, "0")}
+        </span>
+      </div>
+      <span className="mt-1 text-[9px] sm:text-[10px] uppercase tracking-widest text-white/60 font-medium">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function RegistrationCountdown() {
+  const { days, hours, minutes, seconds, expired } = useCountdown(REGISTRATION_DEADLINE);
+  return (
+    <div className="mt-5 flex flex-col items-center gap-2">
+      <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-white/50">
+        Registration ends in
+      </p>
+      {expired ? (
+        <p className="text-sm font-bold text-red-400 tracking-wide">Registration Closed</p>
+      ) : (
+        <div className="flex items-end gap-2 sm:gap-3">
+          <CountdownUnit value={days} label="Days" />
+          <span className="mb-4 text-xl font-bold text-white/40 leading-none">:</span>
+          <CountdownUnit value={hours} label="Hours" />
+          <span className="mb-4 text-xl font-bold text-white/40 leading-none">:</span>
+          <CountdownUnit value={minutes} label="Min" />
+          <span className="mb-4 text-xl font-bold text-white/40 leading-none">:</span>
+          <CountdownUnit value={seconds} label="Sec" />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function App() {
   const [heroImage, setHeroImage] = useState("/hero1.png");
   const [heroIndex, setHeroIndex] = useState(1);
@@ -36,7 +101,7 @@ function App() {
           </div>
         </div>
       </div>
-{/* navbar */}
+      {/* navbar */}
       <nav className="fixed top-[42px] sm:top-[50.4px] left-0 right-0 z-40 px-3 sm:px-4 md:px-6">
         <div className="max-w-3xl mx-auto bg-slate-300/95 backdrop-blur-md rounded-xl sm:rounded-2xl px-4 sm:px-[28.8px] py-3 sm:py-[14.4px] flex items-center justify-between">
           <div className="text-lg sm:text-[21.6px] font-bold text-slate-900 tracking-tight">
@@ -74,7 +139,7 @@ function App() {
             >
               Brochure
             </Link>
-          
+
             {/* <a href="#" className="text-slate-900 hover:text-black transition-colors flex items-center gap-2 font-medium">
               <ShoppingBag className="w-[16.2px] h-[16.2px]" />
               Bag
@@ -95,7 +160,7 @@ function App() {
             )}
             {isAuthenticated === false && (
               <div className="hidden lg:flex items-center gap-2">
-                
+
                 <Link
                   to="/signup"
                   className="rounded-lg bg-slate-900 px-3 py-1.5 text-[13px] font-semibold text-white transition hover:bg-slate-700"
@@ -136,7 +201,7 @@ function App() {
               )}
               {isAuthenticated === false && (
                 <>
-              
+
                   <Link to="/signup" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 text-center">Sign Up</Link>
                 </>
               )}
@@ -157,72 +222,72 @@ function App() {
           />
         </div>
 
-        <div className="relative h-full px-4 sm:px-6 md:pl-8 flex flex-col justify-end gap-8 sm:gap-12 md:gap-16 pb-8 sm:pb-10 md:pb-12 pt-12 sm:pt-16 md:pt-20">
-          <div className="max-w-xl">
+        <div className="relative h-full px-4 sm:px-6 flex flex-col items-center justify-end gap-8 sm:gap-12 md:gap-16 pb-8 sm:pb-10 md:pb-12 pt-12 sm:pt-16 md:pt-20">
+          <div className="max-w-xl text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold text-white leading-[0.95] tracking-tight mb-4 sm:mb-6">
-              Technova'26 <br />
-              The Future is Here
+              Technova'26
             </h1>
           </div>
 
-          <div className="relative">
-            <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
-              <span className="text-lg sm:text-xl md:text-2xl font-bold text-white/30 leading-none transition-all duration-300">
-                {heroIndex.toString().padStart(2, "0")}
-              </span>
-              <div className="flex gap-2 sm:gap-3">
-                <div
-                  className="w-20 h-12 sm:w-24 sm:h-14 md:w-[128px] md:h-[72px] rounded-lg sm:rounded-xl overflow-hidden border-2 border-white/10 hover:border-white/30 transition-all cursor-pointer"
-                  onClick={() => handleImageHover("/hero1.png", 1)}
-                  onMouseEnter={() => handleImageHover("/hero1.png", 1)}
-                >
-                  <img
-                    src="/hero1.png"
-                    alt="Collection preview 1"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div
-                  className="w-20 h-12 sm:w-24 sm:h-14 md:w-[128px] md:h-[72px] rounded-lg sm:rounded-xl overflow-hidden border-2 border-white/10 hover:border-white/30 transition-all cursor-pointer"
-                  onClick={() => handleImageHover("/hero2.png", 2)}
-                  onMouseEnter={() => handleImageHover("/hero2.png", 2)}
-                >
-                  <img
-                    src="/hero2.png"
-                    alt="Collection preview 2"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div
-                  className="w-20 h-12 sm:w-24 sm:h-14 md:w-[128px] md:h-[72px] rounded-lg sm:rounded-xl overflow-hidden border-2 border-white/10 hover:border-white/30 transition-all cursor-pointer"
-                  onClick={() => handleImageHover("/hero3.png", 3)}
-                  onMouseEnter={() => handleImageHover("/hero3.png", 3)}
-                >
-                  <img
-                    src="/hero3.png"
-                    alt="Collection preview 3"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
+          <div className="relative flex flex-col items-center w-full">
+            {/* Thumbnail strip – scrollable on tiny screens */}
+            <div className="w-full overflow-x-auto pb-1 flex justify-center">
+              <div className="flex items-center gap-3 sm:gap-4 md:gap-5 w-max px-2">
+                <span className="text-lg sm:text-xl md:text-2xl font-bold text-white/30 leading-none transition-all duration-300 shrink-0">
+                  {heroIndex.toString().padStart(2, "0")}
+                </span>
+                <div className="flex gap-2 sm:gap-3">
+                  <div
+                    className="w-20 h-12 sm:w-24 sm:h-14 md:w-[128px] md:h-[72px] rounded-lg sm:rounded-xl overflow-hidden border-2 border-white/10 hover:border-white/30 transition-all cursor-pointer shrink-0"
+                    onClick={() => handleImageHover("/hero1.png", 1)}
+                    onMouseEnter={() => handleImageHover("/hero1.png", 1)}
+                  >
+                    <img
+                      src="/hero1.png"
+                      alt="Collection preview 1"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div
+                    className="w-20 h-12 sm:w-24 sm:h-14 md:w-[128px] md:h-[72px] rounded-lg sm:rounded-xl overflow-hidden border-2 border-white/10 hover:border-white/30 transition-all cursor-pointer shrink-0"
+                    onClick={() => handleImageHover("/hero2.png", 2)}
+                    onMouseEnter={() => handleImageHover("/hero2.png", 2)}
+                  >
+                    <img
+                      src="/hero2.png"
+                      alt="Collection preview 2"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div
+                    className="w-20 h-12 sm:w-24 sm:h-14 md:w-[128px] md:h-[72px] rounded-lg sm:rounded-xl overflow-hidden border-2 border-white/10 hover:border-white/30 transition-all cursor-pointer shrink-0"
+                    onClick={() => handleImageHover("/hero3.png", 3)}
+                    onMouseEnter={() => handleImageHover("/hero3.png", 3)}
+                  >
+                    <img
+                      src="/hero3.png"
+                      alt="Collection preview 3"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Hero Log In button — only when auth is confirmed false */}
+            {/* ── Registration countdown — always visible ───────────────── */}
+            <RegistrationCountdown />
+
+            {/* Log In button — only when auth is confirmed false */}
             {isAuthenticated === false && (
-              <div className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center gap-4 sm:gap-5 md:gap-6">
-                <p className="text-xs sm:text-[13.6px] text-white/90 leading-relaxed text-center px-4">
-                  Layer up with confidence and
-                  <br />
-                  stylish all season
-                </p>
+              <div className="mt-4">
                 <Link to="/login">
-                  <button className="bg-white hover:bg-slate-400/85 text-slate-900 font-semibold text-[10px] sm:text-[16px] px-4 sm:px-[22.4px] py-2 sm:py-[11.2px] rounded-lg transition-all">
+                  <button className="bg-white hover:bg-slate-200 text-slate-900 font-semibold text-[13px] sm:text-[15px] px-5 py-2 rounded-lg transition-all">
                     Log In
                   </button>
                 </Link>

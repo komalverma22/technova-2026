@@ -17,9 +17,9 @@ const SITE_URL  = "https://technova26.netlify.app";
 const SITE_NAME = "TechNova'26";
 
 const DEFAULT_IMAGE = `${SITE_URL}/hero1.png`;
-const DEFAULT_TITLE = "TechNova'26 — Annual Techno-Cultural Fest";
+const DEFAULT_TITLE = "TechNova'26 — Annual Technical fest";
 const DEFAULT_DESC  =
-  "TechNova 2026 — The premier annual techno-cultural fest. Explore events, register your team, and celebrate innovation.";
+  "TechNova 2026 — The premier annual Technical fest. Explore events, register your team, and celebrate innovation.";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface ApiEvent {

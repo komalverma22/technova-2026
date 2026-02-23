@@ -29,9 +29,9 @@ function HomePage() {
     <>
       <App />
       <AboutUs/>
-      <Example/>
+      {/* <Example/> */}
       <HomeEventsSection/>
-      <Sponsors/>
+      {/* <Sponsors/> */}
       <Faq/>
       <Footer/>
     </>

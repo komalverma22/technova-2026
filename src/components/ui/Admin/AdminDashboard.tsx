@@ -42,6 +42,17 @@ type User = {
   createdAt?: string;
 };
 
+type TeamMemberInfo = {
+  name: string;
+  email?: string;
+  mobile?: string;
+  mobileNumber?: string;
+  rollNo?: string;
+  college?: string;
+  branch?: string;
+  semester?: number | string;
+};
+
 type Registration = {
   id?: number | string;
   _id?: number | string;
@@ -50,7 +61,10 @@ type Registration = {
   // flat fields when event is not nested
   title?: string;
   department?: string;
-  teamMember?: { name: string; email?: string; mobile?: string; mobileNumber?: string }[];
+  teamMember?: TeamMemberInfo[];
+  // The account that registered (populated by backend)
+  registrar?: { name?: string; email?: string; mobile?: string; mobileNumber?: string };
+  user?: { name?: string; email?: string; mobile?: string; mobileNumber?: string };
   createdAt?: string;
 };
 
@@ -200,21 +214,19 @@ export default function AdminDashboard() {
                 <button
                   key={id}
                   onClick={() => setTab(id)}
-                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    tab === id
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all ${tab === id
                       ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
                       : "text-slate-400 hover:text-white hover:bg-slate-800"
-                  }`}
+                    }`}
                 >
                   {icon}
                   <span className="hidden sm:inline">{label}</span>
                   {count > 0 && (
                     <span
-                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                        tab === id
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === id
                           ? "bg-white/20 text-white"
                           : "bg-slate-700 text-slate-300"
-                      }`}
+                        }`}
                     >
                       {count}
                     </span>
@@ -596,39 +608,49 @@ function sortRegistrations(regs: Registration[], key: RegSortKey): Registration[
 
 function printRegistrations(registrations: Registration[], eventFilter: string) {
   const grouped: Record<string, Registration[]> = {};
-  const sorted = [...registrations].sort((a, b) =>
+  const sortedRegs = [...registrations].sort((a, b) =>
     (a.event?.title ?? a.title ?? "").toLowerCase().localeCompare(
       (b.event?.title ?? b.title ?? "").toLowerCase()
     )
   );
-  for (const reg of sorted) {
+  for (const reg of sortedRegs) {
     const key = reg.event?.title ?? reg.title ?? "Unknown Event";
     if (!grouped[key]) grouped[key] = [];
     grouped[key].push(reg);
   }
+
+  const esc = (s: unknown) => String(s ?? "—").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   const rows = Object.entries(grouped).map(([eventName, regs]) => {
     const memberRows = regs.flatMap((reg) => {
       const { date, time } = formatDateTime(reg.createdAt);
       const regDateTime = [date, time].filter(Boolean).join(" ");
       const members = reg.teamMember ?? [];
+      const registrar = reg.registrar ?? reg.user;
+      const registrarCell = registrar
+        ? `<div><strong>${esc(registrar.name)}</strong></div><div>${esc(registrar.email)}</div><div>${esc(registrar.mobileNumber ?? registrar.mobile)}</div>`
+        : "—";
+
       if (members.length === 0) {
         return `<tr>
-          <td>${eventName}</td>
-          <td>${reg.teamName ?? "—"}</td>
-          <td>—</td><td>—</td><td>—</td>
-          <td>${regDateTime || "—"}</td>
+          <td>${esc(eventName)}</td>
+          <td>${esc(reg.teamName)}</td>
+          <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+          <td>${esc(regDateTime)}</td>
+          <td>${registrarCell}</td>
         </tr>`;
       }
       return members.map((m, mi) =>
         `<tr>
-          ${mi === 0
-            ? `<td rowspan="${members.length}">${eventName}</td><td rowspan="${members.length}">${reg.teamName ?? "—"}</td>`
-            : ""}
-          <td>${m.name ?? "—"}</td>
-          <td>${m.email ?? "—"}</td>
-          <td>${m.mobileNumber ?? m.mobile ?? "—"}</td>
-          ${mi === 0 ? `<td rowspan="${members.length}">${regDateTime || "—"}</td>` : ""}
+          ${mi === 0 ? `<td rowspan="${members.length}">${esc(eventName)}</td><td rowspan="${members.length}">${esc(reg.teamName)}</td>` : ""}
+          <td>${esc(m.rollNo)}</td>
+          <td>${esc(m.name)}</td>
+          <td>${esc(m.email)}</td>
+          <td>${esc(m.mobileNumber ?? m.mobile)}</td>
+          <td>${esc(m.college)}</td>
+          <td>${esc(m.branch)}</td>
+          <td>${esc(m.semester)}</td>
+          ${mi === 0 ? `<td rowspan="${members.length}">${esc(regDateTime)}</td><td rowspan="${members.length}">${registrarCell}</td>` : ""}
         </tr>`
       );
     });
@@ -642,24 +664,27 @@ function printRegistrations(registrations: Registration[], eventFilter: string) 
   <meta charset="UTF-8"/>
   <title>TechNova 2026 – Registrations</title>
   <style>
-    body { font-family: Arial, sans-serif; font-size: 12px; margin: 24px; color: #111; }
-    h1 { font-size: 18px; margin-bottom: 4px; }
-    p { margin: 0 0 16px; color: #555; font-size: 11px; }
+    body { font-family: Arial, sans-serif; font-size: 11px; margin: 20px; color: #111; }
+    h1 { font-size: 16px; margin-bottom: 4px; }
+    p { margin: 0 0 14px; color: #555; font-size: 10px; }
     table { width: 100%; border-collapse: collapse; }
-    th { background: #1e293b; color: #fff; text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
-    td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    th { background: #1e293b; color: #fff; text-align: left; padding: 7px 8px; font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+    td { padding: 6px 8px; border-bottom: 1px solid #e2e8f0; vertical-align: top; font-size: 11px; }
     tr:nth-child(even) td { background: #f8fafc; }
-    @media print { button { display: none; } }
+    .registrar { font-size: 10px; color: #475569; }
+    @media print { button { display: none; } body { margin: 10px; } }
   </style>
 </head>
 <body>
   <h1>TechNova 2026 – Registrations: ${filterLabel}</h1>
-  <p>Printed on ${new Date().toLocaleString("en-IN")} · ${registrations.length} registrations</p>
+  <p>Printed on ${new Date().toLocaleString("en-IN")} · ${registrations.length} registration(s)</p>
   <table>
     <thead>
       <tr>
-        <th>Event Name</th><th>Team Name</th><th>Member Name</th>
-        <th>Email</th><th>Phone</th><th>Registered On</th>
+        <th>Event</th><th>Team Name</th>
+        <th>Roll No.</th><th>Member Name</th><th>Email</th><th>Mobile</th>
+        <th>College</th><th>Branch</th><th>Sem</th>
+        <th>Registered On</th><th>Registered By</th>
       </tr>
     </thead>
     <tbody>${rows.join("")}</tbody>
@@ -785,8 +810,8 @@ function RegistrationsTab({
             <table className="min-w-full divide-y divide-slate-800">
               <thead className="bg-slate-900">
                 <tr>
-                  {["#", "Event", "Department", "Team Name", "Members", "Registered On"].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">{h}</th>
+                  {["#", "Event", "Dept", "Team", "Members (Roll · Name · Email · Mobile · College · Branch · Sem)", "Registered By", "Date"].map((h) => (
+                    <th key={h} className="px-3 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -797,27 +822,35 @@ function RegistrationsTab({
                   const dept = reg.event?.department ?? reg.department ?? "—";
                   const { date, time } = formatDateTime(reg.createdAt);
                   const members = reg.teamMember ?? [];
+                  const registrar = reg.registrar ?? reg.user;
                   return (
-                    <tr key={String(rid)} className="hover:bg-slate-800/40 transition-colors">
-                      <td className="px-4 py-3 text-sm text-slate-500">{i + 1}</td>
-                      <td className="px-4 py-3">
-                        <p className="text-sm font-semibold text-white">{eventTitle}</p>
+                    <tr key={String(rid)} className="hover:bg-slate-800/40 transition-colors align-top">
+                      <td className="px-3 py-3 text-sm text-slate-500">{i + 1}</td>
+                      <td className="px-3 py-3">
+                        <p className="text-sm font-semibold text-white whitespace-nowrap">{eventTitle}</p>
                       </td>
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">{dept}</span>
+                      <td className="px-3 py-3 whitespace-nowrap">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">{dept}</span>
                       </td>
-                      <td className="px-4 py-3 text-sm text-slate-300">
-                        {reg.teamName ?? <span className="text-slate-600 italic">Solo</span>}
+                      <td className="px-3 py-3 text-sm text-slate-300 whitespace-nowrap">
+                        {reg.teamName ?? <span className="text-slate-600 italic text-xs">Solo</span>}
                       </td>
-                      <td className="px-4 py-3">
+                      {/* Members */}
+                      <td className="px-3 py-3">
                         {members.length > 0 ? (
-                          <div className="flex flex-col gap-0.5">
+                          <div className="flex flex-col gap-2">
                             {members.map((m, mi) => (
-                              <div key={mi} className="flex items-center gap-1.5 text-xs text-slate-300">
-                                <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
-                                <span className="font-medium">{m.name}</span>
-                                {(m.mobileNumber ?? m.mobile) && <span className="text-slate-500">· {m.mobileNumber ?? m.mobile}</span>}
-                                {m.email && <span className="text-slate-500">· {m.email}</span>}
+                              <div key={mi} className="text-xs space-y-0.5 border-b border-slate-800/60 pb-2 last:border-0 last:pb-0">
+                                <div className="flex items-center gap-1.5">
+                                  <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
+                                  {m.rollNo && <span className="font-mono text-indigo-300">{m.rollNo}</span>}
+                                  <span className="font-semibold text-white">{m.name}</span>
+                                </div>
+                                <div className="text-slate-400 pl-[18px]">{m.email ?? "—"}</div>
+                                <div className="text-slate-400 pl-[18px]">{m.mobileNumber ?? m.mobile ?? "—"}</div>
+                                <div className="text-slate-500 pl-[18px] text-[10px]">
+                                  {[m.college, m.branch, m.semester ? `Sem ${m.semester}` : undefined].filter(Boolean).join(" · ") || "—"}
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -825,8 +858,20 @@ function RegistrationsTab({
                           <span className="text-xs text-slate-600">—</span>
                         )}
                       </td>
-                      {/* Date + Time */}
-                      <td className="px-4 py-3 whitespace-nowrap">
+                      {/* Registrar */}
+                      <td className="px-3 py-3">
+                        {registrar ? (
+                          <div className="text-xs space-y-0.5">
+                            <p className="font-semibold text-white">{registrar.name ?? "—"}</p>
+                            <p className="text-slate-400">{registrar.email ?? "—"}</p>
+                            <p className="text-slate-500">{registrar.mobileNumber ?? registrar.mobile ?? "—"}</p>
+                          </div>
+                        ) : (
+                          <span className="text-xs text-slate-600">—</span>
+                        )}
+                      </td>
+                      {/* Date */}
+                      <td className="px-3 py-3 whitespace-nowrap">
                         <p className="text-xs text-slate-300">{date || "—"}</p>
                         {time && <p className="text-[11px] text-slate-500">{time}</p>}
                       </td>
@@ -845,8 +890,10 @@ function RegistrationsTab({
               const dept = reg.event?.department ?? reg.department ?? "—";
               const { date, time } = formatDateTime(reg.createdAt);
               const members = reg.teamMember ?? [];
+              const registrar = reg.registrar ?? reg.user;
               return (
-                <div key={String(rid)} className="p-4 bg-slate-900/40 space-y-2">
+                <div key={String(rid)} className="p-4 bg-slate-900/40 space-y-3">
+                  {/* Event + date */}
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="text-sm font-semibold text-white">{eventTitle}</p>
@@ -857,19 +904,38 @@ function RegistrationsTab({
                       {time && <p className="text-[11px] text-slate-500">{time}</p>}
                     </div>
                   </div>
+
                   {reg.teamName && (
                     <p className="text-xs text-slate-400">Team: <span className="text-white font-medium">{reg.teamName}</span></p>
                   )}
+
+                  {/* Members */}
                   {members.length > 0 && (
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                       {members.map((m, mi) => (
-                        <div key={mi} className="flex items-center gap-1.5 text-xs text-slate-300">
-                          <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
-                          {m.name}
-                          {(m.mobileNumber ?? m.mobile) && <span className="text-slate-500">· {m.mobileNumber ?? m.mobile}</span>}
-                          {m.email && <span className="text-slate-500">· {m.email}</span>}
+                        <div key={mi} className="rounded-lg bg-slate-800/50 px-3 py-2 text-xs space-y-0.5">
+                          <div className="flex items-center gap-1.5">
+                            <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
+                            {m.rollNo && <span className="font-mono text-indigo-300">{m.rollNo}</span>}
+                            <span className="font-semibold text-white">{m.name}</span>
+                          </div>
+                          <p className="text-slate-400 pl-[18px]">{m.email ?? "—"}</p>
+                          <p className="text-slate-400 pl-[18px]">{m.mobileNumber ?? m.mobile ?? "—"}</p>
+                          <p className="text-slate-500 pl-[18px] text-[10px]">
+                            {[m.college, m.branch, m.semester ? `Sem ${m.semester}` : undefined].filter(Boolean).join(" · ") || "—"}
+                          </p>
                         </div>
                       ))}
+                    </div>
+                  )}
+
+                  {/* Registrar */}
+                  {registrar && (
+                    <div className="rounded-lg border border-slate-700/40 bg-slate-800/30 px-3 py-2 text-xs">
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Registered by</p>
+                      <p className="font-semibold text-white">{registrar.name ?? "—"}</p>
+                      <p className="text-slate-400">{registrar.email ?? "—"}</p>
+                      <p className="text-slate-500">{registrar.mobileNumber ?? registrar.mobile ?? "—"}</p>
                     </div>
                   )}
                 </div>

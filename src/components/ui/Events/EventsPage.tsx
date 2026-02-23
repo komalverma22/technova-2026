@@ -85,21 +85,19 @@ export default function EventsPage() {
           <div className="mb-6 flex w-full items-center gap-2 sm:mb-8 sm:justify-center sm:gap-3">
             <button
               onClick={() => setViewMode("date")}
-              className={`flex-1 sm:flex-none rounded-xl px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${
-                viewMode === "date"
+              className={`flex-1 sm:flex-none rounded-xl px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${viewMode === "date"
                   ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
                   : "border border-slate-700 bg-slate-800/60 text-slate-400 hover:bg-slate-700 hover:text-white"
-              }`}
+                }`}
             >
               📅 <span className="hidden xs:inline">Sort by </span>Date &amp; Time
             </button>
             <button
               onClick={() => setViewMode("department")}
-              className={`flex-1 sm:flex-none rounded-xl px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${
-                viewMode === "department"
+              className={`flex-1 sm:flex-none rounded-xl px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${viewMode === "department"
                   ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
                   : "border border-slate-700 bg-slate-800/60 text-slate-400 hover:bg-slate-700 hover:text-white"
-              }`}
+                }`}
             >
               🏛 By Department
             </button>
@@ -109,7 +107,7 @@ export default function EventsPage() {
         <FieldGroup>
           {/* Loading skeletons */}
           {loading && (
-            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 min-[480px]:grid-cols-2 xl:grid-cols-3">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="h-80 animate-pulse rounded-2xl bg-slate-700/40 sm:h-96" />
               ))}
@@ -132,7 +130,7 @@ export default function EventsPage() {
 
           {/* ── Date sort view ──────────────────────────────────────────── */}
           {!loading && !error && events.length > 0 && viewMode === "date" && (
-            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 min-[480px]:grid-cols-2 xl:grid-cols-3">
               {sortedByDate.map((event) => (
                 <EventCard
                   key={String(getEventId(event))}
@@ -172,7 +170,7 @@ export default function EventsPage() {
                       )}
                       <div className="hidden flex-1 border-t border-slate-700/60 sm:block" />
                     </div>
-                    <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid gap-4 sm:gap-6 grid-cols-1 min-[480px]:grid-cols-2 xl:grid-cols-3">
                       {sortByDate(deptEvents).map((event) => (
                         <EventCard
                           key={String(getEventId(event))}

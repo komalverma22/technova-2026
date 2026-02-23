@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Calendar, MapPin, Users, FileText, Clock } from "lucide-react";
+import { Calendar, MapPin, Users, FileText, Clock, Share2, Check } from "lucide-react";
 import { API_URL, apiFetch } from "../../../lib/api";
 import { getAuthToken } from "../../../lib/api";
 import type { ApiEvent } from "../../../lib/events";
@@ -53,6 +53,24 @@ export default function EventDetailPage() {
     fetchEvent();
   }, [id]);
 
+  const [copied, setCopied] = useState(false);
+
+  const handleShareClick = async () => {
+    const shareUrl = window.location.href;
+    const shareData = {
+      title: event?.title ? `${event.title} — TechNova'26` : "TechNova'26 Event",
+      text: event?.description?.slice(0, 120) ?? "Check out this event at TechNova'26!",
+      url: shareUrl,
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch { /* user dismissed */ }
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   const handleRegisterClick = () => {
     const hasToken = getAuthToken();
     if (!hasToken) {
@@ -97,7 +115,7 @@ export default function EventDetailPage() {
               src={imageUrl || "/technova-img1.JPG"}
               alt={event.title}
               className="w-full object-contain"
-              style={{ maxHeight: "80vh" }}
+              style={{ maxHeight: "60vh" }}
               loading="lazy"
               decoding="async"
             />
@@ -173,20 +191,34 @@ export default function EventDetailPage() {
           </div>
         </div>
 
-        <div className="mt-8">
-          <Link to="/events" className="text-slate-400 hover:text-white">
+        <div className="mt-8 flex items-center justify-between gap-4 flex-wrap">
+          <Link to="/events" className="text-slate-400 hover:text-white text-sm">
             ← Back to All Events
           </Link>
+          <button
+            onClick={handleShareClick}
+            className="flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-800/60 px-4 py-2 text-sm text-slate-300 hover:border-slate-400 hover:text-white transition-all"
+          >
+            {copied ? <Check className="size-4 text-green-400" /> : <Share2 className="size-4" />}
+            {copied ? "Link copied!" : "Share event"}
+          </button>
         </div>
       </div>
 
       {/* Register button – fixed bottom */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center px-4 py-4">
+      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center gap-3 px-4 py-3 bg-slate-950/80 backdrop-blur-sm border-t border-slate-800/60">
+        <button
+          onClick={handleShareClick}
+          className="flex items-center gap-2 rounded-xl border border-slate-600 bg-slate-900/80 backdrop-blur-sm px-4 py-3 text-sm font-semibold text-slate-200 hover:border-slate-400 hover:text-white transition-all shadow-xl shrink-0"
+        >
+          {copied ? <Check className="size-4 text-green-400" /> : <Share2 className="size-4" />}
+          <span className="hidden xs:inline">{copied ? "Copied!" : "Share"}</span>
+        </button>
         <Button
           variant="white"
           size="lg"
           onClick={handleRegisterClick}
-          className="min-w-[200px] px-8 py-6 text-lg shadow-xl"
+          className="flex-1 sm:flex-none sm:min-w-[200px] py-3 text-base shadow-xl"
         >
           Register for this Event
         </Button>
