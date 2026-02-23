@@ -36,8 +36,8 @@ const HorizontalScrollCarousel = () => {
     <section ref={targetRef} className="relative h-[200vh] sm:h-[250vh] md:h-[300vh]">
       <div className="sticky top-0 flex h-[60vh] sm:h-[70vh] md:h-screen items-center overflow-hidden">
         <motion.div style={{ x }} className="flex gap-3 sm:gap-4 md:gap-6 px-4">
-          {cards.map((card) => {
-            return <Card card={card} key={card.id} />;
+          {cards.map((card, index) => {
+            return <Card card={card} index={index} key={card.id} />;
           })}
         </motion.div>
       </div>
@@ -45,24 +45,22 @@ const HorizontalScrollCarousel = () => {
   );
 };
 
-const Card = ({ card }: { card: CardType }) => {
+const Card = ({ card, index }: { card: CardType; index: number }) => {
   return (
     <div
       key={card.id}
       className="group relative h-[250px] w-[250px] sm:h-[300px] sm:w-[300px] md:h-[400px] md:w-[400px] lg:h-[450px] lg:w-[450px] overflow-hidden rounded-lg shadow-xl flex-shrink-0"
     >
-      <div
-        style={{
-          backgroundImage: `url(${card.url})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className="absolute inset-0 z-0 transition-transform duration-300 group-hover:scale-110"
-      ></div>
+      <img
+        src={card.url}
+        alt={card.title}
+        className="absolute inset-0 z-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+        loading={index === 0 ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={index === 0 ? "high" : "auto"}
+      />
       <div className="absolute inset-0 z-10 grid place-content-center">
-        {/* <p className=" p-4 sm:p-6 md:p-8 text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black uppercase text-white backdrop-blur-lg rounded-lg">
-          {card.title}
-        </p> */}
+        {/* title overlay placeholder */}
       </div>
     </div>
   );

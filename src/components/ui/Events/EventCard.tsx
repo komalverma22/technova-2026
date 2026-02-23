@@ -32,13 +32,16 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
   if (variant === "compact") {
     return (
       <Card className="group overflow-hidden border-slate-700/50 bg-slate-800/40 backdrop-blur-sm transition-all hover:border-slate-500/60 hover:bg-slate-800/60">
-        <div className="relative aspect-[4/3] overflow-hidden">
+        {/* A4 portrait ratio ≈ 1 : 1.414 */}
+        <div className="relative w-full overflow-hidden bg-slate-900" style={{ aspectRatio: "1 / 1.414" }}>
           <img
             src={imageUrl || "/technova-img1.JPG"}
             alt={event.title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
           <div className="absolute bottom-2 left-3 right-3 flex items-center gap-2 text-xs text-white/90">
             <span className="rounded bg-slate-900/80 px-2 py-0.5 font-medium">
               {event.department}
@@ -80,14 +83,21 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
     );
   }
 
+  // Full / list variant
   return (
     <Card className="overflow-hidden border-slate-700/50 bg-slate-800/40 backdrop-blur-sm">
       <div className="flex flex-col sm:flex-row">
-        <div className="relative h-48 w-full shrink-0 overflow-hidden sm:h-auto sm:w-64">
+        {/* A4 portrait ratio in list mode: fixed width, auto height via aspect ratio */}
+        <div
+          className="relative shrink-0 overflow-hidden bg-slate-900 w-full sm:w-52"
+          style={{ aspectRatio: "1 / 1.414" }}
+        >
           <img
             src={imageUrl || "/technova-img1.JPG"}
             alt={event.title}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
+            loading="lazy"
+            decoding="async"
           />
         </div>
         <div className="flex flex-1 flex-col p-4 sm:p-5">

@@ -11,7 +11,6 @@ import {
   Clock,
   ClipboardList,
   Mail,
-  Phone,
   UserCheck,
 } from "lucide-react";
 import { API_URL, apiFetch } from "../../../lib/api";
@@ -54,6 +53,7 @@ type Registration = {
   teamMember?: { name: string; email?: string; mobile?: string; mobileNumber?: string }[];
   createdAt?: string;
 };
+
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -355,7 +355,7 @@ function EventsTab({
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="w-16 h-10 rounded-lg overflow-hidden bg-slate-800">
                           {imgUrl ? (
-                            <img src={imgUrl} alt={event.title} className="w-full h-full object-cover" />
+                            <img src={imgUrl} alt={event.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-slate-600">
                               <CalendarDays className="w-4 h-4" />
@@ -579,6 +579,99 @@ function UsersTab({
 
 // ─── Registrations Tab ────────────────────────────────────────────────────────
 
+type RegSortKey = "newest" | "oldest" | "event-asc" | "event-desc";
+
+function sortRegistrations(regs: Registration[], key: RegSortKey): Registration[] {
+  return [...regs].sort((a, b) => {
+    if (key === "event-asc" || key === "event-desc") {
+      const ta = (a.event?.title ?? a.title ?? "").toLowerCase();
+      const tb = (b.event?.title ?? b.title ?? "").toLowerCase();
+      return key === "event-asc" ? ta.localeCompare(tb) : tb.localeCompare(ta);
+    }
+    const da = new Date(a.createdAt ?? 0).getTime();
+    const db = new Date(b.createdAt ?? 0).getTime();
+    return key === "newest" ? db - da : da - db;
+  });
+}
+
+function printRegistrations(registrations: Registration[], eventFilter: string) {
+  const grouped: Record<string, Registration[]> = {};
+  const sorted = [...registrations].sort((a, b) =>
+    (a.event?.title ?? a.title ?? "").toLowerCase().localeCompare(
+      (b.event?.title ?? b.title ?? "").toLowerCase()
+    )
+  );
+  for (const reg of sorted) {
+    const key = reg.event?.title ?? reg.title ?? "Unknown Event";
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(reg);
+  }
+
+  const rows = Object.entries(grouped).map(([eventName, regs]) => {
+    const memberRows = regs.flatMap((reg) => {
+      const { date, time } = formatDateTime(reg.createdAt);
+      const regDateTime = [date, time].filter(Boolean).join(" ");
+      const members = reg.teamMember ?? [];
+      if (members.length === 0) {
+        return `<tr>
+          <td>${eventName}</td>
+          <td>${reg.teamName ?? "—"}</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td>${regDateTime || "—"}</td>
+        </tr>`;
+      }
+      return members.map((m, mi) =>
+        `<tr>
+          ${mi === 0
+            ? `<td rowspan="${members.length}">${eventName}</td><td rowspan="${members.length}">${reg.teamName ?? "—"}</td>`
+            : ""}
+          <td>${m.name ?? "—"}</td>
+          <td>${m.email ?? "—"}</td>
+          <td>${m.mobileNumber ?? m.mobile ?? "—"}</td>
+          ${mi === 0 ? `<td rowspan="${members.length}">${regDateTime || "—"}</td>` : ""}
+        </tr>`
+      );
+    });
+    return memberRows.join("");
+  });
+
+  const filterLabel = eventFilter === "all" ? "All Events" : eventFilter;
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>TechNova 2026 – Registrations</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; margin: 24px; color: #111; }
+    h1 { font-size: 18px; margin-bottom: 4px; }
+    p { margin: 0 0 16px; color: #555; font-size: 11px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #1e293b; color: #fff; text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+    td { padding: 7px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    @media print { button { display: none; } }
+  </style>
+</head>
+<body>
+  <h1>TechNova 2026 – Registrations: ${filterLabel}</h1>
+  <p>Printed on ${new Date().toLocaleString("en-IN")} · ${registrations.length} registrations</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Event Name</th><th>Team Name</th><th>Member Name</th>
+        <th>Email</th><th>Phone</th><th>Registered On</th>
+      </tr>
+    </thead>
+    <tbody>${rows.join("")}</tbody>
+  </table>
+  <script>window.onload = () => { window.print(); }<\/script>
+</body>
+</html>`;
+
+  const win = window.open("", "_blank");
+  if (win) { win.document.write(html); win.document.close(); }
+}
+
 function RegistrationsTab({
   registrations,
   loading,
@@ -588,14 +681,86 @@ function RegistrationsTab({
   loading: boolean;
   error: string;
 }) {
+  const [sortBy, setSortBy] = useState<RegSortKey>("newest");
+  const [eventFilter, setEventFilter] = useState<string>("all");
+
+  // Unique event names for filter dropdown
+  const eventNames = Array.from(
+    new Set(registrations.map((r) => r.event?.title ?? r.title ?? "Unknown Event"))
+  ).sort((a, b) => a.localeCompare(b));
+
+  // Apply filter, then sort
+  const filtered = eventFilter === "all"
+    ? registrations
+    : registrations.filter((r) => (r.event?.title ?? r.title) === eventFilter);
+
+  const sorted = sortRegistrations(filtered, sortBy);
+
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">All Registrations</h1>
-        <p className="text-slate-400 text-sm mt-0.5">
-          Every event registration so far — {registrations.length} total
-        </p>
+      {/* ── Header ──────────────────────────────────────────────────── */}
+      <div className="mb-5 flex flex-col gap-4 sm:mb-6 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-xl font-bold text-white sm:text-2xl">All Registrations</h1>
+          <p className="mt-0.5 text-xs text-slate-400 sm:text-sm">
+            {filtered.length} of {registrations.length} registration{registrations.length !== 1 ? "s" : ""}
+            {eventFilter !== "all" && (
+              <span className="ml-1 text-indigo-400 truncate"> · {eventFilter}</span>
+            )}
+          </p>
+        </div>
+
+        {!loading && !error && registrations.length > 0 && (
+          /* On mobile: full-width column. On sm+: auto-width row */
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:flex-wrap">
+
+            {/* Event filter */}
+            <div className="flex items-center gap-2">
+              <label htmlFor="reg-event" className="shrink-0 text-xs text-slate-400 sm:text-sm">
+                Event:
+              </label>
+              <select
+                id="reg-event"
+                value={eventFilter}
+                onChange={(e) => setEventFilter(e.target.value)}
+                className="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-800 px-2.5 py-1.5 text-xs text-white focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:w-auto sm:max-w-[200px] sm:text-sm"
+              >
+                <option value="all">All Events</option>
+                {eventNames.map((name) => (
+                  <option key={name} value={name}>{name}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Sort */}
+            <div className="flex items-center gap-2">
+              <label htmlFor="reg-sort" className="shrink-0 text-xs text-slate-400 sm:text-sm">
+                Sort:
+              </label>
+              <select
+                id="reg-sort"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as RegSortKey)}
+                className="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-800 px-2.5 py-1.5 text-xs text-white focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="event-asc">Event A → Z</option>
+                <option value="event-desc">Event Z → A</option>
+              </select>
+            </div>
+
+            {/* Print */}
+            <button
+              onClick={() => printRegistrations(filtered, eventFilter)}
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-medium text-white transition-all hover:bg-indigo-500 sm:py-1.5 sm:text-sm"
+            >
+              🖨 Print
+            </button>
+          </div>
+        )}
       </div>
+
 
       {error && (
         <div className="mb-6 rounded-xl bg-red-500/10 border border-red-500/40 px-4 py-3 text-red-400 text-sm">
@@ -609,28 +774,28 @@ function RegistrationsTab({
         <EmptyState icon={<ClipboardList className="w-12 h-12 text-slate-700" />} label="No registrations yet" hint="Registrations will appear here once participants sign up for events." />
       )}
 
-      {!loading && !error && registrations.length > 0 && (
+      {!loading && !error && registrations.length > 0 && sorted.length === 0 && (
+        <EmptyState icon={<ClipboardList className="w-12 h-12 text-slate-700" />} label="No registrations for this event" hint="Try selecting a different event from the filter." />
+      )}
+
+      {!loading && !error && sorted.length > 0 && (
         <div className="rounded-2xl border border-slate-800 overflow-hidden">
-          {/* Desktop */}
+          {/* Desktop table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-800">
               <thead className="bg-slate-900">
                 <tr>
                   {["#", "Event", "Department", "Team Name", "Members", "Registered On"].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                      {h}
-                    </th>
+                    <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60 bg-slate-900/40">
-                {registrations.map((reg, i) => {
+                {sorted.map((reg, i) => {
                   const rid = reg.id ?? reg._id ?? i;
-                  const eventTitle = reg.event?.title ??reg.title ?? "—";
+                  const eventTitle = reg.event?.title ?? reg.title ?? "—";
                   const dept = reg.event?.department ?? reg.department ?? "—";
-                  const { date } = formatDateTime(reg.createdAt);
-                  // console.log();
-                  
+                  const { date, time } = formatDateTime(reg.createdAt);
                   const members = reg.teamMember ?? [];
                   return (
                     <tr key={String(rid)} className="hover:bg-slate-800/40 transition-colors">
@@ -639,12 +804,10 @@ function RegistrationsTab({
                         <p className="text-sm font-semibold text-white">{eventTitle}</p>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                          {dept}
-                        </span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">{dept}</span>
                       </td>
                       <td className="px-4 py-3 text-sm text-slate-300">
-                        {reg.teamName  ?? <span className="text-slate-600 italic">Solo</span>}
+                        {reg.teamName ?? <span className="text-slate-600 italic">Solo</span>}
                       </td>
                       <td className="px-4 py-3">
                         {members.length > 0 ? (
@@ -653,7 +816,7 @@ function RegistrationsTab({
                               <div key={mi} className="flex items-center gap-1.5 text-xs text-slate-300">
                                 <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
                                 <span className="font-medium">{m.name}</span>
-                                {m.mobileNumber && <span className="text-slate-500">· {m.mobileNumber}</span>}
+                                {(m.mobileNumber ?? m.mobile) && <span className="text-slate-500">· {m.mobileNumber ?? m.mobile}</span>}
                                 {m.email && <span className="text-slate-500">· {m.email}</span>}
                               </div>
                             ))}
@@ -662,7 +825,11 @@ function RegistrationsTab({
                           <span className="text-xs text-slate-600">—</span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-xs text-slate-400">{date || "—"}</td>
+                      {/* Date + Time */}
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <p className="text-xs text-slate-300">{date || "—"}</p>
+                        {time && <p className="text-[11px] text-slate-500">{time}</p>}
+                      </td>
                     </tr>
                   );
                 })}
@@ -672,22 +839,23 @@ function RegistrationsTab({
 
           {/* Mobile cards */}
           <div className="md:hidden divide-y divide-slate-800">
-            {registrations.map((reg, i) => {
+            {sorted.map((reg, i) => {
               const rid = reg.id ?? reg._id ?? i;
               const eventTitle = reg.event?.title ?? reg.title ?? "—";
               const dept = reg.event?.department ?? reg.department ?? "—";
-              const { date } = formatDateTime(reg.createdAt);
+              const { date, time } = formatDateTime(reg.createdAt);
               const members = reg.teamMember ?? [];
               return (
                 <div key={String(rid)} className="p-4 bg-slate-900/40 space-y-2">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="text-sm font-semibold text-white">{eventTitle}</p>
-                      <span className="inline-flex items-center mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                        {dept}
-                      </span>
+                      <span className="inline-flex items-center mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">{dept}</span>
                     </div>
-                    <span className="text-xs text-slate-500 shrink-0">{date || "—"}</span>
+                    <div className="text-right shrink-0">
+                      <p className="text-xs text-slate-400">{date || "—"}</p>
+                      {time && <p className="text-[11px] text-slate-500">{time}</p>}
+                    </div>
                   </div>
                   {reg.teamName && (
                     <p className="text-xs text-slate-400">Team: <span className="text-white font-medium">{reg.teamName}</span></p>
@@ -697,7 +865,9 @@ function RegistrationsTab({
                       {members.map((m, mi) => (
                         <div key={mi} className="flex items-center gap-1.5 text-xs text-slate-300">
                           <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
-                          {m.name} {m.email && <span className="text-slate-500">· {m.email}</span>}
+                          {m.name}
+                          {(m.mobileNumber ?? m.mobile) && <span className="text-slate-500">· {m.mobileNumber ?? m.mobile}</span>}
+                          {m.email && <span className="text-slate-500">· {m.email}</span>}
                         </div>
                       ))}
                     </div>
@@ -711,6 +881,20 @@ function RegistrationsTab({
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ─── Shared UI ────────────────────────────────────────────────────────────────
 

@@ -6,11 +6,13 @@ import type { ApiEvent } from "../../../lib/events";
 import { EventCard } from "./EventCard";
 import { Button } from "../button";
 
-const EVENTS_LIMIT = 5;
+const FALLBACK_LIMIT = 6;
+const FEATURED_DEPT = "Centralized Events";
 
 export function HomeEventsSection() {
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isFeatured, setIsFeatured] = useState(true);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -19,8 +21,21 @@ export function HomeEventsSection() {
           method: "GET",
         });
         const data = await response.json();
-        const list = Array.isArray(data) ? data : data.events || [];
-        setEvents(list.slice(0, EVENTS_LIMIT));
+        const list: ApiEvent[] = Array.isArray(data) ? data : data.events || [];
+
+        // Prefer "Centralized Events" department
+        const centralized = list.filter(
+          (e) => (e.department ?? "").trim().toLowerCase() === FEATURED_DEPT.toLowerCase()
+        );
+
+        if (centralized.length > 0) {
+          setEvents(centralized);
+          setIsFeatured(true);
+        } else {
+          // Fallback: any 6 events
+          setEvents(list.slice(0, FALLBACK_LIMIT));
+          setIsFeatured(false);
+        }
       } catch {
         setEvents([]);
       } finally {
@@ -29,6 +44,7 @@ export function HomeEventsSection() {
     };
     fetchEvents();
   }, []);
+
 
   if (loading) {
     return (
@@ -62,11 +78,12 @@ export function HomeEventsSection() {
           className="mb-4 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl"
           style={{ fontFamily: "Eagle Lake" }}
         >
-          FEATURED EVENTS
+          {isFeatured ? "CENTRALIZED EVENTS" : "FEATURED EVENTS"}
         </h2>
         <p className="mx-auto mb-12 max-w-2xl text-center text-slate-400">
-          Explore the highlights of Technova&apos;26. From hackathons to workshops,
-          there&apos;s something for everyone.
+          {isFeatured
+            ? "Flagship events open to all participants — register and be part of the main stage at TechNova\u2019 26."
+            : "Explore the highlights of Technova\u2019 26. From hackathons to workshops, there\u2019 s something for everyone."}
         </p>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

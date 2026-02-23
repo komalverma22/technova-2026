@@ -5,11 +5,11 @@ import { API_URL, apiFetch } from "../../../lib/api";
 import { getAuthToken } from "../../../lib/api";
 import type { ApiEvent } from "../../../lib/events";
 import { getEventImageUrl, formatDateTime } from "../../../lib/events";
+import { useEventMeta } from "../../../lib/useEventMeta";
 import { Button } from "../button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "../card";
@@ -19,6 +19,9 @@ export default function EventDetailPage() {
   const [event, setEvent] = useState<ApiEvent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Dynamic OG / Twitter meta tags + page title for social sharing
+  useEventMeta(event);
 
   useEffect(() => {
     if (!id) {
@@ -87,13 +90,18 @@ export default function EventDetailPage() {
     <div className="relative min-h-svh">
       <div className="mx-auto max-w-4xl px-4 py-12 pb-32 sm:px-6 md:py-16">
         <div className="relative overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-800/40">
-          <div className="relative aspect-[21/9] w-full overflow-hidden sm:aspect-[3/1]">
+
+          {/* Event poster – A4 portrait, full visible, no crop */}
+          <div className="relative w-full overflow-hidden bg-slate-900 flex items-center justify-center">
             <img
               src={imageUrl || "/technova-img1.JPG"}
               alt={event.title}
-              className="h-full w-full object-cover"
+              className="w-full object-contain"
+              style={{ maxHeight: "80vh" }}
+              loading="lazy"
+              decoding="async"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent pointer-events-none" />
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
               <span className="mb-2 inline-block rounded bg-white/20 px-3 py-1 text-sm font-medium backdrop-blur-sm">
                 {event.department}
@@ -172,7 +180,7 @@ export default function EventDetailPage() {
         </div>
       </div>
 
-      {/* Register button - center bottom absolute */}
+      {/* Register button – fixed bottom */}
       <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center px-4 py-4">
         <Button
           variant="white"

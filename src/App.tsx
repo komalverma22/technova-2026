@@ -5,9 +5,10 @@ function App() {
   const [heroImage, setHeroImage] = useState("/hero1.png");
   const [heroIndex, setHeroIndex] = useState(1);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
+    // Cookie check is synchronous — runs before first paint via useEffect
     const hasToken = document.cookie
       .split("; ")
       .some((cookie) => cookie.startsWith("token="));
@@ -56,10 +57,10 @@ function App() {
               Gallery
             </Link>
             <a
-              href="/#events"
+              href="/events"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
-              Event
+              Events
             </a>
             <Link
               to="/getting-here"
@@ -67,13 +68,12 @@ function App() {
             >
               Getting Here
             </Link>
-            <a
-              href="/brochure-technova_compressed.pdf"
-              download="brochure-technova_compressed.pdf"
+            <Link
+              to="/brochure"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
               Brochure
-            </a>
+            </Link>
           
             {/* <a href="#" className="text-slate-900 hover:text-black transition-colors flex items-center gap-2 font-medium">
               <ShoppingBag className="w-[16.2px] h-[16.2px]" />
@@ -82,14 +82,27 @@ function App() {
             </a> */}
           </div>
 
-          <div className="flex items-center gap-3">
-            {isAuthenticated && (
+          <div className="flex items-center gap-2">
+            {/* Render nothing until auth is resolved → no flash */}
+            {isAuthenticated === true && (
               <Link
                 to="/account"
                 className="text-slate-900 hover:text-black transition-colors"
+                title="My Account"
               >
                 <User className="w-5 h-5" />
               </Link>
+            )}
+            {isAuthenticated === false && (
+              <div className="hidden lg:flex items-center gap-2">
+                
+                <Link
+                  to="/signup"
+                  className="rounded-lg bg-slate-900 px-3 py-1.5 text-[13px] font-semibold text-white transition hover:bg-slate-700"
+                >
+                  Sign Up
+                </Link>
+              </div>
             )}
             <div className="flex lg:hidden items-center">
               <button
@@ -109,37 +122,24 @@ function App() {
         {mobileMenuOpen && (
           <div className="lg:hidden mt-2 max-w-3xl mx-auto bg-slate-300/95 backdrop-blur-md rounded-xl px-4 py-4">
             <div className="flex flex-col gap-3 text-sm">
-              <a
-                href="/"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Home
-              </a>
-              <Link
-                to="/gallery"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Gallery
-              </Link>
-              <a
-                href="/#events"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Event
-              </a>
-              <Link
-                to="/getting-here"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Getting Here
-              </Link>
-              <a
-                href="/brochure-technova_compressed.pdf"
-                download="brochure-technova_compressed.pdf"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Brochure
-              </a>
+              <a href="/" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Home</a>
+              <Link to="/gallery" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Gallery</Link>
+              <a href="/events" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Events</a>
+              <Link to="/getting-here" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Getting Here</Link>
+              <Link to="/brochure" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Brochure</Link>
+              {/* Auth links in mobile menu */}
+              {isAuthenticated === true && (
+                <Link to="/account" className="flex items-center gap-2 text-slate-900 hover:text-black transition-colors font-medium py-2">
+                  <User className="w-4 h-4" />
+                  My Account
+                </Link>
+              )}
+              {isAuthenticated === false && (
+                <>
+              
+                  <Link to="/signup" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 text-center">Sign Up</Link>
+                </>
+              )}
             </div>
           </div>
         )}
@@ -151,6 +151,9 @@ function App() {
             src={heroImage}
             alt="Fashion model in blue denim"
             className="w-full h-full object-cover transition-all duration-500"
+            fetchPriority="high"
+            loading="eager"
+            decoding="sync"
           />
         </div>
 
@@ -177,6 +180,8 @@ function App() {
                     src="/hero1.png"
                     alt="Collection preview 1"
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div
@@ -188,6 +193,8 @@ function App() {
                     src="/hero2.png"
                     alt="Collection preview 2"
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div
@@ -199,12 +206,15 @@ function App() {
                     src="/hero3.png"
                     alt="Collection preview 3"
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
             </div>
 
-            {!isAuthenticated && (
+            {/* Hero Log In button — only when auth is confirmed false */}
+            {isAuthenticated === false && (
               <div className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center gap-4 sm:gap-5 md:gap-6">
                 <p className="text-xs sm:text-[13.6px] text-white/90 leading-relaxed text-center px-4">
                   Layer up with confidence and

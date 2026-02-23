@@ -8,6 +8,14 @@
     <meta property="og:image" content="https://bolt.new/static/og_default.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
+
+    <!-- Preload the above-the-fold hero image so LCP fires as early as possible -->
+    <link rel="preload" as="image" href="/hero1.png" fetchpriority="high" />
+
+    <!-- DNS prefetch for the API host — shaves ~50–200 ms off the first API call -->
+    <link rel="dns-prefetch" href="https://technova.indiesoft.cloud" />
+    <link rel="preconnect" href="https://technova.indiesoft.cloud" crossorigin />
+
   </head>
   <body>
     <div id="root"></div>

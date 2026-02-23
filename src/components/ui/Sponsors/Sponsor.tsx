@@ -17,6 +17,8 @@ export const Sponsors = () => (
                 src={logo.src} 
                 alt={logo.alt} 
                 className="h-16 md:h-20 w-auto object-contain brightness-0 invert"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           ))}
@@ -27,6 +29,8 @@ export const Sponsors = () => (
                 src={logo.src} 
                 alt={logo.alt} 
                 className="h-16 md:h-20 w-auto object-contain brightness-0 invert"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           ))}
