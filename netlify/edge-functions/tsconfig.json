@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ES2022",
+        "moduleResolution": "bundler",
+        "lib": [
+            "ES2022",
+            "DOM"
+        ],
+        "strict": true,
+        "noEmit": true,
+        "typeRoots": [
+            "../../node_modules/@types",
+            "../../node_modules"
+        ],
+        "types": [
+            "@netlify/edge-functions"
+        ]
+    },
+    "include": [
+        "./**/*.ts"
+    ]
+}
