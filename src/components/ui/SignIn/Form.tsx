@@ -1,4 +1,5 @@
 import { SignupForm } from "./account";
+import { BackButton } from "../BackButton";
 
 export default function SignupPage() {
   return (
@@ -13,6 +14,9 @@ export default function SignupPage() {
       />
 
       <div className="relative z-10 w-full max-w-2xl">
+        <div className="mb-4">
+          <BackButton fallbackPath="/" />
+        </div>
         {/* Logo / brand */}
         <div className="mb-8 text-center">
           <a href="/" className="inline-block">

@@ -5,6 +5,7 @@ import { getEventId } from "../../../lib/events";
 import { EventCard } from "./EventCard";
 import { FieldDescription, FieldGroup } from "../field";
 import { Card, CardDescription, CardHeader, CardTitle } from "../card";
+import { BackButton } from "../BackButton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type ViewMode = "date" | "department";
@@ -65,6 +66,10 @@ export default function EventsPage() {
     <div className="relative min-h-svh px-3 py-14 sm:px-6 sm:py-20 md:py-24 lg:px-8">
       <div className="mx-auto max-w-6xl">
 
+        <div className="mb-2">
+          <BackButton fallbackPath="/" />
+        </div>
+
         {/* ── Page header ─────────────────────────────────────────────────── */}
         <Card className="mb-6 border-slate-700/50 bg-slate-800/40 sm:mb-8">
           <CardHeader className="px-4 py-5 text-center sm:px-6 sm:py-6">
@@ -86,8 +91,8 @@ export default function EventsPage() {
             <button
               onClick={() => setViewMode("date")}
               className={`flex-1 sm:flex-none rounded-xl px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${viewMode === "date"
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
-                  : "border border-slate-700 bg-slate-800/60 text-slate-400 hover:bg-slate-700 hover:text-white"
+                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
+                : "border border-slate-700 bg-slate-800/60 text-slate-400 hover:bg-slate-700 hover:text-white"
                 }`}
             >
               📅 <span className="hidden xs:inline">Sort by </span>Date &amp; Time
@@ -95,8 +100,8 @@ export default function EventsPage() {
             <button
               onClick={() => setViewMode("department")}
               className={`flex-1 sm:flex-none rounded-xl px-4 py-2.5 text-xs font-semibold transition-all sm:px-6 sm:text-sm ${viewMode === "department"
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
-                  : "border border-slate-700 bg-slate-800/60 text-slate-400 hover:bg-slate-700 hover:text-white"
+                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30"
+                : "border border-slate-700 bg-slate-800/60 text-slate-400 hover:bg-slate-700 hover:text-white"
                 }`}
             >
               🏛 By Department

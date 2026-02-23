@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../card";
+import { BackButton } from "../BackButton";
 import { Button } from "../button";
 import { FieldDescription, FieldGroup } from "../field";
 import { API_URL, apiFetch } from "../../../lib/api";
@@ -113,6 +114,9 @@ export default function AccountPage() {
   return (
     <div className="bg-slate-950 flex min-h-svh flex-col items-center justify-start gap-6 p-6 pt-24 md:p-10 md:pt-28">
       <div className="flex w-full max-w-3xl flex-col gap-6">
+        <div>
+          <BackButton fallbackPath="/" />
+        </div>
         <Card>
           <CardHeader className="flex flex-row items-start justify-between gap-4">
             <div>

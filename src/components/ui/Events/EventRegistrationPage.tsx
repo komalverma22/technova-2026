@@ -14,6 +14,7 @@ import {
 } from "../card";
 import { Field, FieldGroup, FieldLabel } from "../field";
 import { cn } from "../utils/cn";
+import { BackButton } from "../BackButton";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type TeamMember = {
@@ -249,12 +250,9 @@ export default function EventRegistrationPage() {
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 pb-24 sm:px-6 md:py-16">
-      <Link
-        to={`/events/${id}`}
-        className="mb-6 inline-block text-slate-400 hover:text-white text-sm"
-      >
-        ← Back to Event
-      </Link>
+      <div className="mb-4">
+        <BackButton fallbackPath={`/events/${id}`} />
+      </div>
 
       {success ? (
         <Card className="border-green-500/30 bg-green-500/5">

@@ -7,12 +7,8 @@ import type { ApiEvent } from "../../../lib/events";
 import { getEventImageUrl, formatDateTime } from "../../../lib/events";
 import { useEventMeta } from "../../../lib/useEventMeta";
 import { Button } from "../button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../card";
+import { Card, CardContent, CardHeader, CardTitle } from "../card";
+import { BackButton } from "../BackButton";
 
 export default function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -107,6 +103,9 @@ export default function EventDetailPage() {
   return (
     <div className="relative min-h-svh">
       <div className="mx-auto max-w-4xl px-4 py-12 pb-32 sm:px-6 md:py-16">
+        <div className="mb-4">
+          <BackButton fallbackPath="/events" />
+        </div>
         <div className="relative overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-800/40">
 
           {/* Event poster – A4 portrait, full visible, no crop */}
@@ -191,10 +190,7 @@ export default function EventDetailPage() {
           </div>
         </div>
 
-        <div className="mt-8 flex items-center justify-between gap-4 flex-wrap">
-          <Link to="/events" className="text-slate-400 hover:text-white text-sm">
-            ← Back to All Events
-          </Link>
+        <div className="mt-6 flex items-center justify-end gap-4 flex-wrap">
           <button
             onClick={handleShareClick}
             className="flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-800/60 px-4 py-2 text-sm text-slate-300 hover:border-slate-400 hover:text-white transition-all"

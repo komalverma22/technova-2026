@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FiArrowUpRight,
   FiInstagram,
@@ -9,18 +8,27 @@ import {
 import { Link } from "react-router-dom";
 import { ShootingStarsAndStarsBackgroundDemo } from "./ShootingStars";
 
+// ── Dev team – update names & LinkedIn URLs when provided ─────────────────────
+const devTeam: { name: string; linkedin: string }[] = [
+  { name: "Abhishek Saini", linkedin: "https://www.linkedin.com/in/abhisheksaini04/" },
+  { name: "Komal Verma", linkedin: "https://www.linkedin.com/in/komalverma007/" },
+  { name: "Sahil Ninaia", linkedin: "https://www.linkedin.com/in/sahil-ninania-b0b375337" },
+  { name: "Piyush Yadav", linkedin: "https://www.linkedin.com/in/piyush-yadav-0603py/" },
+];
+
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative isolate overflow-hidden bg-gradient-to-b from-[#050608] via-[#050608] to-[#020307] text-white">
       {/* ShootingStars and StarsBackground replacing the radial gradient */}
-     <ShootingStarsAndStarsBackgroundDemo/>
-      
+      <ShootingStarsAndStarsBackgroundDemo />
+
       {/* Optional: Agar thoda original gradient effect bhi rakhna ho */}
-      
+
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-12 py-12 sm:py-14 md:py-16">
-        <div className="grid gap-8 sm:gap-10 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:gap-10 md:gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand Section */}
           <div className="space-y-5 sm:space-y-6">
             <div className="inline-flex items-center gap-3 sm:gap-4 rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 px-4 sm:px-5 py-3 sm:py-4 backdrop-blur">
@@ -35,7 +43,7 @@ const Footer = () => {
             <div className="flex flex-wrap gap-2 sm:gap-3 text-[0.65rem] sm:text-xs uppercase text-white/50" style={{ fontFamily: "Inter, sans-serif" }}>
               <span className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/10 bg-white/5 px-3 sm:px-4 py-1.5 sm:py-2">
                 <FiMapPin className="h-3 w-3 sm:h-4 sm:w-4 text-white/90" />
-                 DCRUST Murthal
+                DCRUST Murthal
               </span>
               <span className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/10 bg-white/5 px-3 sm:px-4 py-1.5 sm:py-2">
                 2026
@@ -52,36 +60,36 @@ const Footer = () => {
               Navigation
             </h3>
             <div className="grid gap-3 text-xs sm:text-sm" style={{ fontFamily: "Inter, sans-serif" }}>
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
               >
                 <span>Home</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </Link>
-              <Link 
-                to="/gallery" 
+              <Link
+                to="/gallery"
                 className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
               >
                 <span>Gallery</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </Link>
-              <a 
-                href="/#events" 
+              <a
+                href="/#events"
                 className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
               >
                 <span>Event</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </a>
-              <Link 
-                to="/getting-here" 
+              <Link
+                to="/getting-here"
                 className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
               >
                 <span>Getting Here</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </Link>
-              <a 
-                href="/brochure-technova_compressed.pdf" 
+              <a
+                href="/brochure-technova_compressed.pdf"
                 download="brochure-technova_compressed.pdf"
                 className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
               >
@@ -110,10 +118,6 @@ const Footer = () => {
               </a>
               <Link to="/account" className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md">
                 <span>Account</span>
-                <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
-              </Link>
-              <Link to="/admin/dashboard" className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md">
-                <span>Admin</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </Link>
             </div>
@@ -158,6 +162,31 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
+          {/* Dev Team */}
+          <div className="space-y-4 sm:space-y-5 sm:col-span-2 lg:col-span-1">
+            <h3
+              className="text-xs sm:text-sm uppercase tracking-[0.18em] sm:tracking-[0.2em] text-white/60 font-semibold"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              Dev Team
+            </h3>
+            <ul className="space-y-3 sm:space-y-4 text-xs sm:text-sm" style={{ fontFamily: "Inter, sans-serif" }}>
+              {devTeam.map((member) => (
+                <li key={member.name}>
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group inline-flex items-center gap-2 text-white/70 transition hover:text-white"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 flex-shrink-0 group-hover:bg-indigo-400 transition" />
+                    {member.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
 
@@ -165,8 +194,19 @@ const Footer = () => {
           <div className="text-center text-white/60">
             <span>© {currentYear} Technova&apos;26 · Deenbandhu Chhotu Ram University of Science & Technology</span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-white/60">
-            <span className="text-[0.65rem] sm:text-xs">Made with <span className="text-red-400">♥</span> by Technova Team</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-white/50">
+            <span className="text-[0.65rem] sm:text-xs">Made with <span className="text-red-400">♥</span> by</span>
+            {devTeam.map((member, i) => (
+              <a
+                key={member.name}
+                href={member.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="text-[0.65rem] sm:text-xs text-indigo-300 hover:text-indigo-200 transition underline underline-offset-2"
+              >
+                {member.name}{i < devTeam.length - 1 ? "," : ""}
+              </a>
+            ))}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Footer from "../Footer/Footer";
+import { BackButton } from "../BackButton";
 
 const galleryImages = [
   { id: 1, src: "/technova-img1.JPG", alt: "Technova Gallery 1" },
@@ -36,6 +37,9 @@ export default function GalleryPage() {
       {/* Heading */}
       <div className="flex justify-center items-center w-full mb-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="mb-4">
+            <BackButton fallbackPath="/" />
+          </div>
           <h1
             className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center tracking-tight leading-tight"
             style={{ fontFamily: "Eagle Lake" }}
