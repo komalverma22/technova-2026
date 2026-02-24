@@ -78,7 +78,7 @@ const DEPARTMENT_EVENTS: { department: string; events: string[] }[] = [
     events: ["Idea-Thon", "Agri-Technictionary", "Seed Sorting Race"]
   },
   {
-    department: "LISOCI Literary Society",
+    department: "LISOC-Literary Society",
     events: ["Student of the Year", "BPD (British Parliamentary Debate)"]
   },
   {
