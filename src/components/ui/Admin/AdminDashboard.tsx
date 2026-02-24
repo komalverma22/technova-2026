@@ -39,6 +39,10 @@ type User = {
   email?: string;
   mobile?: string;
   mobileNumber?: string;
+  rollNo?: string;
+  branch?: string;
+  college?: string;
+  semester?: number | string;
   createdAt?: string;
 };
 
@@ -215,8 +219,8 @@ export default function AdminDashboard() {
                   key={id}
                   onClick={() => setTab(id)}
                   className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-all ${tab === id
-                      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800"
+                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800"
                     }`}
                 >
                   {icon}
@@ -224,8 +228,8 @@ export default function AdminDashboard() {
                   {count > 0 && (
                     <span
                       className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === id
-                          ? "bg-white/20 text-white"
-                          : "bg-slate-700 text-slate-300"
+                        ? "bg-white/20 text-white"
+                        : "bg-slate-700 text-slate-300"
                         }`}
                     >
                       {count}
@@ -518,13 +522,13 @@ function UsersTab({
 
       {!loading && !error && users.length > 0 && (
         <div className="rounded-2xl border border-slate-800 overflow-hidden">
-          {/* Desktop */}
+          {/* ── Desktop table ── */}
           <div className="hidden md:block overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-800">
               <thead className="bg-slate-900">
                 <tr>
-                  {["#", "Name", "Email", "Joined"].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  {["#", "Name", "Roll No.", "Email", "Mobile", "Branch", "College", "Sem", "Joined"].map((h) => (
+                    <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider whitespace-nowrap">
                       {h}
                     </th>
                   ))}
@@ -534,6 +538,7 @@ function UsersTab({
                 {users.map((user, i) => {
                   const uid = user.id ?? user._id ?? i;
                   const { date } = formatDateTime(user.createdAt);
+                  const phone = user.mobileNumber ?? user.mobile;
                   return (
                     <tr key={String(uid)} className="hover:bg-slate-800/40 transition-colors">
                       <td className="px-4 py-3 text-sm text-slate-500">{i + 1}</td>
@@ -542,22 +547,21 @@ function UsersTab({
                           <div className="w-8 h-8 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-xs font-bold shrink-0">
                             {(user.name ?? "?")[0].toUpperCase()}
                           </div>
-                          <span className="text-sm font-medium text-white">{user.name ?? "—"}</span>
+                          <span className="text-sm font-medium text-white whitespace-nowrap">{user.name ?? "—"}</span>
                         </div>
                       </td>
+                      <td className="px-4 py-3 text-sm text-slate-300 whitespace-nowrap">{user.rollNo ?? "—"}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1.5 text-sm text-slate-300">
                           <Mail className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                           {user.email ?? "—"}
                         </div>
                       </td>
-                      {/* <td className="px-4 py-3">
-                        <div className="flex items-center gap-1.5 text-sm text-slate-300">
-                          <Phone className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                          {user.mobileNumber ?? user.mobile ?? "—"}
-                        </div>
-                      </td> */}
-                      <td className="px-4 py-3 text-xs text-slate-400">{date || "—"}</td>
+                      <td className="px-4 py-3 text-sm text-slate-300 whitespace-nowrap">{phone ?? "—"}</td>
+                      <td className="px-4 py-3 text-sm text-slate-300 whitespace-nowrap">{user.branch ?? "—"}</td>
+                      <td className="px-4 py-3 text-sm text-slate-300 max-w-[180px] truncate">{user.college ?? "—"}</td>
+                      <td className="px-4 py-3 text-sm text-slate-300 text-center">{user.semester ?? "—"}</td>
+                      <td className="px-4 py-3 text-xs text-slate-400 whitespace-nowrap">{date || "—"}</td>
                     </tr>
                   );
                 })}
@@ -565,19 +569,42 @@ function UsersTab({
             </table>
           </div>
 
-          {/* Mobile cards */}
+          {/* ── Mobile cards ── */}
           <div className="md:hidden divide-y divide-slate-800">
             {users.map((user, i) => {
               const uid = user.id ?? user._id ?? i;
+              const phone = user.mobileNumber ?? user.mobile;
+              const { date } = formatDateTime(user.createdAt);
               return (
-                <div key={String(uid)} className="p-4 bg-slate-900/40 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-sm font-bold shrink-0">
-                    {(user.name ?? "?")[0].toUpperCase()}
+                <div key={String(uid)} className="p-4 bg-slate-900/40 space-y-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-sm font-bold shrink-0">
+                      {(user.name ?? "?")[0].toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">{user.name ?? "—"}</p>
+                      <p className="text-xs text-slate-400 truncate">{user.email ?? "—"}</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-white">{user.name ?? "—"}</p>
-                    <p className="text-xs text-slate-400 truncate">{user.email ?? "—"}</p>
-                    {/* <p className="text-xs text-slate-500">{user.mobileNumber ?? user.mobile ?? ""}</p> */}
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 pl-1 text-xs">
+                    {user.rollNo && (
+                      <span className="text-slate-400">Roll No: <span className="text-slate-200">{user.rollNo}</span></span>
+                    )}
+                    {phone && (
+                      <span className="text-slate-400">Mobile: <span className="text-slate-200">{phone}</span></span>
+                    )}
+                    {user.branch && (
+                      <span className="text-slate-400">Branch: <span className="text-slate-200">{user.branch}</span></span>
+                    )}
+                    {user.semester != null && (
+                      <span className="text-slate-400">Sem: <span className="text-slate-200">{user.semester}</span></span>
+                    )}
+                    {user.college && (
+                      <span className="col-span-2 text-slate-400">College: <span className="text-slate-200">{user.college}</span></span>
+                    )}
+                    {date && (
+                      <span className="col-span-2 text-slate-500">Joined: {date}</span>
+                    )}
                   </div>
                 </div>
               );

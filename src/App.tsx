@@ -139,6 +139,12 @@ function App() {
             >
               Brochure
             </Link>
+            <Link
+              to="/contact"
+              className="text-slate-900 hover:text-black transition-colors font-medium"
+            >
+              Contact
+            </Link>
 
             {/* <a href="#" className="text-slate-900 hover:text-black transition-colors flex items-center gap-2 font-medium">
               <ShoppingBag className="w-[16.2px] h-[16.2px]" />
@@ -192,6 +198,7 @@ function App() {
               <a href="/events" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Events</a>
               <Link to="/getting-here" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Getting Here</Link>
               <Link to="/brochure" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Brochure</Link>
+              <Link to="/contact" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Contact</Link>
               {/* Auth links in mobile menu */}
               {isAuthenticated === true && (
                 <Link to="/account" className="flex items-center gap-2 text-slate-900 hover:text-black transition-colors font-medium py-2">

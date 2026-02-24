@@ -22,18 +22,19 @@ import AdminDashboard from './components/ui/Admin/AdminDashboard.tsx';
 import AdminEventsPage from './components/ui/Admin/AdminEventsPage.tsx';
 import AdminGuard from './components/ui/Admin/AdminGuard.tsx';
 import BrochurePage from './components/ui/Brochure/BrochurePage.tsx';
+import ContactPage from './components/ui/Contact/ContactPage.tsx';
 
 // Home page component banao
 function HomePage() {
   return (
     <>
       <App />
-      <AboutUs/>
+      <AboutUs />
       {/* <Example/> */}
-      <HomeEventsSection/>
+      <HomeEventsSection />
       {/* <Sponsors/> */}
-      <Faq/>
-      <Footer/>
+      <Faq />
+      <Footer />
     </>
   );
 }
@@ -44,9 +45,9 @@ createRoot(document.getElementById('root')!).render(
       <div className="relative min-h-screen">
         {/* Background - fixed */}
         <div className="fixed inset-0 z-0">
-          <FloatingLines/>
+          <FloatingLines />
         </div>
-        
+
         {/* Routes - on top */}
         <div className="relative z-10">
           <Routes>
@@ -62,6 +63,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/admin/dashboard" element={<AdminGuard><AdminDashboard /></AdminGuard>} />
             <Route path="/admin/dashboard/events" element={<AdminGuard><AdminEventsPage /></AdminGuard>} />
             <Route path="/brochure" element={<BrochurePage />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </div>
       </div>

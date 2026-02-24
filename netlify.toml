@@ -1,23 +1,33 @@
 [build]
-  command   = "npm run build"
-  publish   = "dist"
+  command = "npm run build"
+  publish = "dist"
 
-# ── Edge Functions ────────────────────────────────────────────────────────────
-# Injects dynamic OG meta tags for /events/:id so social crawlers
-# (WhatsApp, Facebook, Twitter) see event-specific previews.
+# ── Edge Functions ─────────────────────────────────────────────────────────────
+# og-meta intercepts GET requests for known social crawlers and injects
+# dynamic Open Graph + Twitter Card meta tags so previews work on
+# WhatsApp, Facebook, Twitter/X, LinkedIn, Discord, etc.
+#
+# Normal users are passed through untouched (no SSR, no hydration changes).
+
+# Home page
+[[edge_functions]]
+  function = "og-meta"
+  path     = "/"
+
+# Every event detail / registration page
 [[edge_functions]]
   function = "og-meta"
   path     = "/events/*"
 
-# ── SPA Fallback ─────────────────────────────────────────────────────────────
-# All routes not matched by a static file serve index.html so React Router
-# can handle client-side navigation.
+# ── SPA Fallback ───────────────────────────────────────────────────────────────
+# All routes not matched by a static file fall back to index.html so
+# React Router can handle client-side navigation.
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
   status = 200
 
-# ── Response Headers ─────────────────────────────────────────────────────────
+# ── Response Headers ───────────────────────────────────────────────────────────
 # Disable byte-range requests on HTML to prevent HTTP 206 responses
 # that confuse WhatsApp / Facebook crawlers.
 [[headers]]

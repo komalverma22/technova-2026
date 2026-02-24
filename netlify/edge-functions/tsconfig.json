@@ -9,13 +9,7 @@
         ],
         "strict": true,
         "noEmit": true,
-        "typeRoots": [
-            "../../node_modules/@types",
-            "../../node_modules"
-        ],
-        "types": [
-            "@netlify/edge-functions"
-        ]
+        "skipLibCheck": true
     },
     "include": [
         "./**/*.ts"

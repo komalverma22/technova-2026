@@ -12,7 +12,7 @@ import { ShootingStarsAndStarsBackgroundDemo } from "./ShootingStars";
 const devTeam: { name: string; linkedin: string }[] = [
   { name: "Abhishek Saini", linkedin: "https://www.linkedin.com/in/abhisheksaini04/" },
   { name: "Komal Verma", linkedin: "https://www.linkedin.com/in/komalverma007/" },
-  { name: "Sahil Ninaia", linkedin: "https://www.linkedin.com/in/sahil-ninania-b0b375337" },
+  { name: "Sahil Ninania", linkedin: "https://www.linkedin.com/in/sahil-ninania-b0b375337" },
   { name: "Piyush Yadav", linkedin: "https://www.linkedin.com/in/piyush-yadav-0603py/" },
 ];
 
@@ -46,7 +46,7 @@ const Footer = () => {
                 DCRUST Murthal
               </span>
               <span className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/10 bg-white/5 px-3 sm:px-4 py-1.5 sm:py-2">
-                2026
+                13-14 March 2026
               </span>
             </div>
           </div>
@@ -75,7 +75,7 @@ const Footer = () => {
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </Link>
               <a
-                href="/#events"
+                href="/events"
                 className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
               >
                 <span>Event</span>
@@ -96,6 +96,13 @@ const Footer = () => {
                 <span>Brochure</span>
                 <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
               </a>
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-white/80 transition hover:text-white hover:bg-white/10 hover:backdrop-blur-md"
+              >
+                <span>Contact</span>
+                <FiArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 opacity-0 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
+              </Link>
             </div>
           </div>
 
@@ -138,7 +145,7 @@ const Footer = () => {
                   technova@dcrustm.org
                 </a>
               </li>
-              <li className="flex items-start gap-2 sm:gap-3">
+              {/* <li className="flex items-start gap-2 sm:gap-3">
                 <FiInstagram className="mt-0.5 sm:mt-1 h-4 w-4 sm:h-5 sm:w-5 text-white/90 flex-shrink-0" />
                 <a
                   href="https://instagram.com/technova_dcrust"
@@ -148,7 +155,7 @@ const Footer = () => {
                 >
                   @technova_dcrust
                 </a>
-              </li>
+              </li> */}
               <li className="flex items-start gap-2 sm:gap-3">
                 <FiGlobe className="mt-0.5 sm:mt-1 h-4 w-4 sm:h-5 sm:w-5 text-white/90 flex-shrink-0" />
                 <a

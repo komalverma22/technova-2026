@@ -1,27 +1,73 @@
 /**
- * Netlify Edge Function — og-meta
+ * Netlify Edge Function — og-meta  (v2)
  *
- * Intercepts GET requests to /events/:id and injects event-specific
- * Open Graph + Twitter meta tags into the HTML response so that
- * WhatsApp / Facebook / Twitter crawlers (which don't execute JS)
- * get the correct social preview.
+ * Intercepts GET requests to:
+ *   /          → static home-page OG tags
+ *   /events/*  → dynamic event-specific OG tags (fetched from API)
  *
- * Runs on Deno (Netlify Edge Runtime) — no Node.js APIs available.
+ * ONLY modifies the response for known social-crawler user-agents.
+ * Regular users receive the untouched SPA HTML.
+ *
+ * Runtime: Deno (Netlify Edge Runtime) — no Node.js APIs.
+ * Type: Context is inlined below to avoid needing @netlify/edge-functions package.
  */
 
-import type { Context } from "@netlify/edge-functions";
+// ── Inline type so we don't need @netlify/edge-functions installed ─────────────
+interface Context {
+  next(opts?: { sendConditionalRequest?: boolean }): Promise<Response>;
+  ip: string;
+  geo: Record<string, unknown>;
+  site: { id: string; name: string; url: string };
+  deploy: { id: string; context: string; published: boolean };
+  account: { id: string };
+  cookies: { get(name: string): string | undefined; set(name: string, value: string): void };
+  params: Record<string, string>;
+  rewrite(url: string | URL): Promise<Response>;
+  redirect(url: string | URL, status?: number): Response;
+  json(data: unknown, init?: ResponseInit): Response;
+  log(...args: unknown[]): void;
+}
 
-// ── Constants ─────────────────────────────────────────────────────────────────
+// ── Constants ──────────────────────────────────────────────────────────────────
 const API_BASE  = "https://technova.indiesoft.cloud";
 const SITE_URL  = "https://technova26.netlify.app";
 const SITE_NAME = "TechNova'26";
 
 const DEFAULT_IMAGE = `${SITE_URL}/hero1.png`;
-const DEFAULT_TITLE = "TechNova'26 — Annual Technical fest";
+const DEFAULT_TITLE = "TechNova'26 — Annual Technical Fest";
 const DEFAULT_DESC  =
-  "TechNova 2026 — The premier annual Technical fest. Explore events, register your team, and celebrate innovation.";
+  "TechNova 2026 — The premier annual Technical Fest at DCRUST Murthal. Explore events, register your team, and celebrate innovation.";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// ── Crawler user-agent detection ───────────────────────────────────────────────
+const CRAWLER_PATTERNS = [
+  /facebookexternalhit/i,
+  /facebot/i,
+  /twitterbot/i,
+  /whatsapp/i,
+  /linkedinbot/i,
+  /discordbot/i,
+  /telegrambot/i,
+  /slackbot/i,
+  /pinterest/i,
+  /applebot/i,
+  /googlebot/i,
+  /bingbot/i,
+  /rogerbot/i,
+  /embedly/i,
+  /quora\s*link\s*preview/i,
+  /outbrain/i,
+  /screaming\s*frog/i,
+  /skypeuripreview/i,
+  /iframely/i,
+  /vkshare/i,
+];
+
+function isCrawler(userAgent: string): boolean {
+  if (!userAgent) return false;
+  return CRAWLER_PATTERNS.some((re) => re.test(userAgent));
+}
+
+// ── Type for API event ─────────────────────────────────────────────────────────
 interface ApiEvent {
   id?          : number | string;
   _id?         : number | string;
@@ -31,16 +77,14 @@ interface ApiEvent {
   department?  : string;
   date?        : string;
   venue?       : string;
-  rules?       : string;
   minTeamSize? : number;
   maxTeamSize? : number;
-  /** API occasionally sends this typo */
+  /** API typo variant */
   maxTeaSize?  : number;
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────────────────────
 
-/** Resolve image URL — supports full URLs and API-relative paths */
 function resolveImageUrl(imagePath: string | undefined): string {
   if (!imagePath) return DEFAULT_IMAGE;
   if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
@@ -49,13 +93,11 @@ function resolveImageUrl(imagePath: string | undefined): string {
   return `${API_BASE}/${imagePath.replace(/^\//, "")}`;
 }
 
-/** Truncate text to max characters */
 function truncate(text: string | undefined, max = 200): string {
   if (!text) return "";
   return text.length > max ? text.slice(0, max).trimEnd() + "…" : text;
 }
 
-/** Format an ISO date string to human-readable form (Deno-safe, no locale) */
 function formatDate(dateStr: string | undefined): string {
   if (!dateStr) return "";
   try {
@@ -73,26 +115,16 @@ function formatDate(dateStr: string | undefined): string {
   }
 }
 
-/**
- * Build a rich OG description from all available event fields.
- * Social crawlers show only the first ~300 chars, so put the most
- * important info first.
- */
-function buildDescription(event: ApiEvent): string {
+function buildEventDescription(event: ApiEvent): string {
   const parts: string[] = [];
-
-  // 1. Event description (primary text, up to 160 chars)
   if (event.description) {
     parts.push(truncate(event.description, 160));
   }
-
-  // 2. Key details line  e.g.  "🏛 CSE  |  📅 12 Mar 2026, 10:00 UTC  |  📍 Main Auditorium"
   const details: string[] = [];
   if (event.department) details.push(`🏛 ${event.department}`);
   const dateStr = formatDate(event.date);
-  if (dateStr)          details.push(`📅 ${dateStr}`);
-  if (event.venue)      details.push(`📍 ${event.venue}`);
-
+  if (dateStr)         details.push(`📅 ${dateStr}`);
+  if (event.venue)     details.push(`📍 ${event.venue}`);
   const maxTeam = event.maxTeamSize ?? event.maxTeaSize;
   if (event.minTeamSize != null && maxTeam != null) {
     if (event.minTeamSize === maxTeam) {
@@ -101,14 +133,11 @@ function buildDescription(event: ApiEvent): string {
       details.push(`👥 ${event.minTeamSize}–${maxTeam} members`);
     }
   }
-
   if (details.length) parts.push(details.join("  |  "));
-
-  const result = parts.join("\n");
-  return result || DEFAULT_DESC;
+  return parts.join("\n") || DEFAULT_DESC;
 }
 
-/** Escape HTML special characters for safe injection into attributes */
+/** Escape HTML special chars for safe injection into attribute values */
 function esc(str: string): string {
   return str
     .replace(/&/g,  "&amp;")
@@ -117,55 +146,82 @@ function esc(str: string): string {
     .replace(/>/g,  "&gt;");
 }
 
-/** Build the full block of <meta> tags to inject */
-function buildMetaTags(event: ApiEvent, pageUrl: string): string {
-  const hasEvent   = Boolean(event.title);
-  const title      = hasEvent ? `${event.title} — ${SITE_NAME}` : DEFAULT_TITLE;
-  const description = hasEvent ? buildDescription(event) : DEFAULT_DESC;
-  const image      = resolveImageUrl(event.imagePath);
-  const imageAlt   = hasEvent ? `${event.title} — event poster` : SITE_NAME;
-
-  // Event images are A4 portrait posters; fall back to landscape OG dimensions
-  // when using the default hero image.
-  const isPortrait = Boolean(event.imagePath);
-  const imgWidth   = isPortrait ? "794"  : "1200";
-  const imgHeight  = isPortrait ? "1123" : "630";
-
-  return `
-  <!-- Dynamic OG injected by Netlify Edge Function -->
-  <meta property="og:type"         content="website" />
-  <meta property="og:site_name"    content="${esc(SITE_NAME)}" />
-  <meta property="og:title"        content="${esc(title)}" />
-  <meta property="og:description"  content="${esc(description)}" />
-  <meta property="og:image"        content="${esc(image)}" />
-  <meta property="og:image:width"  content="${imgWidth}" />
-  <meta property="og:image:height" content="${imgHeight}" />
-  <meta property="og:image:alt"    content="${esc(imageAlt)}" />
-  <meta property="og:url"          content="${esc(pageUrl)}" />
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="${esc(title)}" />
-  <meta name="twitter:description" content="${esc(description)}" />
-  <meta name="twitter:image"       content="${esc(image)}" />
-  <meta name="twitter:image:alt"   content="${esc(imageAlt)}" />`;
+interface OgData {
+  title      : string;
+  description: string;
+  image      : string;
+  imageAlt   : string;
+  imageWidth : string;
+  imageHeight: string;
+  url        : string;
 }
 
-// ── Handler ───────────────────────────────────────────────────────────────────
-export default async function handler(req: Request, context: Context) {
+function buildMetaBlock(og: OgData): string {
+  return `
+  <!-- OG injected by Netlify Edge Function (og-meta v2) -->
+  <meta property="og:type"         content="website" />
+  <meta property="og:site_name"    content="${esc(SITE_NAME)}" />
+  <meta property="og:title"        content="${esc(og.title)}" />
+  <meta property="og:description"  content="${esc(og.description)}" />
+  <meta property="og:image"        content="${esc(og.image)}" />
+  <meta property="og:image:width"  content="${og.imageWidth}" />
+  <meta property="og:image:height" content="${og.imageHeight}" />
+  <meta property="og:image:alt"    content="${esc(og.imageAlt)}" />
+  <meta property="og:url"          content="${esc(og.url)}" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="${esc(og.title)}" />
+  <meta name="twitter:description" content="${esc(og.description)}" />
+  <meta name="twitter:image"       content="${esc(og.image)}" />
+  <meta name="twitter:image:alt"   content="${esc(og.imageAlt)}" />`;
+}
+
+/**
+ * Strip any existing static OG / Twitter / injected tags from the HTML
+ * to prevent duplicate meta when we inject our own.
+ */
+function stripExistingMeta(html: string): string {
+  return html
+    // Remove all <meta property="og:..."> tags (self-closing variants)
+    .replace(/<meta\s+property="og:[^"]*"[^>]*\/?>/gi, "")
+    // Remove all <meta name="twitter:..."> tags
+    .replace(/<meta\s+name="twitter:[^"]*"[^>]*\/?>/gi, "")
+    // Remove our own injected comment markers
+    .replace(/<!--\s*OG injected by Netlify Edge Function[^>]*-->/gi, "")
+    // Remove old comment marker format
+    .replace(/<!--\s*Dynamic OG injected[^>]*-->/gi, "");
+}
+
+// ── Main handler ───────────────────────────────────────────────────────────────
+export default async function handler(req: Request, context: Context): Promise<Response> {
   const url = new URL(req.url);
+  const ua  = req.headers.get("user-agent") ?? "";
 
-  // Extract event id from /events/:id  (and optional sub-paths like /register)
-  const match   = url.pathname.match(/^\/events\/([^/]+)/);
-  const eventId = match?.[1];
-
-  if (!eventId) {
-    // No id — let Netlify serve the normal SPA fallback
+  // ── Gate: only do expensive work for crawlers ──────────────────────────────
+  // Normal browsers get the unmodified SPA immediately.
+  if (!isCrawler(ua)) {
     return context.next();
   }
 
-  // ── 1. Fetch the original HTML from Netlify (the built index.html) ─────────
+  // Only process GET requests
+  if (req.method !== "GET") {
+    return context.next();
+  }
+
+  const pathname = url.pathname;
+
+  // ── Determine page type ────────────────────────────────────────────────────
+  const isHome     = pathname === "/" || pathname === "";
+  const eventMatch = pathname.match(/^\/events\/([^/]+)/);
+  const eventId    = eventMatch?.[1];
+
+  if (!isHome && !eventId) {
+    // Not a page we handle — pass through
+    return context.next();
+  }
+
+  // ── Fetch the raw SPA HTML from Netlify ────────────────────────────────────
   const htmlResponse = await context.next();
 
-  // Only rewrite successful HTML responses
   const contentType = htmlResponse.headers.get("content-type") ?? "";
   if (!htmlResponse.ok || !contentType.includes("text/html")) {
     return htmlResponse;
@@ -173,39 +229,76 @@ export default async function handler(req: Request, context: Context) {
 
   let html = await htmlResponse.text();
 
-  // ── 2. Fetch event data from the API ────────────────────────────────────────
-  let event: ApiEvent = {};
-  try {
-    const apiRes = await fetch(`${API_BASE}/api/events/${eventId}`, {
-      headers: { Accept: "application/json" },
-      // 3-second timeout so a slow API doesn't delay crawlers
-      signal: AbortSignal.timeout(3000),
-    });
-    if (apiRes.ok) {
-      event = (await apiRes.json()) as ApiEvent;
+  // ── Build OG data ──────────────────────────────────────────────────────────
+  let og: OgData;
+
+  if (isHome) {
+    og = {
+      title      : DEFAULT_TITLE,
+      description: DEFAULT_DESC,
+      image      : DEFAULT_IMAGE,
+      imageAlt   : SITE_NAME,
+      imageWidth : "1200",
+      imageHeight: "630",
+      url        : `${SITE_URL}/`,
+    };
+  } else {
+    // Fetch event data from API (3-second timeout so crawlers aren't held up)
+    let event: ApiEvent = {};
+    try {
+      const apiRes = await fetch(`${API_BASE}/api/events/${eventId}`, {
+        headers: { Accept: "application/json" },
+        signal : AbortSignal.timeout(3000),
+      });
+      if (apiRes.ok) {
+        event = (await apiRes.json()) as ApiEvent;
+      }
+    } catch {
+      // API unreachable → fall back to site defaults
     }
-  } catch {
-    // API unreachable — fall back to the default OG tags already in index.html
+
+    const hasEvent = Boolean(event.title);
+    if (hasEvent) {
+      const isPortrait = Boolean(event.imagePath); // event posters are portrait
+      og = {
+        title      : `${event.title} — ${SITE_NAME}`,
+        description: buildEventDescription(event),
+        image      : resolveImageUrl(event.imagePath),
+        imageAlt   : `${event.title} — event poster`,
+        imageWidth : isPortrait ? "794"  : "1200",
+        imageHeight: isPortrait ? "1123" : "630",
+        url        : `${SITE_URL}${pathname}`,
+      };
+    } else {
+      // Event not found → use site defaults
+      og = {
+        title      : DEFAULT_TITLE,
+        description: DEFAULT_DESC,
+        image      : DEFAULT_IMAGE,
+        imageAlt   : SITE_NAME,
+        imageWidth : "1200",
+        imageHeight: "630",
+        url        : `${SITE_URL}${pathname}`,
+      };
+    }
   }
 
-  // ── 3. Remove any existing OG / Twitter tags baked into index.html ──────────
-  // Prevents duplicate meta tags in the final HTML.
-  html = html
-    .replace(/<meta\s+property="og:[^"]*"[^>]*\/>/gi, "")
-    .replace(/<meta\s+name="twitter:[^"]*"[^>]*\/>/gi, "")
-    .replace(/<!--\s*Dynamic OG injected[^>]*-->/gi, "");
+  // ── Inject meta tags ───────────────────────────────────────────────────────
+  // 1. Strip any static OG tags baked into index.html to prevent duplication
+  html = stripExistingMeta(html);
 
-  // ── 4. Inject event-specific OG tags just before </head> ────────────────────
-  const pageUrl  = `${SITE_URL}${url.pathname}`;
-  const metaTags = buildMetaTags(event, pageUrl);
-  html = html.replace("</head>", `${metaTags}\n  </head>`);
+  // 2. Inject just before </head>
+  const metaBlock = buildMetaBlock(og);
+  html = html.replace("</head>", `${metaBlock}\n  </head>`);
 
+  // ── Return the rewritten HTML ──────────────────────────────────────────────
   return new Response(html, {
-    status: 200, // Always 200 — fixes the 206 partial-content issue
+    status : 200,          // Always 200 — prevents HTTP 206 partial-content
     headers: {
       "content-type"  : "text/html;charset=UTF-8",
-      "accept-ranges" : "none",   // Prevent byte-range requests → no 206
+      "accept-ranges" : "none",  // Prevent byte-range → no 206
       "cache-control" : "public, max-age=300, stale-while-revalidate=60",
+      "x-robots-tag"  : "all",
     },
   });
 }

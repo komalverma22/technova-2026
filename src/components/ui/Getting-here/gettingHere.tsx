@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
 import { Car, Train, Bus, Plane, MapPin, Navigation, Route, ArrowUpRight } from "lucide-react";
-import { Menu, User, X } from "lucide-react";
-import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
+import { BackButton } from "../BackButton";
 
 const ACCENT = "#3B82F6";
 const ACCENT_RGB = "59,130,246";
@@ -92,126 +90,8 @@ const mapSrc =
   "https://maps.google.com/maps?q=DCRUST%20Murthal%20University&t=&z=14&ie=UTF8&iwloc=&output=embed";
 
 export default function GettingHerePage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const hasToken = document.cookie
-      .split("; ")
-      .some((cookie) => cookie.startsWith("token="));
-    setIsAuthenticated(hasToken);
-  }, []);
-
   return (
     <>
-        <nav className="fixed top-[42px] sm:top-[50.4px] left-0 right-0 z-40 px-3 sm:px-4 md:px-6">
-        <div className="max-w-3xl mx-auto bg-slate-300/95 backdrop-blur-md rounded-xl sm:rounded-2xl px-4 sm:px-[28.8px] py-3 sm:py-[14.4px] flex items-center justify-between">
-          <div className="text-lg sm:text-[21.6px] font-bold text-slate-900 tracking-tight">
-            TÉCHNOVA
-          </div>
-
-          <div className="hidden lg:flex items-center gap-4 xl:gap-[25.2px] text-[13.5px] ml-auto">
-            <a
-              href="/"
-              className="text-slate-900 hover:text-black transition-colors font-medium"
-            >
-              Home
-            </a>
-            <Link
-              to="/gallery"
-              className="text-slate-900 hover:text-black transition-colors font-medium"
-            >
-              Gallery
-            </Link>
-            <a
-              href="/#events"
-              className="text-slate-900 hover:text-black transition-colors font-medium"
-            >
-              Event
-            </a>
-            <Link
-              to="/getting-here"
-              className="text-slate-900 hover:text-black transition-colors font-medium"
-            >
-              Getting Here
-            </Link>
-            <a
-              href="/brochure-technova_compressed.pdf"
-              download="brochure-technova_compressed.pdf"
-              className="text-slate-900 hover:text-black transition-colors font-medium"
-            >
-              Brochure
-            </a>
-          
-            {/* <a href="#" className="text-slate-900 hover:text-black transition-colors flex items-center gap-2 font-medium">
-              <ShoppingBag className="w-[16.2px] h-[16.2px]" />
-              Bag
-              <span className="flex items-center justify-center w-[21.6px] h-[21.6px] rounded-full border border-slate-900 text-[12.6px] font-medium">0</span>
-            </a> */}
-          </div>
-
-          <div className="flex items-center gap-3">
-            {isAuthenticated && (
-              <Link
-                to="/account"
-                className="text-slate-900 hover:text-black transition-colors"
-              >
-                <User className="w-5 h-5" />
-              </Link>
-            )}
-            <div className="flex lg:hidden items-center">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-slate-900 hover:text-black transition-colors"
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {mobileMenuOpen && (
-          <div className="lg:hidden mt-2 max-w-3xl mx-auto bg-slate-300/95 backdrop-blur-md rounded-xl px-4 py-4">
-            <div className="flex flex-col gap-3 text-sm">
-              <a
-                href="/"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Home
-              </a>
-              <Link
-                to="/gallery"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Gallery
-              </Link>
-              <a
-                href="/#events"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Event
-              </a>
-              <Link
-                to="/getting-here"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Getting Here
-              </Link>
-              <a
-                href="/brochure-technova_compressed.pdf"
-                download="brochure-technova_compressed.pdf"
-                className="text-slate-900 hover:text-black transition-colors font-medium py-2"
-              >
-                Brochure
-              </a>
-            </div>
-          </div>
-        )}
-      </nav>
       <main className="relative min-h-screen w-full overflow-hidden bg-[#0b0b0b] text-white">
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -230,9 +110,9 @@ export default function GettingHerePage() {
             style={{ background: "radial-gradient(circle, rgba(192, 132, 252, 0.18), transparent 60%)" }}
           />
         </div>
-        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-24 pt-36 md:px-10 lg:pt-44">
+        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-24 pt-24 md:px-10 md:pt-28">
           <header className="space-y-6 text-center">
-       
+
             {/* <span
               className="text-xs uppercase text-white/50"
               style={{ fontFamily: "var(--font-inter)" }}
@@ -252,15 +132,8 @@ export default function GettingHerePage() {
               A streamlined travel console for Rhythm'25. Lock in your route, drop a pin on campus, and glide into the arena with neon precision.
             </p> */}
             <div className="flex flex-wrap justify-center gap-4 pt-2">
+              <BackButton fallbackPath="/" />
               {/* ✅ Replaced next/link <Link> with standard <a> */}
-              <a
-                href="/"
-                className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold uppercase text-white transition hover:border-white/25 hover:bg-white/10"
-                style={{ fontFamily: "var(--font-inter)" }}
-              >
-                Back to home
-                <ArrowUpRight className="h-4 w-4" style={{ color: ACCENT }} />
-              </a>
               <a
                 href="https://maps.google.com/maps?q=DCRUST%20Murthal%20University&t=&z=14&ie=UTF8&iwloc"
                 target="_blank"
@@ -427,73 +300,10 @@ export default function GettingHerePage() {
             </div>
           </section>
 
-          <section className="mt-20 rounded-3xl border border-white/10 bg-[#111113]/90 p-8 shadow-[0_32px_70px_rgba(0,0,0,0.45)] lg:p-12">
-            <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="space-y-5">
-                <h2
-                  className="text-xl uppercase text-white"
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  On-arrival Rhythm
-                </h2>
-                <p
-                  className="text-sm text-white/70"
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  Three quick beats between stepping onto campus and stepping into the arena.
-                </p>
-                <ul className="space-y-4">
-                  {arrivalChecklist.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-sm text-white/75"
-                      style={{ fontFamily: "var(--font-inter)" }}
-                    >
-                      <span
-                        className="mt-1 h-2 w-2 rounded-full"
-                        style={{ background: ACCENT }}
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-3xl border border-white/10 bg-[#0b0b0b]/70 p-6">
-                <h3
-                  className="text-base uppercase text-white"
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  Need assistance?
-                </h3>
-                <p
-                  className="mt-3 text-sm text-white/65"
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  The travel desk operates round the clock during Rhythm'25. Ping us before you start or when you're on the move.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <a
-                    href="mailto:rhythm2025@dcrustm.org"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2 text-xs uppercase text-white transition hover:border-white/30 hover:bg-white/10"
-                    style={{ fontFamily: "var(--font-inter)" }}
-                  >
-                    Email Desk
-                  </a>
-                  {/* ✅ Replaced next/link <Link> with standard <a> */}
-                  <a
-                    href="/#contact"
-                    className="inline-flex items-center gap-2 rounded-full border border-[rgba(59,130,246,0.3)] bg-[rgba(59,130,246,0.12)] px-5 py-2 text-xs uppercase text-white transition hover:bg-[rgba(59,130,246,0.2)]"
-                    style={{ fontFamily: "var(--font-inter)" }}
-                  >
-                    Contact Form
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
+         
         </div>
       </main>
-   <Footer/>
+      <Footer />
     </>
   );
 }
