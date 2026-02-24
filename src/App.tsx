@@ -152,8 +152,7 @@ function App() {
               <span className="flex items-center justify-center w-[21.6px] h-[21.6px] rounded-full border border-slate-900 text-[12.6px] font-medium">0</span>
             </a> */}
           </div>
-
-          <div className="flex items-center gap-2">
+          <div style={{marginLeft:"10px"}} className="flex items-center gap-2">
             {/* Render nothing until auth is resolved → no flash */}
             {isAuthenticated === true && (
               <Link

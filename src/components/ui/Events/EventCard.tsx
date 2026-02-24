@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, Users } from "lucide-react";
 import type { ApiEvent } from "../../../lib/events";
-import { getEventId, getEventImageUrl } from "../../../lib/events";
+import { getEventId, getEventImageUrl, formatEventDate } from "../../../lib/events";
 import { Button } from "../button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card";
 
@@ -10,19 +10,6 @@ type EventCardProps = {
   variant?: "compact" | "full";
 };
 
-function formatDate(dateStr: string | undefined) {
-  if (!dateStr) return "";
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
 
 export function EventCard({ event, variant = "compact" }: EventCardProps) {
   const id = String(getEventId(event));
@@ -59,7 +46,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           <CardDescription className="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-400">
             <span className="flex items-center gap-1">
               <Calendar className="size-3.5" />
-              {formatDate(event.date)}
+              {formatEventDate(event.date)}
             </span>
             {event.venue && (
               <span className="flex items-center gap-1 truncate">
@@ -106,7 +93,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
             <CardDescription className="flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
               <span className="flex items-center gap-1">
                 <Calendar className="size-3.5" />
-                {formatDate(event.date)}
+                {formatEventDate(event.date)}
               </span>
               {event.venue && (
                 <span className="flex items-center gap-1">

@@ -57,8 +57,8 @@ function validate(data: FormData): FieldErrors {
   const sem = Number(data.semester);
   if (!data.semester)
     errors.semester = "Semester is required.";
-  else if (!Number.isInteger(sem) || sem < 1 || sem > 8)
-    errors.semester = "Semester must be between 1 and 8.";
+  else if (!Number.isInteger(sem) || sem < 1 || sem > 10)
+    errors.semester = "Semester must be between 1 and 10.";
 
   if (!data.password)
     errors.password = "Password is required.";
@@ -376,7 +376,7 @@ export function SignupForm({
                     type="number"
                     value={formData.semester}
                     onChange={handleChange}
-                    placeholder="1 – 8"
+                    placeholder="1 – 10"
                     inputMode="numeric"
                     error={fieldErrors.semester}
                   />

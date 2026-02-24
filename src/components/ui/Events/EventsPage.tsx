@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { API_URL, apiFetch } from "../../../lib/api";
 import type { ApiEvent } from "../../../lib/events";
-import { getEventId } from "../../../lib/events";
+import { getEventId, formatEventDate } from "../../../lib/events";
 import { EventCard } from "./EventCard";
 import { FieldDescription, FieldGroup } from "../field";
 import { Card, CardDescription, CardHeader, CardTitle } from "../card";
@@ -26,18 +26,6 @@ function groupByDepartment(events: ApiEvent[]): Record<string, ApiEvent[]> {
   }, {});
 }
 
-function formatEventDate(dateStr: string | undefined): string {
-  if (!dateStr) return "";
-  try {
-    return new Date(dateStr).toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function EventsPage() {
