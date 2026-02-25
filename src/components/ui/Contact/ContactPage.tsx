@@ -51,7 +51,7 @@ const webDCoordinators: DevMember[] = [
         designation: "Department of Computer Science and Engineering",
         eventRole: "Web-Dev Coordinator",
         photo: "https://res.cloudinary.com/dqf7raj6f/image/upload/v1761847482/WhatsApp_Image_2025-10-30_at_23.33.08_46f1d5c0_ncldcf.jpg",
-        linkedin: "https://www.linkedin.com/in/komalverma22/",
+        linkedin: "https://www.linkedin.com/in/komalverma007/",
         isLead: true,
     },
     {
