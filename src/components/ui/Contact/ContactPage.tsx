@@ -73,7 +73,7 @@ const webDCoordinators: DevMember[] = [
         name: "Sahil Ninania",
         designation: "Department of Computer Science and Engineering",
         eventRole: "Web-Dev Member",
-        photo: "/coordinator-placeholder.png",
+        photo: "https://res.cloudinary.com/dqf7raj6f/image/upload/v1772013459/WhatsApp_Image_2026-02-25_at_15.17.12_bj6bld.jpg",
         linkedin: "https://www.linkedin.com/in/sahil-ninania-b0b375337",
     },
 ];
@@ -84,28 +84,28 @@ const studentCoordinators: Student[] = [
         mobile: "+91 98170 88907",
         email: "23001003100rishi@dcrustm.org",
         role: "Coordinator",
-        photo: "/coordinator-placeholder.png",
+        photo: "https://res.cloudinary.com/dqf7raj6f/image/upload/v1772012910/WhatsApp_Image_2026-02-25_at_14.58.18_npcm3p.jpg",
     },
     {
         name: "Aditya Aggarwal",
         mobile: "+91 98734 03658",
         email: "23001001008aditya@dcrustm.org",
         role: "Co-Coordinator",
-        photo: "/coordinator-placeholder.png",
+        photo: "https://res.cloudinary.com/dqf7raj6f/image/upload/v1772012754/IMG_1530_iixner.jpg",
     },
     {
         name: "Shiv",
         mobile: "+91 7088163828",
         email: "23001004041shiv@dcrustm.org",
         role: "Co-Coordinator",
-        photo: "/coordinator-placeholder.png",
+        photo: "https://res.cloudinary.com/dqf7raj6f/image/upload/v1772013314/IMG_0599_celqp0.jpg",
     },
     {
         name: "Nandini",
-        mobile: "+91 00000 00000",
-        email: "student3@example.com",
+        mobile: "+91 85274 68520",
+        email: "24001008008nandani@dcrustm.org",
         role: "Co-Coordinator",
-        photo: "/coordinator-placeholder.png",
+        photo: "https://res.cloudinary.com/dqf7raj6f/image/upload/v1772012525/WhatsApp_Image_2026-02-24_at_13.34.09_uoecqh.jpg",
     },
 ];
 
