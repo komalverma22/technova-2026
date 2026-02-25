@@ -27,18 +27,24 @@ export const Faq = () => (
 
 const questions = [
   {
-    question: "What is this tech event about?",
+    question: "What is this technova about?",
     answer: `A college-organized tech event focused on innovation, learning, and hands-on activities like workshops and competitions.`
   },
-  { question: 'Who can participate?', answer: 'All college students can participate, regardless of branch or year.' },
+  { question: 'Who can participate?', answer: 'All engineering and science students can participate, regardless of branch or year.' },
   {
     question: 'Do I need prior technical knowledge?',
-    answer: 'No, the event includes sessions for both beginners and advanced learners.'
+    answer: 'I is events specific. Refer rule book for more'
   },
   { question: 'How can I register?', answer: 'You can register through the official event website using the registration form.' },
   {
     question: 'Is there any registration fee?',
-    answer: 'Most events are free; some may have a small fee mentioned in the details.'
+    answer: 'There is no fees for dcrust students. For external participants one time registration fees is 100 rupees per participant which is payable at the time of physical reporting during the event.'
+  },
+
+  { question: 'Is on the spot registration allowed?', answer: 'You can register through the official event website using the registration form.' },
+  {
+    question: 'Is there any registration fee?',
+    answer: 'No, the interested participants must registered online via the official website of technova 2026.'
   },
 
   
