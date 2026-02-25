@@ -64,6 +64,13 @@ const studentCoordinators: Student[] = [
         photo: "/coordinator-placeholder.png",
     },
     {
+        name: "Shiv",
+        mobile: "+91 00000 00000",
+        email: "student3@example.com",
+        role: "Co-Coordinator",
+        photo: "/coordinator-placeholder.png",
+    },
+    {
         name: "Nandini",
         mobile: "+91 00000 00000",
         email: "student3@example.com",
@@ -207,7 +214,7 @@ export default function ContactPage() {
                             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight"
                             style={{ fontFamily: "Eagle Lake, serif" }}
                         >
-                            Student Coordinators
+                            Student Coordinator
                             {/* line-break only on very small screens to avoid single long word wrapping oddly */}
                             <span className="block sm:inline"> &amp; Co-Coordinators</span>
                         </h1>

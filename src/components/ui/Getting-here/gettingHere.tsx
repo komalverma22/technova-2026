@@ -81,7 +81,7 @@ const quickSteps = [
 ];
 
 const arrivalChecklist = [
-  "Display your institute ID and Rhythm access band at Gate 1.",
+  "Display your institute ID and Technova access band at Gate 1.",
   "Check in with the hospitality desk for green-room and schedule briefs.",
   "Report to the stage marshal 30 minutes before your performance block.",
 ];
@@ -129,7 +129,7 @@ export default function GettingHerePage() {
               className="mx-auto max-w-2xl text-base text-white/70"
               style={{ fontFamily: "var(--font-inter)" }}
             >
-              A streamlined travel console for Rhythm'25. Lock in your route, drop a pin on campus, and glide into the arena with neon precision.
+              A streamlined travel console for Technova'26. Lock in your route, drop a pin on campus, and glide into the arena with neon precision.
             </p> */}
             <div className="flex flex-wrap justify-center gap-4 pt-2">
               <BackButton fallbackPath="/" />
@@ -196,7 +196,7 @@ export default function GettingHerePage() {
                   className="text-sm text-white/70"
                   style={{ fontFamily: "var(--font-inter)" }}
                 >
-                  Drop the pin, follow the amber beacons, and you'll coast into the Rhythm'25 arena without missing a beat.
+                  Drop the pin, follow the amber beacons, and you'll coast into the Technova'26 arena without missing a beat.
                 </p>
               </div>
               <div className="space-y-4">

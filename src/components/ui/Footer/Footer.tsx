@@ -1,6 +1,6 @@
 import {
   FiArrowUpRight,
-  FiInstagram,
+
   FiMail,
   FiGlobe,
   FiMapPin,
