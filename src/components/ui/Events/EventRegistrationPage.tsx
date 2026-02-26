@@ -72,6 +72,13 @@ function RegInput({
   );
 }
 
+// ── Deadline check ───────────────────────────────────────────────────────────
+function isAfterDeadlineIST(): boolean {
+  // Target: 10 March 2026, 23:59 IST (UTC+05:30) → UTC equivalent
+  const targetUTC = Date.UTC(2026, 2, 10, 18, 29, 59);
+  return Date.now() >= targetUTC;
+}
+
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function EventRegistrationPage() {
   const { id } = useParams<{ id: string }>();
@@ -243,6 +250,34 @@ export default function EventRegistrationPage() {
   }
 
   if (!event) return null;
+
+  // ── Deadline gate ──────────────────────────────────────────────────────────
+  if (isAfterDeadlineIST()) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-12 pb-24 sm:px-6 md:py-16">
+        <div className="mb-4">
+          <BackButton fallbackPath={`/events/${id}`} />
+        </div>
+        <Card className="border-red-500/30 bg-red-500/5">
+          <CardHeader>
+            <CardTitle className="text-xl text-red-400">
+              🔒 Registration Closed
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              The registration deadline for <strong>{event.title}</strong> has
+              passed (10 March 2026, 11:59 PM IST). No further registrations
+              are being accepted.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link to={`/events/${id}`}>
+              <Button variant="white">Back to Event</Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const imageUrl = getEventImageUrl(event.imagePath);
   const { date, time } = formatDateTime(event.date);
