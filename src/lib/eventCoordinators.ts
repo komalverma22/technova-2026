@@ -62,7 +62,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Rajni", phone: "8059332247" },
       { name: "Partik Singh", phone: "9350203487" },
     ],
-    studentCoordinator: { name: "Narshi", phone: "8166969968" },
+    studentCoordinator: { name: "Harsh", phone: "8166969968" },
     studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
   },
   "Get Recognised for Your Personality (GRYP)": {
