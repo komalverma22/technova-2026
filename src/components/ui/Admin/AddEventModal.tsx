@@ -94,7 +94,7 @@ const DEPARTMENT_EVENTS: { department: string; events: string[] }[] = [
     events: ["Mix-Matched", "The Corporate Clash"]
   },
   {
-    department: "THINKBOTS",
+    department: "ROBOTICS(THINKBOTS)",
     events: ["Walking-Dead", "Dungeon-Drive"]
   },
   {
@@ -116,8 +116,8 @@ const DEPARTMENT_EVENTS: { department: string; events: string[] }[] = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function AddEventModal({ onClose, onSuccess }: Props) {
-    // console.log("COOKIE",);
-    
+  // console.log("COOKIE",);
+
   const [form, setForm] = useState({
     title: "",
     description: "",

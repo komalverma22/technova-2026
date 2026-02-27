@@ -108,9 +108,9 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     studentCoCoordinator: { name: "Sunny Saini", phone: "7015463534" },
   },
 
-  // ── THINKBOTS ─────────────────────────────────────────────────────────────
+  // ── ROBOTICS(THINKBOTS) ─────────────────────────────────────────────────────────────
   "Walking-Dead": {
-    department: "THINKBOTS",
+    department: "ROBOTICS(THINKBOTS)",
     coordinators: [
       { name: "Pritam", phone: "9812015241" },
       { name: "Sahil Kumar", phone: "8168606627" },
@@ -120,7 +120,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     studentCoCoordinator: { name: "Harshit Gupta", phone: "8318457562" },
   },
   "Dungeon-Drive": {
-    department: "THINKBOTS",
+    department: "ROBOTICS(THINKBOTS)",
     coordinators: [
       { name: "Sahil Kumar", phone: "8168606627" },
       { name: "Harshit Gupta", phone: "8318457562" },

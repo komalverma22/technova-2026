@@ -25,9 +25,9 @@ export function getEventId(event: ApiEvent): string | number {
 // ─── Display timezone ────────────────────────────────────────────────────────
 /**
  * All event times are stored in UTC by the backend (Prisma / Neon).
- * We display them in UTC so there is zero conversion and zero ambiguity.
+ * We display them in IST (Asia/Kolkata = UTC+05:30).
  */
-export const DISPLAY_TZ = "UTC" as const;
+export const DISPLAY_TZ = "Asia/Kolkata" as const;
 
 /** @deprecated Use DISPLAY_TZ. Kept for any legacy imports. */
 export const IST_TZ = DISPLAY_TZ;
@@ -140,7 +140,7 @@ export function formatDateTime(dateStr: string | undefined | null): {
   if (!d) return { date: dateStr ?? "", time: "" };
   try {
     const date = dateFmtLong.format(d);
-    const time = timeFmt.format(d) + " UTC"; // e.g. "14:55 UTC"
+    const time = timeFmt.format(d) + " IST"; // e.g. "08:25 IST"
     return { date, time };
   } catch {
     return { date: String(dateStr), time: "" };

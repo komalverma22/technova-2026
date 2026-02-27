@@ -27,7 +27,7 @@ const DEPARTMENT_EVENTS: { department: string; events: string[] }[] = [
   { department: "SUNSHINE", events: ["Gaming Event", "Treasure Hunt"] },
   { department: "SAVERA", events: ["Innovation Odyssey Challenge", "Tech Titans Trivia"] },
   { department: "E-Cell", events: ["Mix-Matched", "The Corporate Clash"] },
-  { department: "THINKBOTS", events: ["Walking-Dead", "Dungeon-Drive"] },
+  { department: "ROBOTICS(THINKBOTS)", events: ["Walking-Dead", "Dungeon-Drive"] },
   { department: "DCRUST ODC", events: ["CodeBug", "SQL Master"] },
   { department: "Centralized Events", events: ["Project Expo", "Poster Presentation", "Hobby Expo", "Robotics"] },
 ];
