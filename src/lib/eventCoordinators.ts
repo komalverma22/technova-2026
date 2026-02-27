@@ -223,13 +223,13 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     studentCoordinator: { name: "Dipanshu", phone: "9812173253" },
     studentCoCoordinator: { name: "Nikita Pawar", phone: "8930519875" },
   },
-  Debate: {
+  "Debate": {
     department: "MATHEMAGICIANS (Mathematics)",
     coordinators: [],
     studentCoordinator: { name: "Dipanshu", phone: "9812173253" },
     studentCoCoordinator: { name: "Nikita Pawar", phone: "8930519875" },
   },
-  Quiz: {
+  "Quiz": {
     department: "MATHEMAGICIANS (Mathematics)",
     coordinators: [],
     studentCoordinator: { name: "Dipanshu", phone: "9812173253" },
@@ -291,7 +291,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   },
 
   // ── NIRMAN (CIVIL) ─────────────────────────────────────────────────────────
-  Chakravyuh: {
+  "Chakravyuh": {
     department: "NIRMAN (CIVIL)",
     coordinators: [],
     studentCoordinator: { name: "Harsh", phone: "8950173600" },
@@ -337,7 +337,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   },
 
   // ── DCRUST ODC ─────────────────────────────────────────────────────────────
-  CodeBug: {
+  "CodeBug": {
     department: "DCRUST ODC",
     coordinators: [],
     studentCoordinator: { name: "Laxmi", phone: "9350993206" },

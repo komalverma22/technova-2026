@@ -35,7 +35,7 @@ export default function EventDetailPage() {
         });
         const data = await response.json();
         // console.log(data);
-        
+
 
         if (!response.ok) {
           throw new Error(data.message || "Failed to load event");
@@ -103,9 +103,6 @@ export default function EventDetailPage() {
   const maxTeam = event.maxTeamSize ?? (event as { maxTeaSize?: number }).maxTeaSize ?? event.minTeamSize;
   const imageUrl = getEventImageUrl(event.imagePath);
   const eventCoordinators = getEventCoordinators(event.title);
-  
-  console.log("🔍 Event Title:", event.title);
-  console.log("✓ Coordinators Found:", !!eventCoordinators);
 
   return (
     <div className="relative min-h-svh">
@@ -188,74 +185,77 @@ export default function EventDetailPage() {
                 </Card>
               )}
 
-              {/* Event Coordinators Table */}
-              {eventCoordinators ? (
-                <Card className="border-emerald-500/30 bg-emerald-500/5">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-xl text-emerald-400">
-                      <Users className="size-5" />
-                      Event Coordinators
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="border-b border-emerald-600/50 bg-emerald-900/40">
-                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-emerald-300">
-                              Name
-                            </th>
-                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-emerald-300">
-                              Phone
-                            </th>
-                            <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-widest text-emerald-300">
-                              Contact
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-emerald-700/30">
-                          {eventCoordinators.coordinators.map((coord, idx) => (
-                            <tr
-                              key={idx}
-                              className="transition-colors duration-200 hover:bg-emerald-900/30"
-                            >
-                              <td className="px-4 py-3 text-slate-100 font-medium">
-                                {coord.name}
-                              </td>
-                              <td className="px-4 py-3 text-slate-300 font-mono text-sm">
-                                {coord.phone}
-                              </td>
-                              <td className="px-4 py-3 text-center">
-                                <a
-                                  href={`tel:${coord.phone.replace(/\s/g, "")}`}
-                                  className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400/70 hover:bg-emerald-400/20 hover:text-emerald-200 transition-all duration-200"
-                                  title={`Call ${coord.name}`}
-                                >
-                                  <Phone className="h-3.5 w-3.5" />
-                                </a>
-                              </td>
+              {/* Event Coordinators Card */}
+              {eventCoordinators && (() => {
+                // Build a flat list of student contacts only
+                const rows: { role: string; name: string; phone: string }[] = [];
+
+                if (eventCoordinators.studentCoordinator) {
+                  rows.push({
+                    role: "Student Coordinator",
+                    name: eventCoordinators.studentCoordinator.name,
+                    phone: eventCoordinators.studentCoordinator.phone,
+                  });
+                }
+                if (eventCoordinators.studentCoCoordinator) {
+                  rows.push({
+                    role: "Student Co-Coordinator",
+                    name: eventCoordinators.studentCoCoordinator.name,
+                    phone: eventCoordinators.studentCoCoordinator.phone,
+                  });
+                }
+
+                if (rows.length === 0) return null;
+
+                return (
+                  <Card className="border-emerald-500/30 bg-emerald-500/5">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2 text-xl text-emerald-400">
+                        <Phone className="size-5" />
+                        Event Coordinators
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-emerald-600/50 bg-emerald-900/40">
+                              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-emerald-300">Role</th>
+                              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-emerald-300">Name</th>
+                              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-emerald-300">Phone</th>
+                              <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-widest text-emerald-300">Call</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </CardContent>
-                </Card>
-              ) : (
-                <Card className="border-amber-600/30 bg-amber-900/10">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg text-amber-400">
-                      <Users className="size-5" />
-                      Event Coordinators
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-amber-300/70 text-sm">
-                      No coordinators assigned yet. Title: <code className="text-amber-200">{event.title}</code>
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
+                          </thead>
+                          <tbody className="divide-y divide-emerald-700/30">
+                            {rows.map((row, idx) => (
+                              <tr key={idx} className="transition-colors duration-200 hover:bg-emerald-900/30">
+                                <td className="px-4 py-3 text-emerald-300/70 text-xs font-medium whitespace-nowrap">{row.role}</td>
+                                <td className="px-4 py-3 text-slate-100 font-medium whitespace-nowrap">{row.name}</td>
+                                <td className="px-4 py-3 text-slate-300 font-mono text-sm whitespace-nowrap">
+                                  {row.phone || <span className="text-slate-500 text-xs italic">—</span>}
+                                </td>
+                                <td className="px-4 py-3 text-center">
+                                  {row.phone ? (
+                                    <a
+                                      href={`tel:${row.phone.replace(/\s/g, "")}`}
+                                      className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400/70 hover:bg-emerald-400/20 hover:text-emerald-200 transition-all duration-200"
+                                      title={`Call ${row.name}`}
+                                    >
+                                      <Phone className="h-3.5 w-3.5" />
+                                    </a>
+                                  ) : (
+                                    <span className="text-slate-600 text-xs">—</span>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })()}
             </div>
 
             {error && (
