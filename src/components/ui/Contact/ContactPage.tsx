@@ -120,7 +120,7 @@ function TeacherCard({ t }: { t: Teacher }) {
             <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-indigo-500/30 transition-opacity duration-300 group-hover:opacity-100" />
 
             {/* Avatar */}
-            <div className="relative mb-3 sm:mb-4 h-20 w-20 sm:h-28 sm:w-28 overflow-hidden rounded-full border-2 border-indigo-500/40 shadow-lg shadow-indigo-900/30">
+            {/* <div className="relative mb-3 sm:mb-4 h-20 w-20 sm:h-28 sm:w-28 overflow-hidden rounded-full border-2 border-indigo-500/40 shadow-lg shadow-indigo-900/30">
                 <img
                     src={t.photo}
                     alt={t.name}
@@ -130,7 +130,7 @@ function TeacherCard({ t }: { t: Teacher }) {
                             `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=1e2748&color=a5b4fc&size=128&bold=true`;
                     }}
                 />
-            </div>
+            </div> */}
 
             {/* Badge */}
             <span className="mb-3 inline-block rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-0.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-widest text-indigo-300">
@@ -173,7 +173,7 @@ function DevCard({ m }: { m: DevMember }) {
             <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-emerald-400/25 transition-opacity duration-300 group-hover:opacity-100" />
 
             {/* Avatar */}
-            <div className="relative mb-4 h-20 w-20 sm:h-24 sm:w-24 overflow-hidden rounded-xl border border-emerald-500/30 shadow-lg shadow-emerald-900/20 group-hover:border-emerald-400/60 transition-colors duration-300">
+            {/* <div className="relative mb-4 h-20 w-20 sm:h-24 sm:w-24 overflow-hidden rounded-xl border border-emerald-500/30 shadow-lg shadow-emerald-900/20 group-hover:border-emerald-400/60 transition-colors duration-300">
                 <img
                     src={m.photo}
                     alt={m.name}
@@ -183,11 +183,11 @@ function DevCard({ m }: { m: DevMember }) {
                             `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=0a1a0f&color=34d399&size=128&bold=true&format=svg`;
                     }}
                 />
-                {/* Terminal blink dot */}
+            
                 <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]"
                     style={{ animation: "pulse 2s ease-in-out infinite" }}
                 />
-            </div>
+            </div> */}
 
             {/* Badge */}
             <span className={`mb-3 inline-flex items-center gap-1 rounded-md border px-2.5 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-widest ${isLead
@@ -226,7 +226,7 @@ function StudentCard({ s }: { s: Student }) {
             <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-cyan-500/30 transition-opacity duration-300 group-hover:opacity-100" />
 
             {/* Avatar */}
-            <div className="relative mb-3 sm:mb-4 h-20 w-20 sm:h-28 sm:w-28 overflow-hidden rounded-full border-2 border-cyan-500/40 shadow-lg shadow-cyan-900/20">
+            {/* <div className="relative mb-3 sm:mb-4 h-20 w-20 sm:h-28 sm:w-28 overflow-hidden rounded-full border-2 border-cyan-500/40 shadow-lg shadow-cyan-900/20">
                 <img
                     src={s.photo}
                     alt={s.name}
@@ -236,7 +236,7 @@ function StudentCard({ s }: { s: Student }) {
                             `https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=0d2030&color=67e8f9&size=128&bold=true`;
                     }}
                 />
-            </div>
+            </div> */}
 
             {/* Role badge */}
             <span
