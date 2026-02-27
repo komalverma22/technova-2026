@@ -275,19 +275,19 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Science Quiz": {
     department: "RASAYANAM (Chemistry)",
     coordinators: [],
-    studentCoordinator: { name: "Mahi", phone: "9350772741" },
+    studentCoordinator: { name: "Monti", phone: "9350772741" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
   "Magic of Chemistry": {
     department: "RASAYANAM (Chemistry)",
     coordinators: [],
-    studentCoordinator: { name: "Mahi", phone: "9350772741" },
+    studentCoordinator: { name: "Monti", phone: "9350772741" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
   "The Alchemist's Cipher": {
     department: "RASAYANAM (Chemistry)",
     coordinators: [],
-    studentCoordinator: { name: "Mahi", phone: "9350772741" },
+    studentCoordinator: { name: "Monti", phone: "9350772741" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
 
@@ -295,19 +295,19 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Chakravyuh": {
     department: "NIRMAN (CIVIL)",
     coordinators: [],
-    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoordinator: { name: "Yashika", phone: "8700162084" },
     studentCoCoordinator: { name: "Abhishek", phone: "9896768939" },
   },
   "Bridge it Right": {
     department: "NIRMAN (CIVIL)",
     coordinators: [],
-    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoordinator: { name: "Yashika", phone: "8700162084" },
     studentCoCoordinator: { name: "Abhishek", phone: "9896768939" },
   },
   "Think & Sprint": {
     department: "NIRMAN (CIVIL)",
     coordinators: [],
-    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoordinator: { name: "Yashika", phone: "8700162084" },
     studentCoCoordinator: { name: "Abhishek", phone: "9896768939" },
   },
 
