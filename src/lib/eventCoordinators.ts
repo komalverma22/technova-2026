@@ -72,7 +72,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Pawan Kumar", phone: "8178477961" },
       { name: "Disha", phone: "7015473578" },
     ],
-    studentCoordinator: { name: "Narshi", phone: "8166969968" },
+    studentCoordinator: { name: "Harsh", phone: "8166969968" },
     studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
   },
   "Chem Spark": {
@@ -82,7 +82,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Bhoomi", phone: "8168573726" },
       { name: "Aayush Mishra", phone: "9334805855" },
     ],
-    studentCoordinator: { name: "Narshi", phone: "8166969968" },
+    studentCoordinator: { name: "Harsh", phone: "8166969968" },
     studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
   },
 
