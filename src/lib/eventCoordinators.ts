@@ -195,7 +195,43 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     studentCoordinator: { name: "Krishna Maheshwari", phone: "7056894787" },
     studentCoCoordinator: { name: "Agastya", phone: "8708411706" },
   },
-
+// cse
+  "Web Master": {
+  department: "CSE Department",
+  coordinators: [],
+  studentCoordinator: { 
+    name: "Aditya Aggrawal", 
+    phone: "9873403658" 
+  },
+  studentCoCoordinator: { 
+    name: "Ansshu", 
+    phone: "9015078464" 
+  },
+},
+  "Techno Quiz": {
+  department: "CSE Department",
+  coordinators: [],
+  studentCoordinator: { 
+    name: "Aditya Aggrawal", 
+    phone: "9873403658" 
+  },
+  studentCoCoordinator: { 
+    name: "Ansshu", 
+    phone: "9015078464" 
+  },
+},
+  "Think Future": {
+  department: "CSE Department",
+  coordinators: [],
+  studentCoordinator: { 
+    name: "Aditya Aggrawal", 
+    phone: "9873403658" 
+  },
+  studentCoCoordinator: { 
+    name: "Ansshu", 
+    phone: "9015078464" 
+  },
+},
   // ── CEEES ─────────────────────────────────────────────────────────────────
   "Idea-Thon": {
     department: "CEEES",
