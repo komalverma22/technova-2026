@@ -177,10 +177,26 @@ export default function EventDetailPage() {
                       Rules
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="space-y-4">
                     <p className="whitespace-pre-wrap text-slate-300">
                       {event.rules}
                     </p>
+                    {/* Rulebook reference */}
+                    <div className="flex items-start gap-3 rounded-lg border border-indigo-500/30 bg-indigo-500/5 px-4 py-3">
+                      <FileText className="mt-0.5 size-4 shrink-0 text-indigo-400" />
+                      <p className="text-sm text-indigo-300/90">
+                        For complete rules &amp; regulations, please refer to the{" "}
+                        <a
+                          href="/brochure-technova_compressed.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-indigo-300 underline underline-offset-2 hover:text-indigo-100 transition-colors"
+                        >
+                          official TechNova&apos;26 Rulebook
+                        </a>
+                        . Participants are expected to read and abide by all guidelines before registering.
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
               )}
