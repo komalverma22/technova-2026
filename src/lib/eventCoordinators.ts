@@ -276,14 +276,14 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Brainy Brawl": {
     department: "ENGENISIS (BT)",
     coordinators: [],
-    studentCoordinator: { name: "Ayushi Singh", phone: "7827166646" },
-    studentCoCoordinator: { name: "Sidharth", phone: "8059062537" },
+    studentCoordinator: { name: "Ayushi Singh", phone: "7827216646" },
+    studentCoCoordinator: { name: "Sidharth", phone: "8059062592" },
   },
   "Brain Quest Arena": {
     department: "ENGENISIS (BT)",
     coordinators: [],
-    studentCoordinator: { name: "Ayushi Singh", phone: "7827166646" },
-    studentCoCoordinator: { name: "Sidharth", phone: "8059062537" },
+    studentCoordinator: { name: "Ayushi Singh", phone: "7827216646" },
+    studentCoCoordinator: { name: "Sidharth", phone: "8059062592" },
   },
 
   // ── MEDITRONICA (BME) ─────────────────────────────────────────────────────
