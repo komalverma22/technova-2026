@@ -9,14 +9,27 @@ type Props = {
   onSuccess: () => void;
 };
 
-const DEPARTMENTS = [
-  "Computer Science",
-  "Information Technology",
-  "Electronics",
-  "Mechanical",
-  "Civil",
-  "Electrical",
-  "Other",
+const DEPARTMENT_EVENTS: { department: string; events: string[] }[] = [
+  { department: "CSE Department", events: ["Web Master", "Techno Quiz", "Think Future"] },
+  { department: "SEE (EED)", events: ["Tech Charades", "Tech Bid", "Machine Mantra"] },
+  { department: "INTEC (ECE)", events: ["Circuit Design and Debugging Competition", "Roast Verse", "Prompt2Poster"] },
+  { department: "SOMEC (MED)", events: ["Design Minds", "Aero Modeling (Sky Glider)"] },
+  { department: "MANTHAN (CHE)", events: ["Knowledge Knockout Quiz (Mind Clash)", "Get Recognised for Your Personality (GRYP)", "Chem Spark"] },
+  { department: "MEDITRONICA (BME)", events: ["Poster Making Competition", "Biomedical Tech Quiz", "Biomedical Debate Competition"] },
+  { department: "ENGENISIS (BT)", events: ["Brainy Brawl", "Brain Quest Arena"] },
+  { department: "NIRMAN (CIVIL)", events: ["Chakravyuh", "Bridge it Right", "Think & Sprint"] },
+  { department: "RAMAN (Physics)", events: ["Physi-Hunt", "The Escape Room", "Inno Vision"] },
+  { department: "RASAYANAM (Chemistry)", events: ["Science Quiz", "Magic of Chemistry", "The Alchemist's Cipher"] },
+  { department: "MATHEMAGICIANS (Mathematics)", events: ["Poster Making", "Debate", "Quiz"] },
+  { department: "YOUNG THESPIANS (DMS)", events: ["Team Titans", "Brand Storm", "Business Hunt"] },
+  { department: "CEEES", events: ["Idea-Thon", "Agri-Technictionary", "Seed Sorting Race"] },
+  { department: "LISOC-Literary Society", events: ["Student of the Year", "BPD (British Parliamentary Debate)"] },
+  { department: "SUNSHINE", events: ["Gaming Event", "Treasure Hunt"] },
+  { department: "SAVERA", events: ["Innovation Odyssey Challenge", "Tech Titans Trivia"] },
+  { department: "E-Cell", events: ["Mix-Matched", "The Corporate Clash"] },
+  { department: "THINKBOTS", events: ["Walking-Dead", "Dungeon-Drive"] },
+  { department: "DCRUST ODC", events: ["CodeBug", "SQL Master"] },
+  { department: "Centralized Events", events: ["Project Expo", "Poster Presentation", "Hobby Expo", "Robotics"] },
 ];
 
 function toDatetimeLocal(dateStr: string | undefined): string {
@@ -50,10 +63,25 @@ export default function EditEventModal({ event, onClose, onSuccess }: Props) {
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Events available for the currently selected department
+  const availableEvents =
+    DEPARTMENT_EVENTS.find((d) => d.department === form.department)?.events ?? [];
+
+  // Whether the current dept/title values exist in the predefined lists
+  const deptInList = DEPARTMENT_EVENTS.some((d) => d.department === form.department);
+  const titleInList = availableEvents.includes(form.title);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => {
+      // When department changes, reset title so admin must re-pick
+      if (name === "department") {
+        return { ...prev, department: value, title: "" };
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,18 +195,55 @@ export default function EditEventModal({ event, onClose, onSuccess }: Props) {
             )}
           </div>
 
-          {/* Title */}
+          {/* Department */}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">
-              Title <span className="text-red-400">*</span>
+              Department <span className="text-red-400">*</span>
             </label>
-            <input
+            <select
+              name="department"
+              value={form.department}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+            >
+              <option value="" disabled>Select department</option>
+              {/* Inject existing value as fallback if it's not in the predefined list */}
+              {form.department && !deptInList && (
+                <option value={form.department}>{form.department}</option>
+              )}
+              {DEPARTMENT_EVENTS.map(({ department }) => (
+                <option key={department} value={department}>{department}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Event Title (cascades from department) */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1">
+              Event Title <span className="text-red-400">*</span>
+            </label>
+            <select
               name="title"
               value={form.title}
               onChange={handleChange}
               required
-              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-            />
+              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+            >
+              <option value="" disabled>Select event title</option>
+              {/* Inject existing title as fallback if it's not in the cascaded list */}
+              {form.title && !titleInList && (
+                <option value={form.title}>{form.title}</option>
+              )}
+              {availableEvents.map((ev) => (
+                <option key={ev} value={ev}>{ev}</option>
+              ))}
+            </select>
+            {!deptInList && form.department && (
+              <p className="mt-1 text-xs text-slate-500">
+                Select a department above to filter available event titles.
+              </p>
+            )}
           </div>
 
           {/* Description */}
@@ -194,25 +259,6 @@ export default function EditEventModal({ event, onClose, onSuccess }: Props) {
               rows={3}
               className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-500 px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"
             />
-          </div>
-
-          {/* Department */}
-          <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1">
-              Department <span className="text-red-400">*</span>
-            </label>
-            <select
-              name="department"
-              value={form.department}
-              onChange={handleChange}
-              required
-              className="w-full rounded-lg bg-slate-800 border border-slate-700 text-white px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-            >
-              <option value="" disabled>Select department</option>
-              {DEPARTMENTS.map((d) => (
-                <option key={d} value={d}>{d}</option>
-              ))}
-            </select>
           </div>
 
           {/* Team Size */}
