@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Calendar, MapPin, Users, FileText, Clock, Share2, Check } from "lucide-react";
+import { Calendar, MapPin, Users, FileText, Clock, Share2, Check, Phone } from "lucide-react";
 import { API_URL, apiFetch } from "../../../lib/api";
 import { getAuthToken } from "../../../lib/api";
 import type { ApiEvent } from "../../../lib/events";
 import { getEventImageUrl, formatDateTime } from "../../../lib/events";
 import { useEventMeta } from "../../../lib/useEventMeta";
+import { getEventCoordinators } from "../../../lib/eventCoordinators";
 import { Button } from "../button";
 import { Card, CardContent, CardHeader, CardTitle } from "../card";
 import { BackButton } from "../BackButton";
@@ -101,10 +102,14 @@ export default function EventDetailPage() {
 
   const maxTeam = event.maxTeamSize ?? (event as { maxTeaSize?: number }).maxTeaSize ?? event.minTeamSize;
   const imageUrl = getEventImageUrl(event.imagePath);
+  const eventCoordinators = getEventCoordinators(event.title);
+  
+  console.log("🔍 Event Title:", event.title);
+  console.log("✓ Coordinators Found:", !!eventCoordinators);
 
   return (
     <div className="relative min-h-svh">
-      <div className="mx-auto max-w-4xl px-4 py-12 pb-32 sm:px-6 md:py-16">
+      <div className="mx-auto max-w-4xl px-4 py-12 pb-48 sm:px-6 md:py-16">
         <div className="mb-4">
           <BackButton fallbackPath="/events" />
         </div>
@@ -178,6 +183,75 @@ export default function EventDetailPage() {
                   <CardContent>
                     <p className="whitespace-pre-wrap text-slate-300">
                       {event.rules}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Event Coordinators Table */}
+              {eventCoordinators ? (
+                <Card className="border-emerald-500/30 bg-emerald-500/5">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-xl text-emerald-400">
+                      <Users className="size-5" />
+                      Event Coordinators
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-emerald-600/50 bg-emerald-900/40">
+                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-emerald-300">
+                              Name
+                            </th>
+                            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-emerald-300">
+                              Phone
+                            </th>
+                            <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-widest text-emerald-300">
+                              Contact
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-emerald-700/30">
+                          {eventCoordinators.coordinators.map((coord, idx) => (
+                            <tr
+                              key={idx}
+                              className="transition-colors duration-200 hover:bg-emerald-900/30"
+                            >
+                              <td className="px-4 py-3 text-slate-100 font-medium">
+                                {coord.name}
+                              </td>
+                              <td className="px-4 py-3 text-slate-300 font-mono text-sm">
+                                {coord.phone}
+                              </td>
+                              <td className="px-4 py-3 text-center">
+                                <a
+                                  href={`tel:${coord.phone.replace(/\s/g, "")}`}
+                                  className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400/70 hover:bg-emerald-400/20 hover:text-emerald-200 transition-all duration-200"
+                                  title={`Call ${coord.name}`}
+                                >
+                                  <Phone className="h-3.5 w-3.5" />
+                                </a>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card className="border-amber-600/30 bg-amber-900/10">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-lg text-amber-400">
+                      <Users className="size-5" />
+                      Event Coordinators
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-amber-300/70 text-sm">
+                      No coordinators assigned yet. Title: <code className="text-amber-200">{event.title}</code>
                     </p>
                   </CardContent>
                 </Card>

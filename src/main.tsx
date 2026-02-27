@@ -23,7 +23,6 @@ import AdminEventsPage from './components/ui/Admin/AdminEventsPage.tsx';
 import AdminGuard from './components/ui/Admin/AdminGuard.tsx';
 import BrochurePage from './components/ui/Brochure/BrochurePage.tsx';
 import ContactPage from './components/ui/Contact/ContactPage.tsx';
-import EventCoordinatorsPage from './components/ui/Contact/EventCoordinatorsPage.tsx';
 
 // Home page component banao
 function HomePage() {
@@ -65,7 +64,6 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/admin/dashboard/events" element={<AdminGuard><AdminEventsPage /></AdminGuard>} />
             <Route path="/brochure" element={<BrochurePage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/event-coordinators" element={<EventCoordinatorsPage />} />
           </Routes>
         </div>
       </div>
