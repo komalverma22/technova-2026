@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { Calendar, MapPin, Users } from "lucide-react";
+import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import type { ApiEvent } from "../../../lib/events";
-import { getEventId, getEventImageUrl, formatEventDate } from "../../../lib/events";
+import { getEventId, getEventImageUrl, formatDateTime } from "../../../lib/events";
 import { Button } from "../button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card";
 
@@ -46,7 +46,11 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           <CardDescription className="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-400">
             <span className="flex items-center gap-1">
               <Calendar className="size-3.5" />
-              {formatEventDate(event.date)}
+              {formatDateTime(event.date).date}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="size-3.5" />
+              {formatDateTime(event.date).time}
             </span>
             {event.venue && (
               <span className="flex items-center gap-1 truncate">
@@ -93,7 +97,11 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
             <CardDescription className="flex flex-wrap gap-x-4 gap-y-1 text-slate-400">
               <span className="flex items-center gap-1">
                 <Calendar className="size-3.5" />
-                {formatEventDate(event.date)}
+                {formatDateTime(event.date).date}
+              </span>
+              <span className="flex items-center gap-1">
+                <Clock className="size-3.5" />
+                {formatDateTime(event.date).time}
               </span>
               {event.venue && (
                 <span className="flex items-center gap-1">
