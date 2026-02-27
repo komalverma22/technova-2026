@@ -62,7 +62,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Rajni", phone: "8059332247" },
       { name: "Partik Singh", phone: "9350203487" },
     ],
-    studentCoordinator: { name: "Harsh", phone: "8166969968" },
+    studentCoordinator: { name: "Harsh", phone: "8168669968" },
     studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
   },
   "Get Recognised for Your Personality (GRYP)": {
@@ -72,7 +72,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Pawan Kumar", phone: "8178477961" },
       { name: "Disha", phone: "7015473578" },
     ],
-    studentCoordinator: { name: "Harsh", phone: "8166969968" },
+    studentCoordinator: { name: "Harsh", phone: "8168669968" },
     studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
   },
   "Chem Spark": {
@@ -82,7 +82,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Bhoomi", phone: "8168573726" },
       { name: "Aayush Mishra", phone: "9334805855" },
     ],
-    studentCoordinator: { name: "Harsh", phone: "8166969968" },
+    studentCoordinator: { name: "Harsh", phone: "8168669968" },
     studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
   },
 
@@ -138,7 +138,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Amit Kumar", phone: "9345805135" },
       { name: "Harsh Sindal", phone: "2307273876" },
     ],
-    studentCoordinator: { name: "Aryan Beniwal", phone: "9728762999" },
+    studentCoordinator: { name: "ARYAN DEHIMIWAL", phone: "9728762999" },
     studentCoCoordinator: { name: "Anshu Kumar", phone: "9468190812" },
   },
   "The Corporate Clash": {
@@ -148,7 +148,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Lavisha Goyal", phone: "9253278847" },
       { name: "Sundich Chauhan", phone: "8510077880" },
     ],
-    studentCoordinator: { name: "Aryan Beniwal", phone: "9728762999" },
+    studentCoordinator: { name: "ARYAN DEHIMIWAL", phone: "9728762999" },
     studentCoCoordinator: { name: "Anshu Kumar", phone: "9468190812" },
   },
 
@@ -183,7 +183,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Sanjeev", phone: "7419179477" },
     ],
     studentCoordinator: { name: "Krishna Maheshwari", phone: "7056894787" },
-    studentCoCoordinator: { name: "Yashika", phone: "7051144068" },
+    studentCoCoordinator: { name: "Agastya", phone: "8708411706" },
   },
   "Treasure Hunt": {
     department: "SUNSHINE",
@@ -193,7 +193,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Akshat", phone: "9350827383" },
     ],
     studentCoordinator: { name: "Krishna Maheshwari", phone: "7056894787" },
-    studentCoCoordinator: { name: "Yashika", phone: "7051144068" },
+    studentCoCoordinator: { name: "Agastya", phone: "8708411706" },
   },
 
   // ── CEEES ─────────────────────────────────────────────────────────────────
@@ -252,21 +252,22 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
 
   // ── MEDITRONICA (BME) ─────────────────────────────────────────────────────
   "Poster Making Competition": {
-    department: "MEDITRONICA (BME)",
+    department: "MEDITRONICA (BME)", 
+    
     coordinators: [],
-    studentCoordinator: { name: "Ayan", phone: "7988235524" },
+    studentCoordinator: { name: "Aryan", phone: "7982625724" },
     studentCoCoordinator: { name: "Ankit", phone: "9355106062" },
   },
   "Biomedical Tech Quiz": {
     department: "MEDITRONICA (BME)",
     coordinators: [],
-    studentCoordinator: { name: "Ayan", phone: "7988235524" },
+    studentCoordinator: { name: "Aryan", phone: "7982625724" },
     studentCoCoordinator: { name: "Ankit", phone: "9355106062" },
   },
   "Biomedical Debate Competition": {
     department: "MEDITRONICA (BME)",
     coordinators: [],
-    studentCoordinator: { name: "Ayan", phone: "7988235524" },
+    studentCoordinator: { name: "Aryan", phone: "7982625724" },
     studentCoCoordinator: { name: "Ankit", phone: "9355106062" },
   },
 
