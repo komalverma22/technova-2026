@@ -346,7 +346,35 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     studentCoordinator: { name: "Yashika", phone: "8700162084" },
     studentCoCoordinator: { name: "Abhishek", phone: "9896768939" },
   },
-
+// MED somec
+"Design Minds": {
+  department: "Mechanical engineering",
+  coordinators: [
+  
+  ],
+  studentCoordinator: { 
+    name: "Yuvraj Rai", 
+    phone: "9369495654" 
+  },
+  studentCoCoordinator: { 
+    name: "Dhanjeet Kumar Yadav", 
+    phone: "7007430796" 
+  }
+},
+"Aero Modeling (Sky Glider)": {
+  department: "Mechanical engineering",
+  coordinators: [
+  
+  ],
+  studentCoordinator: { 
+    name: "Yuvraj Rai", 
+    phone: "9369495654" 
+  },
+  studentCoCoordinator: { 
+    name: "Dhanjeet Kumar Yadav", 
+    phone: "7007430796" 
+  }
+},
   // ── RAMAN (Physics) ───────────────────────────────────────────────────────
   "Physi-Hunt": {
     department: "RAMAN (Physics)",
@@ -377,8 +405,14 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "CodeBug": {
     department: "DCRUST ODC",
     coordinators: [],
-    studentCoordinator: { name: "Laxmi", phone: "9350993206" },
-    studentCoCoordinator: { name: "Abhishek", phone: "9350696511" },
+    studentCoordinator: { name: "Laxmi", phone: "9350079206" },
+    studentCoCoordinator: { name: "Abhishek", phone: "9350069551" },
+  },
+  "SQL Master": {
+    department: "DCRUST ODC",
+    coordinators: [],
+    studentCoordinator: { name: "Laxmi", phone: "9350079206" },
+    studentCoCoordinator: { name: "Abhishek", phone: "9350069551" },
   },
 };
 
