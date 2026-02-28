@@ -417,7 +417,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Rozy", phone: "8572832441" },
       { name: "Sahil", phone: "8295522360" },
     ],
-    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoordinator:{ name: "Yashika", phone: "8700162084" },
     studentCoCoordinator: { name: "Abhishek Pandey", phone: "9896768939" },
   },
   "Think & Sprint": {
