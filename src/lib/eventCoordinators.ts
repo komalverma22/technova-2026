@@ -179,8 +179,8 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Archit Kumar", phone: "9813655644" },
       { name: "Divya", phone: "8295148907" },
     ],
-    studentCoordinator: { name: "Nishant Kumar", phone: "8447949250" },
-    studentCoCoordinator: { name: "Rohan Raj", phone: "9310377806" },
+    studentCoordinator:  { name: "Rohan Kumar Rai", phone: "9310377806" },
+    studentCoCoordinator: { name: "Neel Kamal", phone: "8447949250" },
   },
   "BPD (British Parliamentary Debate)": {
     department: "LISOC-Literary Society",
@@ -189,8 +189,8 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Rajat", phone: "7404993212" },
       { name: "Bhumika", phone: "9467598459" },
     ],
-    studentCoordinator: { name: "Nishant Kumar", phone: "8447949250" },
-    studentCoCoordinator: { name: "Rohan Raj", phone: "9310377806" },
+    studentCoordinator:  { name: "Rohan Kumar Rai", phone: "9310377806" },
+    studentCoCoordinator: { name: "Neel Kamal", phone: "8447949250" },
   },
 
   // ── SUNSHINE ──────────────────────────────────────────────────────────────
@@ -348,8 +348,8 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Biomedical Tech Quiz": {
     department: "MEDITRONICA (BME)",
     coordinators: [
-      { name: "Anshika / Akshit", phone: "8571816371" },
-      { name: "Kaveni", phone: "6232113336" },
+      { name: "Akshit", phone: "8571816371" },
+      { name: "Kaveri", phone: "6232113336" },
       { name: "Sourabh", phone: "8168341583" },
     ],
     studentCoordinator: { name: "Aryan", phone: "7982625724" },
@@ -403,17 +403,18 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     department: "NIRMAN (CIVIL)",
     coordinators: [
       { name: "Tanisha", phone: "8708076069" },
-      { name: "Yug Sangwan", phone: "8171132391" },
-      { name: "Jayant Beniwal", phone: "7056045318" },
+      { name: "Amarjot", phone: "6006248424" },
+      { name: "Ashish ", phone: "9729672344" },
     ],
-    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoordinator: { name: "Yashika", phone: "8700162084" },
     studentCoCoordinator: { name: "Abhishek Pandey", phone: "9896768939" },
   },
   "Bridge it Right": {
     department: "NIRMAN (CIVIL)",
     coordinators: [
-      { name: "Divya Singh", phone: "8708819922" },
+      { name: "Neetu", phone: "8818068093" },
       { name: "Tanu", phone: "7206347772" },
+      { name: "Rozy", phone: "8572832441" },
       { name: "Sahil", phone: "8295522360" },
     ],
     studentCoordinator: { name: "Harsh", phone: "8950173600" },
