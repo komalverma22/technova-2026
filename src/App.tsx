@@ -140,6 +140,12 @@ function App() {
               Brochure
             </Link>
             <Link
+              to="/schedule"
+              className="text-slate-900 hover:text-black transition-colors font-medium"
+            >
+              Schedule
+            </Link>
+            <Link
               to="/contact"
               className="text-slate-900 hover:text-black transition-colors font-medium"
             >
@@ -197,6 +203,7 @@ function App() {
               <a href="/events" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Events</a>
               <Link to="/getting-here" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Getting Here</Link>
               <Link to="/brochure" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Brochure</Link>
+              <Link to="/schedule" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Schedule</Link>
               <Link to="/contact" className="text-slate-900 hover:text-black transition-colors font-medium py-2">Contact</Link>
               {/* Auth links in mobile menu */}
               {isAuthenticated === true && (
