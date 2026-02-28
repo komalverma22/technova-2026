@@ -125,6 +125,17 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     studentCoordinator: { name: "Nikita Singh", phone: "8278907980" },
     studentCoCoordinator: { name: "Sunny Saini", phone: "7015463534" },
   },
+  
+  "Business Hunt": {
+    department: "YOUNG THESPIANS (DMS)",
+    coordinators: [
+      { name: "Apsara", phone: "8816950480" },
+      { name: "Anjali", phone: "8683852081" },
+      { name: "Jatin", phone: "9991224661" },
+    ],
+    studentCoordinator: { name: "Nikita Singh", phone: "8278907980" },
+    studentCoCoordinator: { name: "Sunny Saini", phone: "7015463534" },
+  },
 
   // ── ROBOTICS (THINKBOTS) ─────────────────────────────────────────────────
   "Walking-Dead": {
@@ -185,7 +196,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "BPD (British Parliamentary Debate)": {
     department: "LISOC-Literary Society",
     coordinators: [
-      { name: "Mohit", phone: "8168884901" },
+      { name: "Rohit", phone: "6204611307" },
       { name: "Rajat", phone: "7404993212" },
       { name: "Bhumika", phone: "9467598459" },
     ],
@@ -326,7 +337,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Brain Quest Arena": {
     department: "ENGENISIS (BT)",
     coordinators: [
-      { name: "Paras Sharma", phone: "9812689204" },
+      { name: "Paras Sharma", phone: "9034789204" },
       { name: "Raveena Kumari", phone: "9953262105" },
       { name: "Prachi Giri", phone: "8800418632" },
     ],
@@ -374,7 +385,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Mahak Verma", phone: "8708283003" },
       { name: "Tannu", phone: "8168397513" },
     ],
-    studentCoordinator: { name: "Monti", phone: "9350772741" },
+    studentCoordinator: { name: "Monti", phone: "9350472740" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
   "Magic of Chemistry": {
@@ -384,7 +395,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Yashasvi", phone: "7206738128" },
       { name: "Chhavi", phone: "9996461260" },
     ],
-    studentCoordinator: { name: "Monti", phone: "9350772741" },
+    studentCoordinator: { name: "Monti", phone: "9350472740" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
   "The Alchemist's Cipher": {
@@ -394,7 +405,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Kumkum", phone: "7015725980" },
       { name: "Priya", phone: "9306259105" },
     ],
-    studentCoordinator: { name: "Monti", phone: "9350772741" },
+    studentCoordinator: { name: "Monti", phone: "9350472740" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
 
