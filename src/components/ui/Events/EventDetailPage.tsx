@@ -203,7 +203,7 @@ export default function EventDetailPage() {
 
               {/* Event Coordinators Card */}
               {eventCoordinators && (() => {
-                // Build a flat list of student contacts only
+                // Build a flat list of student contacts and event coordinators
                 const rows: { role: string; name: string; phone: string }[] = [];
 
                 if (eventCoordinators.studentCoordinator) {
@@ -218,6 +218,17 @@ export default function EventDetailPage() {
                     role: "Student Co-Coordinator",
                     name: eventCoordinators.studentCoCoordinator.name,
                     phone: eventCoordinators.studentCoCoordinator.phone,
+                  });
+                }
+
+                // Add event-wise coordinators
+                if (eventCoordinators.coordinators && eventCoordinators.coordinators.length > 0) {
+                  eventCoordinators.coordinators.forEach((coordinator) => {
+                    rows.push({
+                      role: "Event Coordinator",
+                      name: coordinator.name,
+                      phone: coordinator.phone,
+                    });
                   });
                 }
 

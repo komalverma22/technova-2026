@@ -20,8 +20,8 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Innovation Odyssey Challenge": {
     department: "SAVERA",
     coordinators: [
-      { name: "Rishit (Coordinator)", phone: "98190 98697" },
-      { name: "Himanshu", phone: "9143588007" },
+      { name: "Harsh Kr (Coordinator)", phone: "9811413309" },
+      { name: "Himanshu", phone: "9143580007" },
       { name: "Bhoomi", phone: "9817413591" },
     ],
     studentCoordinator: { name: "Archana", phone: "7015114622" },
@@ -29,7 +29,10 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   },
   "Tech Titans Trivia": {
     department: "SAVERA",
-    coordinators: [],
+    coordinators: [
+      { name: "Ananya (Coordinator)", phone: "7988439289" },
+      { name: "Nandini", phone: "7015401143" },
+    ],
     studentCoordinator: { name: "Archana", phone: "7015114622" },
     studentCoCoordinator: { name: "Suraj", phone: "9546716342" },
   },
@@ -37,24 +40,39 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   // ── SEE (EED) ─────────────────────────────────────────────────────────────
   "Tech Charades": {
     department: "SEE (EED)",
-    coordinators: [],
+    coordinators: [
+      { name: "Yashika", phone: "8053602816" },
+      { name: "Shaan", phone: "9306754678" },
+      { name: "Rohan Lalka", phone: "8278920321" },
+    ],
     studentCoordinator: { name: "Anuj", phone: "9996022472" },
     studentCoCoordinator: { name: "Kajal", phone: "9034610676" },
   },
   "Tech Bid": {
     department: "SEE (EED)",
-    coordinators: [],
+    coordinators: [
+      { name: "Prajeshwar Kaushik", phone: "7015098896" },
+      { name: "Tannu", phone: "9692653159" },
+      { name: "Arpit", phone: "9466636455" },
+      { name: "Chirag", phone: "9253208728" },
+    ],
     studentCoordinator: { name: "Anuj", phone: "9996022472" },
     studentCoCoordinator: { name: "Kajal", phone: "9034610676" },
   },
   "Machine Mantra": {
     department: "SEE (EED)",
-    coordinators: [],
+    coordinators: [
+      { name: "Yash Dahiya", phone: "7015855834" },
+      { name: "Prince", phone: "9216786005" },
+      { name: "Sanjeet", phone: "" },
+      { name: "Deepanshu", phone: "" },
+      { name: "Pariksha", phone: "" },
+    ],
     studentCoordinator: { name: "Anuj", phone: "9996022472" },
     studentCoCoordinator: { name: "Kajal", phone: "9034610676" },
   },
 
-  // ── MANTHAN (CHE) ─────────────────────────────────────────────────────────
+  // ── MANTHAN (CHE) chemical ─────────────────────────────────────────────────────────
   "Knowledge Knockout Quiz (Mind Clash)": {
     department: "MANTHAN (CHE)",
     coordinators: [
@@ -63,7 +81,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Partik Singh", phone: "9350203487" },
     ],
     studentCoordinator: { name: "Harsh", phone: "8168669968" },
-    studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
+    studentCoCoordinator: { name: "Mayank Mann", phone: "7016416260" },
   },
   "Get Recognised for Your Personality (GRYP)": {
     department: "MANTHAN (CHE)",
@@ -73,7 +91,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Disha", phone: "7015473578" },
     ],
     studentCoordinator: { name: "Harsh", phone: "8168669968" },
-    studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
+    studentCoCoordinator: { name: "Mayank Mann", phone: "7016416260" },
   },
   "Chem Spark": {
     department: "MANTHAN (CHE)",
@@ -83,7 +101,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Aayush Mishra", phone: "9334805855" },
     ],
     studentCoordinator: { name: "Harsh", phone: "8168669968" },
-    studentCoCoordinator: { name: "Mayank Mann", phone: "7016416269" },
+    studentCoCoordinator: { name: "Mayank Mann", phone: "7016416260" },
   },
 
   // ── YOUNG THESPIANS (DMS) ─────────────────────────────────────────────────
@@ -92,7 +110,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     coordinators: [
       { name: "Hemant", phone: "9992551171" },
       { name: "Purvi", phone: "7988909541" },
-      { name: "Sarika", phone: "9992560565" },
+      { name: "Sarika", phone: "9992560550" },
     ],
     studentCoordinator: { name: "Nikita Singh", phone: "8278907980" },
     studentCoCoordinator: { name: "Sunny Saini", phone: "7015463534" },
@@ -101,32 +119,32 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     department: "YOUNG THESPIANS (DMS)",
     coordinators: [
       { name: "Apsara", phone: "8816950480" },
-      { name: "Anjali", phone: "8688525081" },
+      { name: "Anjali", phone: "8683852081" },
       { name: "Jatin", phone: "9991224661" },
     ],
     studentCoordinator: { name: "Nikita Singh", phone: "8278907980" },
     studentCoCoordinator: { name: "Sunny Saini", phone: "7015463534" },
   },
 
-  // ── ROBOTICS(THINKBOTS) ─────────────────────────────────────────────────────────────
+  // ── ROBOTICS (THINKBOTS) ─────────────────────────────────────────────────
   "Walking-Dead": {
     department: "ROBOTICS(THINKBOTS)",
     coordinators: [
       { name: "Pritam", phone: "9812015241" },
-      { name: "Sahil Kumar", phone: "8168606627" },
+      { name: "Sahil Kumar", phone: "8168560627" },
       { name: "Bhavana", phone: "8950293115" },
     ],
-    studentCoordinator: { name: "Sahil Kumar", phone: "8168606627" },
+    studentCoordinator: { name: "Sahil Kumar", phone: "8168560627" },
     studentCoCoordinator: { name: "Harshit Gupta", phone: "8318457562" },
   },
   "Dungeon-Drive": {
     department: "ROBOTICS(THINKBOTS)",
     coordinators: [
-      { name: "Sahil Kumar", phone: "8168606627" },
+      { name: "Sahil Kumar", phone: "8168560627" },
       { name: "Harshit Gupta", phone: "8318457562" },
       { name: "Pritam", phone: "9812015241" },
     ],
-    studentCoordinator: { name: "Sahil Kumar", phone: "8168606627" },
+    studentCoordinator: { name: "Sahil Kumar", phone: "8168560627" },
     studentCoCoordinator: { name: "Harshit Gupta", phone: "8318457562" },
   },
 
@@ -134,11 +152,11 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Mix-Matched": {
     department: "E-Cell",
     coordinators: [
-      { name: "Akshat", phone: "989565691" },
-      { name: "Amit Kumar", phone: "9345805135" },
-      { name: "Harsh Sindal", phone: "2307273876" },
+      { name: "Akshat", phone: "8950956591" },
+      { name: "Amit Kumar", phone: "9145850135" },
+      { name: "Harsh Jindal", phone: "8307273876" },
     ],
-    studentCoordinator: { name: "ARYAN DEHIMIWAL", phone: "9728762999" },
+    studentCoordinator: { name: "ARYAN DEHIMIWAL", phone: "9728762899" },
     studentCoCoordinator: { name: "Anshu Kumar", phone: "9468190812" },
   },
   "The Corporate Clash": {
@@ -146,9 +164,9 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     coordinators: [
       { name: "Garv", phone: "7082398051" },
       { name: "Lavisha Goyal", phone: "9253278847" },
-      { name: "Sundich Chauhan", phone: "8510077880" },
+      { name: "Sunidhi Chauhan", phone: "8510077880" },
     ],
-    studentCoordinator: { name: "ARYAN DEHIMIWAL", phone: "9728762999" },
+    studentCoordinator: { name: "ARYAN DEHIMIWAL", phone: "9728762899" },
     studentCoCoordinator: { name: "Anshu Kumar", phone: "9468190812" },
   },
 
@@ -156,33 +174,34 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   "Student of the Year": {
     department: "LISOC-Literary Society",
     coordinators: [
-      { name: "Nishant Kumar", phone: "8448044603" },
+      { name: "Nishant Kumar", phone: "8448048603" },
+      // { name: "Neel Kamal", phone: "8447949250" },
       { name: "Archit Kumar", phone: "9813655644" },
       { name: "Divya", phone: "8295148907" },
     ],
-    studentCoordinator: { name: "Nishant Kumar", phone: "8448044603" },
-    studentCoCoordinator: { name: "Rohit Raj", phone: "7404993212" },
+    studentCoordinator: { name: "Nishant Kumar", phone: "8447949250" },
+    studentCoCoordinator: { name: "Rohan Raj", phone: "9310377806" },
   },
   "BPD (British Parliamentary Debate)": {
     department: "LISOC-Literary Society",
     coordinators: [
-      { name: "Mohit", phone: "8168886901" },
+      { name: "Mohit", phone: "8168884901" },
       { name: "Rajat", phone: "7404993212" },
       { name: "Bhumika", phone: "9467598459" },
     ],
-    studentCoordinator: { name: "Nishant Kumar", phone: "8448044603" },
-    studentCoCoordinator: { name: "Rohit Raj", phone: "7404993212" },
+    studentCoordinator: { name: "Nishant Kumar", phone: "8447949250" },
+    studentCoCoordinator: { name: "Rohan Raj", phone: "9310377806" },
   },
 
   // ── SUNSHINE ──────────────────────────────────────────────────────────────
   "Gaming Event": {
     department: "SUNSHINE",
     coordinators: [
-      { name: "Dronu Chahlia", phone: "9468199602" },
+      { name: "Dhruv Chahlia", phone: "9468199602" },
       { name: "Pushkar Narula", phone: "9896583405" },
       { name: "Sanjeev", phone: "7419179477" },
     ],
-    studentCoordinator: { name: "Krishna Maheshwari", phone: "7056894787" },
+    studentCoordinator: { name: "Krishna Maheshwari", phone: "7015081345" },
     studentCoCoordinator: { name: "Agastya", phone: "8708411706" },
   },
   "Treasure Hunt": {
@@ -192,137 +211,189 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
       { name: "Simran", phone: "8901087009" },
       { name: "Akshat", phone: "9350827383" },
     ],
-    studentCoordinator: { name: "Krishna Maheshwari", phone: "7056894787" },
+    studentCoordinator: { name: "Krishna Maheshwari", phone: "7015081345" },
     studentCoCoordinator: { name: "Agastya", phone: "8708411706" },
   },
-// cse
+
+  // ── CSE Department ────────────────────────────────────────────────────────
   "Web Master": {
-  department: "CSE Department",
-  coordinators: [],
-  studentCoordinator: { 
-    name: "Aditya Aggrawal", 
-    phone: "9873403658" 
+    department: "CSE Department",
+    coordinators: [
+      { name: "Mahek", phone: "9653540271" },
+      { name: "Rijul Kasana", phone: "9354297700" },
+      { name: "Neeraj", phone: "7027142144" },
+    ],
+    studentCoordinator: { name: "Aditya Aggrawal", phone: "9873403658" },
+    studentCoCoordinator: { name: "Ansshu", phone: "9015078464" },
   },
-  studentCoCoordinator: { 
-    name: "Ansshu", 
-    phone: "9015078464" 
-  },
-},
   "Techno Quiz": {
-  department: "CSE Department",
-  coordinators: [],
-  studentCoordinator: { 
-    name: "Aditya Aggrawal", 
-    phone: "9873403658" 
+    department: "CSE Department",
+    coordinators: [
+      { name: "Divyansh", phone: "9729308775" },
+      { name: "Vivek", phone: "8816883633" },
+      { name: "Jayant", phone: "7082401701" },
+    ],
+    studentCoordinator: { name: "Aditya Aggrawal", phone: "9873403658" },
+    studentCoCoordinator: { name: "Ansshu", phone: "9015078464" },
   },
-  studentCoCoordinator: { 
-    name: "Ansshu", 
-    phone: "9015078464" 
-  },
-},
   "Think Future": {
-  department: "CSE Department",
-  coordinators: [],
-  studentCoordinator: { 
-    name: "Aditya Aggrawal", 
-    phone: "9873403658" 
+    department: "CSE Department",
+    coordinators: [
+      { name: "Abhishek Saini", phone: "9350069551" },
+      { name: "Abhishek Kumar", phone: "8877998483" },
+      { name: "Komal Yadav", phone: "9253413116" },
+    ],
+    studentCoordinator: { name: "Aditya Aggrawal", phone: "9873403658" },
+    studentCoCoordinator: { name: "Ansshu", phone: "9015078464" },
   },
-  studentCoCoordinator: { 
-    name: "Ansshu", 
-    phone: "9015078464" 
-  },
-},
+
   // ── CEEES ─────────────────────────────────────────────────────────────────
   "Idea-Thon": {
     department: "CEEES",
-    coordinators: [],
-    studentCoordinator: { name: "Ankit Kumar", phone: "9815874080" },
-    studentCoCoordinator: { name: "Vansh Saini", phone: "7014867807" },
+    coordinators: [
+      { name: "Ritika", phone: "9368373056" },
+      { name: "Priyanshu", phone: "8683911620" },
+      { name: "Priyadarshan", phone: "9105131514" },
+    ],
+    studentCoordinator: { name: "Anshu Kumar", phone: "9817582885" },
+    studentCoCoordinator: { name: "Vansh Saini", phone: "7027768707" },
   },
   "Agri-Technictionary": {
     department: "CEEES",
-    coordinators: [],
-    studentCoordinator: { name: "Ankit Kumar", phone: "9815874080" },
-    studentCoCoordinator: { name: "Vansh Saini", phone: "7014867807" },
+    coordinators: [
+      { name: "Parul", phone: "9812433539" },
+      { name: "Sahil", phone: "9992301925" },
+      { name: "Vishu", phone: "9050409918" },
+    ],
+    studentCoordinator: { name: "Anshu Kumar", phone: "9817582885" },
+    studentCoCoordinator: { name: "Vansh Saini", phone: "7027768707" },
   },
   "Seed Sorting Race": {
     department: "CEEES",
-    coordinators: [],
-    studentCoordinator: { name: "Ankit Kumar", phone: "9815874080" },
-    studentCoCoordinator: { name: "Vansh Saini", phone: "7014867807" },
+    coordinators: [
+      { name: "Nikhil", phone: "8684004933" },
+      { name: "Rajat", phone: "9050280207" },
+      { name: "Yash", phone: "8989848380" },
+    ],
+    studentCoordinator: { name: "Anshu Kumar", phone: "9817582885" },
+    studentCoCoordinator: { name: "Vansh Saini", phone: "7027768707" },
   },
 
   // ── MATHEMAGICIANS (Mathematics) ───────────────────────────────────────────
   "Poster Making": {
     department: "MATHEMAGICIANS (Mathematics)",
-    coordinators: [],
+    coordinators: [
+      { name: "Jaya", phone: "9996975284" },
+      { name: "Anjali", phone: "7419313745" },
+      { name: "Diya", phone: "7056705284" },
+    ],
     studentCoordinator: { name: "Dipanshu", phone: "9812173253" },
-    studentCoCoordinator: { name: "Nikita Pawar", phone: "8930519875" },
+    studentCoCoordinator: { name: "Nikita Panwar", phone: "8930519875" },
   },
   "Debate": {
     department: "MATHEMAGICIANS (Mathematics)",
-    coordinators: [],
+    coordinators: [
+      { name: "Aditya Barak", phone: "9992222263" },
+      { name: "Anshul", phone: "9034179331" },
+      { name: "Savin Malik", phone: "9992106583" },
+    ],
     studentCoordinator: { name: "Dipanshu", phone: "9812173253" },
-    studentCoCoordinator: { name: "Nikita Pawar", phone: "8930519875" },
+    studentCoCoordinator: { name: "Nikita Panwar", phone: "8930519875" },
   },
   "Quiz": {
     department: "MATHEMAGICIANS (Mathematics)",
-    coordinators: [],
+    coordinators: [
+      { name: "Sagar", phone: "9813686078" },
+      { name: "Princy", phone: "9306668220" },
+      { name: "Neha", phone: "8199076316" },
+      { name: "Priyanshu", phone: "9996525807" },
+    ],
     studentCoordinator: { name: "Dipanshu", phone: "9812173253" },
-    studentCoCoordinator: { name: "Nikita Pawar", phone: "8930519875" },
+    studentCoCoordinator: { name: "Nikita Panwar", phone: "8930519875" },
   },
 
   // ── ENGENISIS (BT) ────────────────────────────────────────────────────────
   "Brainy Brawl": {
     department: "ENGENISIS (BT)",
-    coordinators: [],
+    coordinators: [
+      { name: "Sharmili", phone: "9310123638" },
+      { name: "P. Pujitha", phone: "7042564979" },
+      { name: "Nishtha", phone: "9015466455" },
+    ],
     studentCoordinator: { name: "Ayushi Singh", phone: "7827216646" },
     studentCoCoordinator: { name: "Sidharth", phone: "8059062592" },
   },
   "Brain Quest Arena": {
     department: "ENGENISIS (BT)",
-    coordinators: [],
+    coordinators: [
+      { name: "Paras Sharma", phone: "9812689204" },
+      { name: "Raveena Kumari", phone: "9953262105" },
+      { name: "Prachi Giri", phone: "8800418632" },
+    ],
     studentCoordinator: { name: "Ayushi Singh", phone: "7827216646" },
     studentCoCoordinator: { name: "Sidharth", phone: "8059062592" },
   },
 
   // ── MEDITRONICA (BME) ─────────────────────────────────────────────────────
   "Poster Making Competition": {
-    department: "MEDITRONICA (BME)", 
-    
-    coordinators: [],
+    department: "MEDITRONICA (BME)",
+    coordinators: [
+      { name: "Paviter", phone: "7701973440" },
+      { name: "Bhawna", phone: "8368902424" },
+      { name: "Anushka", phone: "9953099802" },
+    ],
     studentCoordinator: { name: "Aryan", phone: "7982625724" },
-    studentCoCoordinator: { name: "Ankit", phone: "9355106062" },
+    studentCoCoordinator: { name: "Ankit", phone: "9350660602" },
   },
   "Biomedical Tech Quiz": {
     department: "MEDITRONICA (BME)",
-    coordinators: [],
+    coordinators: [
+      { name: "Anshika / Akshit", phone: "8571816371" },
+      { name: "Kaveni", phone: "6232113336" },
+      { name: "Sourabh", phone: "8168341583" },
+    ],
     studentCoordinator: { name: "Aryan", phone: "7982625724" },
-    studentCoCoordinator: { name: "Ankit", phone: "9355106062" },
+    studentCoCoordinator: { name: "Ankit", phone: "9350660602" },
   },
   "Biomedical Debate Competition": {
     department: "MEDITRONICA (BME)",
-    coordinators: [],
+    coordinators: [
+      { name: "Advika", phone: "9810696492" },
+      { name: "Sneha", phone: "8950679804" },
+      { name: "Kirti", phone: "7988145663" },
+    ],
     studentCoordinator: { name: "Aryan", phone: "7982625724" },
-    studentCoCoordinator: { name: "Ankit", phone: "9355106062" },
+    studentCoCoordinator: { name: "Ankit", phone: "9350660602" },
   },
 
   // ── RASAYANAM (Chemistry) ─────────────────────────────────────────────────
   "Science Quiz": {
     department: "RASAYANAM (Chemistry)",
-    coordinators: [],
+    coordinators: [
+      { name: "Megha", phone: "9817958951" },
+      { name: "Mahak Verma", phone: "8708283003" },
+      { name: "Tannu", phone: "8168397513" },
+    ],
     studentCoordinator: { name: "Monti", phone: "9350772741" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
   "Magic of Chemistry": {
     department: "RASAYANAM (Chemistry)",
-    coordinators: [],
+    coordinators: [
+      { name: "Sheetal", phone: "8395940368" },
+      { name: "Yashasvi", phone: "7206738128" },
+      { name: "Chhavi", phone: "9996461260" },
+    ],
     studentCoordinator: { name: "Monti", phone: "9350772741" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
   "The Alchemist's Cipher": {
     department: "RASAYANAM (Chemistry)",
-    coordinators: [],
+    coordinators: [
+      { name: "Shruti", phone: "9671110581" },
+      { name: "Kumkum", phone: "7015725980" },
+      { name: "Priya", phone: "9306259105" },
+    ],
     studentCoordinator: { name: "Monti", phone: "9350772741" },
     studentCoCoordinator: { name: "Sahil", phone: "9350122173" },
   },
@@ -330,51 +401,57 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   // ── NIRMAN (CIVIL) ─────────────────────────────────────────────────────────
   "Chakravyuh": {
     department: "NIRMAN (CIVIL)",
-    coordinators: [],
-    studentCoordinator: { name: "Yashika", phone: "8700162084" },
-    studentCoCoordinator: { name: "Abhishek", phone: "9896768939" },
+    coordinators: [
+      { name: "Tanisha", phone: "8708076069" },
+      { name: "Yug Sangwan", phone: "8171132391" },
+      { name: "Jayant Beniwal", phone: "7056045318" },
+    ],
+    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoCoordinator: { name: "Abhishek Pandey", phone: "9896768939" },
   },
   "Bridge it Right": {
     department: "NIRMAN (CIVIL)",
-    coordinators: [],
-    studentCoordinator: { name: "Yashika", phone: "8700162084" },
-    studentCoCoordinator: { name: "Abhishek", phone: "9896768939" },
+    coordinators: [
+      { name: "Divya Singh", phone: "8708819922" },
+      { name: "Tanu", phone: "7206347772" },
+      { name: "Sahil", phone: "8295522360" },
+    ],
+    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoCoordinator: { name: "Abhishek Pandey", phone: "9896768939" },
   },
   "Think & Sprint": {
     department: "NIRMAN (CIVIL)",
-    coordinators: [],
-    studentCoordinator: { name: "Yashika", phone: "8700162084" },
-    studentCoCoordinator: { name: "Abhishek", phone: "9896768939" },
+    coordinators: [
+      { name: "Srishti Rawal", phone: "9034524004" },
+      { name: "Saman", phone: "9992379210" },
+      { name: "Vikash Yadav", phone: "7678601745" },
+    ],
+    studentCoordinator: { name: "Harsh", phone: "8950173600" },
+    studentCoCoordinator: { name: "Abhishek Pandey", phone: "9896768939" },
   },
-// MED somec
-"Design Minds": {
-  department: "Mechanical engineering",
-  coordinators: [
-  
-  ],
-  studentCoordinator: { 
-    name: "Yuvraj Rai", 
-    phone: "9369495654" 
+
+  // ── Mechanical Engineering (SoMEC) ────────────────────────────────────────
+  "Design Minds": {
+    department: "Mechanical Engineering",
+    coordinators: [
+      { name: "Rohan Kumar Rai", phone: "9310377806" },
+      { name: "Sameen", phone: "9306752242" },
+      { name: "Kartik Kashyap", phone: "9266467568" },
+    ],
+    studentCoordinator: { name: "Yuvraj Rai", phone: "9369495654" },
+    studentCoCoordinator: { name: "Dhanjeet Kumar Yadav", phone: "7007430796" },
   },
-  studentCoCoordinator: { 
-    name: "Dhanjeet Kumar Yadav", 
-    phone: "7007430796" 
-  }
-},
-"Aero Modeling (Sky Glider)": {
-  department: "Mechanical engineering",
-  coordinators: [
-  
-  ],
-  studentCoordinator: { 
-    name: "Yuvraj Rai", 
-    phone: "9369495654" 
+  "Aero Modeling (Sky Glider)": {
+    department: "Mechanical Engineering",
+    coordinators: [
+      { name: "Tanisha Yadav", phone: "8307236942" },
+      { name: "Himanshu Saini", phone: "7015087827" },
+      { name: "Umesh", phone: "8307519848" },
+    ],
+    studentCoordinator: { name: "Yuvraj Rai", phone: "9369495654" },
+    studentCoCoordinator: { name: "Dhanjeet Kumar Yadav", phone: "7007430796" },
   },
-  studentCoCoordinator: { 
-    name: "Dhanjeet Kumar Yadav", 
-    phone: "7007430796" 
-  }
-},
+
   // ── RAMAN (Physics) ───────────────────────────────────────────────────────
   "Physi-Hunt": {
     department: "RAMAN (Physics)",
@@ -401,10 +478,47 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     studentCoordinator: { name: "Dr Ravinder Kumar", phone: "" },
   },
 
+  // ── ECED Department ───────────────────────────────────────────────────────
+  "Circuit Design and Debugging Competition": {
+    department: "ECED",
+    coordinators: [
+      { name: "Rohit Shankar", phone: "8368082225" },
+      { name: "Yashika", phone: "9899009143" },
+      { name: "Piyush Sharma", phone: "7310605726" },
+      { name: "Sumit", phone: "6295137950" },
+    ],
+    studentCoordinator: { name: "Gautam Saw", phone: "9334053907" },
+    studentCoCoordinator: { name: "Nitin", phone: "8708716164" },
+  },
+  "Roastverse": {
+    department: "ECED",
+    coordinators: [
+      { name: "Akshat", phone: "8950956591" },
+      { name: "Ashurt Bansal", phone: "9729705939" },
+      { name: "Rahul", phone: "7877051118" },
+    ],
+    studentCoordinator: { name: "Gautam Saw", phone: "9334053907" },
+    studentCoCoordinator: { name: "Nitin", phone: "8708716164" },
+  },
+  "Prompt2Poster": {
+    department: "ECED",
+    coordinators: [
+      { name: "Sagar", phone: "9992930151" },
+      { name: "Rahul Bhukal", phone: "9671268466" },
+      { name: "Mahesh", phone: "9034398741" },
+    ],
+    studentCoordinator: { name: "Gautam Saw", phone: "9334053907" },
+    studentCoCoordinator: { name: "Nitin", phone: "8708716164" },
+  },
+
   // ── DCRUST ODC ─────────────────────────────────────────────────────────────
   "CodeBug": {
     department: "DCRUST ODC",
-    coordinators: [],
+    coordinators: [
+      { name: "Mukul", phone: "9817366024" },
+      { name: "Ankit Balhara", phone: "8684973584" },
+      { name: "Komal Verma", phone: "9053931575" },
+    ],
     studentCoordinator: { name: "Laxmi", phone: "9350079206" },
     studentCoCoordinator: { name: "Abhishek", phone: "9350069551" },
   },
