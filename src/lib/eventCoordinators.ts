@@ -447,7 +447,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     department: "Mechanical Engineering",
     coordinators: [
       { name: "Rohan Kumar Rai", phone: "9310377806" },
-      { name: "Sameen", phone: "9306752242" },
+      { name: "Sameer", phone: "9306752242" },
       { name: "Kartik Kashyap", phone: "9266467568" },
     ],
     studentCoordinator: { name: "Yuvraj Rai", phone: "9369495654" },
@@ -458,7 +458,7 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
     coordinators: [
       { name: "Tanisha Yadav", phone: "8307236942" },
       { name: "Himanshu Saini", phone: "7015087827" },
-      { name: "Umesh", phone: "8307519848" },
+      { name: "Umesh Kumar", phone: "8307519848" },
     ],
     studentCoordinator: { name: "Yuvraj Rai", phone: "9369495654" },
     studentCoCoordinator: { name: "Dhanjeet Kumar Yadav", phone: "7007430796" },
