@@ -1,15 +1,9 @@
 import { useState, useCallback } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
+import { Document, Page } from "react-pdf";
 import { Download, ExternalLink, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { BackButton } from "../BackButton";
-
-// Point PDF.js worker at the CDN build that ships with react-pdf
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/build/pdf.worker.min.mjs",
-    import.meta.url
-).toString();
 
 const PDF_PATH = "/brochure-technova_compressed.pdf";
 

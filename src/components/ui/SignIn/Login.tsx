@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { GalleryVerticalEnd } from "lucide-react";
+import { GalleryVerticalEnd, Eye, EyeOff } from "lucide-react";
 import { BackButton } from "../BackButton";
 
 import { cn } from "../utils/cn";
@@ -49,6 +49,7 @@ function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -138,13 +139,25 @@ function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
               <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input
-                  id="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((p) => !p)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                    tabIndex={-1}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
                 <FieldDescription>
                   Must be at least 8 characters long.
                 </FieldDescription>

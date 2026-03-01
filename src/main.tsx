@@ -1,8 +1,16 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { pdfjs } from 'react-pdf';
 import App from './App.tsx';
 import './index.css';
+
+// ── PDF.js worker — configured ONCE here so both BrochurePage and
+// SchedulePage share the same worker instance without conflicts.
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString();
 import { Faq } from './components/ui/FAQ/faq.tsx';
 import { Sponsors } from './components/ui/Sponsors/Sponsor.tsx';
 import { AboutUs } from './components/ui/About-us/index.tsx';

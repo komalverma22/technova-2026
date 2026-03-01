@@ -724,6 +724,94 @@ function printRegistrations(registrations: Registration[], eventFilter: string) 
   if (win) { win.document.write(html); win.document.close(); }
 }
 
+function downloadCSV(registrations: Registration[], eventFilter: string) {
+  const headers = [
+    "Event",
+    "Department",
+    "Team Name",
+    "Roll No.",
+    "Member Name",
+    "Email",
+    "Mobile",
+    "College",
+    "Branch",
+    "Semester",
+    "Registered By (Name)",
+    "Registered By (Email)",
+    "Registered By (Mobile)",
+    "Registered On",
+  ];
+
+  const esc = (v: unknown) => {
+    const s = String(v ?? "");
+    // Wrap in quotes if it contains comma, quote, or newline
+    if (s.includes(",") || s.includes('"') || s.includes("\n")) {
+      return `"${s.replace(/"/g, '""')}"`;
+    }
+    return s;
+  };
+
+  const sorted = [...registrations].sort((a, b) =>
+    (a.event?.title ?? a.title ?? "").toLowerCase().localeCompare(
+      (b.event?.title ?? b.title ?? "").toLowerCase()
+    )
+  );
+
+  const rows: string[] = [headers.map(esc).join(",")];
+
+  for (const reg of sorted) {
+    const eventName = reg.event?.title ?? reg.title ?? "";
+    const dept = reg.event?.department ?? reg.department ?? "";
+    const teamName = reg.teamName ?? "";
+    const registrar = reg.registrar ?? reg.user;
+    const { date, time } = formatDateTime(reg.createdAt);
+    const regDateTime = [date, time].filter(Boolean).join(" ");
+    const members = reg.teamMember ?? [];
+
+    if (members.length === 0) {
+      rows.push(
+        [
+          eventName, dept, teamName,
+          "", "", "", "", "", "", "",
+          registrar?.name ?? "",
+          registrar?.email ?? "",
+          registrar?.mobileNumber ?? registrar?.mobile ?? "",
+          regDateTime,
+        ].map(esc).join(",")
+      );
+    } else {
+      for (const m of members) {
+        rows.push(
+          [
+            eventName, dept, teamName,
+            m.rollNo ?? "",
+            m.name ?? "",
+            m.email ?? "",
+            m.mobileNumber ?? m.mobile ?? "",
+            m.college ?? "",
+            m.branch ?? "",
+            m.semester ?? "",
+            registrar?.name ?? "",
+            registrar?.email ?? "",
+            registrar?.mobileNumber ?? registrar?.mobile ?? "",
+            regDateTime,
+          ].map(esc).join(",")
+        );
+      }
+    }
+  }
+
+  const csvContent = rows.join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const label = eventFilter === "all" ? "all-events" : eventFilter.replace(/\s+/g, "-").toLowerCase();
+  link.href = url;
+  link.download = `technova-2026-registrations-${label}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function RegistrationsTab({
   registrations,
   loading,
@@ -802,13 +890,21 @@ function RegistrationsTab({
               </select>
             </div>
 
-            {/* Print */}
-            <button
-              onClick={() => printRegistrations(filtered, eventFilter)}
-              className="flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-medium text-white transition-all hover:bg-indigo-500 sm:py-1.5 sm:text-sm"
-            >
-              🖨 Print
-            </button>
+            {/* Print + CSV */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => printRegistrations(filtered, eventFilter)}
+                className="flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-medium text-white transition-all hover:bg-indigo-500 sm:py-1.5 sm:text-sm"
+              >
+                🖨 Print
+              </button>
+              <button
+                onClick={() => downloadCSV(filtered, eventFilter)}
+                className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 text-xs font-medium text-white transition-all hover:bg-emerald-600 sm:py-1.5 sm:text-sm"
+              >
+                ⬇ CSV
+              </button>
+            </div>
           </div>
         )}
       </div>
