@@ -19,6 +19,13 @@
   function = "og-meta"
   path     = "/events/*"
 
+# ── PDF pass-through ───────────────────────────────────────────────────────────
+# Must come BEFORE the SPA catch-all so Netlify serves the real files.
+[[redirects]]
+  from   = "/*.pdf"
+  to     = "/:splat.pdf"
+  status = 200
+
 # ── SPA Fallback ───────────────────────────────────────────────────────────────
 # All routes not matched by a static file fall back to index.html so
 # React Router can handle client-side navigation.
