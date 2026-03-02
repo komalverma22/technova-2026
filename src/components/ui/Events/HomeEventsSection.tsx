@@ -74,10 +74,12 @@ export function HomeEventsSection() {
   return (
     <section id="events" className="relative w-full px-4 py-16 sm:px-6 md:py-24 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <h2
-          className="mb-4 text-center font-bold tracking-tight text-white"
-          style={{ fontFamily: "Eagle Lake", fontSize: "3.75rem" }}
-        >
+       <h2
+  className="mb-4 text-center font-bold tracking-tight text-white text-[1.75rem] md:text-4xl lg:text-5xl xl:text-6xl"
+  style={{ fontFamily: "Eagle Lake" }}
+>
+  
+
           {isFeatured ? "CENTRALIZED EVENTS" : "FEATURED EVENTS"}
         </h2>
         <p className="mx-auto mb-12 max-w-2xl text-center text-slate-400">
