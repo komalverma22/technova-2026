@@ -38,7 +38,7 @@ const Footer = () => {
               className="max-w-md text-xs sm:text-sm text-white/70 leading-relaxed"
               style={{ fontFamily: "Inter, sans-serif" }}
             >
-              Technova&apos;26 is an annual tech fest at DCRUST Murthal — a convergence of innovation, tech talks, and exciting competitions. Join us for an electrifying experience.
+              TECHNOVA is DCRUST&apos;s annual technical symposium, attracting thousands of NCR students to showcase innovation, creativity, and diverse technical events.
             </p>
             <div className="flex flex-wrap gap-2 sm:gap-3 text-[0.65rem] sm:text-xs uppercase text-white/50" style={{ fontFamily: "Inter, sans-serif" }}>
               <span className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/10 bg-white/5 px-3 sm:px-4 py-1.5 sm:py-2">
@@ -142,7 +142,7 @@ const Footer = () => {
               <li className="flex items-start gap-2 sm:gap-3">
                 <FiMail className="mt-0.5 sm:mt-1 h-4 w-4 sm:h-5 sm:w-5 text-white/90 flex-shrink-0" />
                 <a href="mailto:technova@dcrustm.org" className="hover:text-white transition break-all hover:bg-white/10 hover:backdrop-blur-md px-2 py-1 rounded">
-                 coordinator_technova@dcrustm.org
+                  coordinator_technova@dcrustm.org
                 </a>
               </li>
               {/* <li className="flex items-start gap-2 sm:gap-3">

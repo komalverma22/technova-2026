@@ -33,6 +33,11 @@ import BrochurePage from './components/ui/Brochure/BrochurePage.tsx';
 import SchedulePage from './components/ui/Schedule/SchedulePage.tsx';
 import ContactPage from './components/ui/Contact/ContactPage.tsx';
 
+import Carousel from './components/ui/About-us/Carousel.tsx';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { Button } from './components/ui/button.tsx';
+
 // Home page component banao
 function HomePage() {
   return (
@@ -41,6 +46,40 @@ function HomePage() {
       <AboutUs />
       {/* <Example/> */}
       <HomeEventsSection />
+
+      {/* ── Gallery Preview Section ── */}
+      <section className="relative py-16 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
+        {/* Section header */}
+        <div className="max-w-6xl mx-auto mb-10 sm:mb-12">
+          <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-indigo-400 font-semibold mb-2">
+            Moments from the Past
+          </p>
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight"
+            style={{ textShadow: '0 0 40px rgba(99,102,241,0.35)' }}
+          >
+            Gallery
+          </h2>
+        </div>
+
+        {/* Carousel */}
+        <div className="max-w-6xl mx-auto">
+          <div className="relative h-[240px] sm:h-[360px] md:h-[460px] lg:h-[540px] rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
+            <Carousel autoplay={true} autoplayDelay={3000} pauseOnHover={true} loop={true} />
+          </div>
+
+          {/* Visit Gallery button – identical to View All Events */}
+          <div className="mt-12 flex justify-center">
+            <Link to="/gallery">
+              <Button variant="white" size="lg" className="gap-2 px-8 py-6 text-base">
+                Visit Full Gallery
+                <ArrowRight className="size-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* <Sponsors/> */}
       <Faq />
       <Footer />

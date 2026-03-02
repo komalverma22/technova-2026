@@ -1,6 +1,4 @@
-// import Carousel from './Carousel'
 
-import Carousel from "./Carousel";
 
 export const AboutUs = () => (
   <div id="about" className="flex w-full items-center justify-center py-12 px-4">
@@ -16,18 +14,14 @@ export const AboutUs = () => (
       {/* Carousel and Text Container */}
       <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start">
 
-        {/* Carousel - Left Side */}
+        {/* Poster - Left Side */}
         <div className="w-full sm:w-[85%] md:w-[75%] lg:w-1/2">
           <div className="relative h-[260px] sm:h-[340px] md:h-[420px] lg:h-[520px]">
-            {/* <Carousel
-              baseWidth={500}
-              autoplay={true}
-              autoplayDelay={3000}
-              pauseOnHover={true}
-              loop={true}
-              round={false}
-            /> */}
-            <Carousel autoplay={true} autoplayDelay={3000} pauseOnHover={true} loop={true} />
+            <img
+              src="/poster.png"
+              alt="TechNova'26 Poster"
+              className="w-full h-full object-contain rounded-2xl"
+            />
           </div>
         </div>
 
@@ -41,5 +35,6 @@ export const AboutUs = () => (
         </div>
       </div>
     </div>
+
   </div>
 )
