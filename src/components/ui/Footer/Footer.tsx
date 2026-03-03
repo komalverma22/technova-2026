@@ -141,7 +141,7 @@ const Footer = () => {
             <ul className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white/80" style={{ fontFamily: "Inter, sans-serif" }}>
               <li className="flex items-start gap-2 sm:gap-3">
                 <FiMail className="mt-0.5 sm:mt-1 h-4 w-4 sm:h-5 sm:w-5 text-white/90 flex-shrink-0" />
-                <a href="mailto:technova@dcrustm.org" className="hover:text-white transition break-all hover:bg-white/10 hover:backdrop-blur-md px-2 py-1 rounded">
+                <a href="mailto:coordinator_technova@dcrustm.org" className="hover:text-white transition break-all hover:bg-white/10 hover:backdrop-blur-md px-2 py-1 rounded">
                   coordinator_technova@dcrustm.org
                 </a>
               </li>

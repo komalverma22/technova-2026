@@ -410,14 +410,14 @@ export default function ContactPage() {
                         <p className="relative mb-6 text-sm text-slate-400">
                             Reach out to us at&nbsp;
                             <a
-                                href="mailto:technova@dcrustm.org"
+                                href="mailto:coordinator_technova@dcrustm.org"
                                 className="text-indigo-300 underline underline-offset-2 hover:text-indigo-200 transition break-all"
                             >
-                                technova@dcrustm.org
+                                coordinator_technova@dcrustm.org
                             </a>
                         </p>
                         <a
-                            href="mailto:technova@dcrustm.org"
+                            href="mailto:coordinator_technova@dcrustm.org"
                             className="relative inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-indigo-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] active:scale-95"
                         >
                             <Mail className="h-4 w-4" />
