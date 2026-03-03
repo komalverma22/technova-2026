@@ -34,6 +34,8 @@ import SchedulePage from './components/ui/Schedule/SchedulePage.tsx';
 import ContactPage from './components/ui/Contact/ContactPage.tsx';
 
 import Carousel from './components/ui/About-us/Carousel.tsx';
+import PosterCarousel from './components/ui/About-us/PosterCarousel.tsx';
+import { MessagesCarousel } from './components/ui/Messages/MessagesCarousel.tsx';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './components/ui/button.tsx';
@@ -44,6 +46,13 @@ function HomePage() {
     <>
       <App />
       <AboutUs />
+
+      {/* ── Messages from VC / DSW / Registrar ── */}
+      <MessagesCarousel />
+
+      {/* ── Poster Carousel ── */}
+      {/* <PosterCarousel /> */}
+
       {/* <Example/> */}
       <HomeEventsSection />
 
@@ -65,7 +74,7 @@ function HomePage() {
             <Carousel autoplay={true} autoplayDelay={3000} pauseOnHover={true} loop={true} />
           </div>
 
-          {/* Visit Gallery button – identical to View All Events */}
+          {/* Visit Gallery button */}
           <div className="mt-12 flex justify-center">
             <Link to="/gallery">
               <Button variant="white" size="lg" className="gap-2 px-8 py-6 text-base">

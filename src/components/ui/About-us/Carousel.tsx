@@ -19,11 +19,11 @@ export default function Carousel({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
-  const timerRef = useRef(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = images.length;
 
   const goTo = useCallback(
-    (index) => {
+    (index: number) => {
       if (loop) {
         setCurrent((index + total) % total);
       } else {
@@ -42,17 +42,17 @@ export default function Carousel({
     if (pauseOnHover && isHovered) return;
 
     timerRef.current = setInterval(next, autoplayDelay);
-    return () => clearInterval(timerRef.current);
+    return () => { if (timerRef.current !== null) clearInterval(timerRef.current); };
   }, [autoplay, autoplayDelay, pauseOnHover, isHovered, next]);
 
   // Touch / mouse drag
-  const handleDragStart = (clientX) => {
+  const handleDragStart = (clientX: number) => {
     setIsDragging(true);
     setDragStartX(clientX);
     setDragOffset(0);
   };
 
-  const handleDragMove = (clientX) => {
+  const handleDragMove = (clientX: number) => {
     if (!isDragging) return;
     setDragOffset(clientX - dragStartX);
   };
