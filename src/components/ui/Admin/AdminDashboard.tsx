@@ -490,6 +490,34 @@ function EventsTab({
 
 // ─── Users Tab ────────────────────────────────────────────────────────────────
 
+function downloadUsersCSV(users: User[]) {
+  const headers = ["Name", "Roll No.", "Email", "Mobile", "Branch", "College", "Semester"];
+  const esc = (v: unknown) => {
+    const s = String(v ?? "");
+    if (s.includes(",") || s.includes('"') || s.includes("\n")) return `"${s.replace(/"/g, '""')}"`;
+    return s;
+  };
+  const rows: string[] = [headers.map(esc).join(",")];
+  for (const u of users) {
+    rows.push([
+      u.name ?? "",
+      u.rollNo ?? "",
+      u.email ?? "",
+      u.mobileNumber ?? u.mobile ?? "",
+      u.branch ?? "",
+      u.college ?? "",
+      u.semester ?? "",
+    ].map(esc).join(","));
+  }
+  const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `technova-2026-users.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function UsersTab({
   users,
   loading,
@@ -499,13 +527,73 @@ function UsersTab({
   loading: boolean;
   error: string;
 }) {
+  const [sortBy, setSortBy] = useState<UserSortKey>("newest");
+  const [search, setSearch] = useState("");
+
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? users.filter(
+        (u) =>
+          (u.name ?? "").toLowerCase().includes(q) ||
+          (u.email ?? "").toLowerCase().includes(q) ||
+          (u.rollNo ?? "").toLowerCase().includes(q)
+      )
+    : users;
+
+  const sorted = sortUsers(filtered, sortBy);
+
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Signed Up Users</h1>
-        <p className="text-slate-400 text-sm mt-0.5">
-          All registered users on TechNova 2026 — {users.length} total
-        </p>
+      {/* ── Header ── */}
+      <div className="mb-5 flex flex-col gap-4 sm:mb-6 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-white">Signed Up Users</h1>
+          <p className="text-slate-400 text-sm mt-0.5">
+            {sorted.length} of {users.length} user{users.length !== 1 ? "s" : ""}
+          </p>
+        </div>
+
+        {!loading && !error && users.length > 0 && (
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:flex-wrap">
+            {/* Search */}
+            <input
+              type="search"
+              placeholder="Search name, email, roll no…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:w-52 sm:text-sm"
+            />
+
+            {/* Sort */}
+            <div className="flex items-center gap-2">
+              <label htmlFor="user-sort" className="shrink-0 text-xs text-slate-400 sm:text-sm">
+                Sort:
+              </label>
+              <select
+                id="user-sort"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as UserSortKey)}
+                className="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-800 px-2.5 py-1.5 text-xs text-white focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="name-asc">Name A → Z</option>
+                <option value="name-desc">Name Z → A</option>
+                <option value="branch-asc">Branch A → Z</option>
+                <option value="branch-desc">Branch Z → A</option>
+                <option value="branch-name">Branch → Name</option>
+              </select>
+            </div>
+
+            {/* CSV download */}
+            <button
+              onClick={() => downloadUsersCSV(sorted)}
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 text-xs font-medium text-white transition-all hover:bg-emerald-600 sm:py-1.5 sm:text-sm"
+            >
+              ⬇ CSV
+            </button>
+          </div>
+        )}
       </div>
 
       {error && (
@@ -520,14 +608,18 @@ function UsersTab({
         <EmptyState icon={<Users className="w-12 h-12 text-slate-700" />} label="No users yet" hint="Users will appear here once they sign up." />
       )}
 
-      {!loading && !error && users.length > 0 && (
+      {!loading && !error && users.length > 0 && sorted.length === 0 && (
+        <EmptyState icon={<Users className="w-12 h-12 text-slate-700" />} label="No users match your search" hint="Try a different name, email, or roll number." />
+      )}
+
+      {!loading && !error && sorted.length > 0 && (
         <div className="rounded-2xl border border-slate-800 overflow-hidden">
           {/* ── Desktop table ── */}
           <div className="hidden md:block overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-800">
               <thead className="bg-slate-900">
                 <tr>
-                  {["#", "Name", "Roll No.", "Email", "Mobile", "Branch", "College", "Sem", "Joined"].map((h) => (
+                  {["#", "Name", "Roll No.", "Email", "Mobile", "Branch", "College", "Sem"].map((h) => (
                     <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider whitespace-nowrap">
                       {h}
                     </th>
@@ -535,9 +627,8 @@ function UsersTab({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60 bg-slate-900/40">
-                {users.map((user, i) => {
+                {sorted.map((user, i) => {
                   const uid = user.id ?? user._id ?? i;
-                  const { date } = formatDateTime(user.createdAt);
                   const phone = user.mobileNumber ?? user.mobile;
                   return (
                     <tr key={String(uid)} className="hover:bg-slate-800/40 transition-colors">
@@ -561,7 +652,6 @@ function UsersTab({
                       <td className="px-4 py-3 text-sm text-slate-300 whitespace-nowrap">{user.branch ?? "—"}</td>
                       <td className="px-4 py-3 text-sm text-slate-300 max-w-[180px] truncate">{user.college ?? "—"}</td>
                       <td className="px-4 py-3 text-sm text-slate-300 text-center">{user.semester ?? "—"}</td>
-                      <td className="px-4 py-3 text-xs text-slate-400 whitespace-nowrap">{date || "—"}</td>
                     </tr>
                   );
                 })}
@@ -571,10 +661,9 @@ function UsersTab({
 
           {/* ── Mobile cards ── */}
           <div className="md:hidden divide-y divide-slate-800">
-            {users.map((user, i) => {
+            {sorted.map((user, i) => {
               const uid = user.id ?? user._id ?? i;
               const phone = user.mobileNumber ?? user.mobile;
-              const { date } = formatDateTime(user.createdAt);
               return (
                 <div key={String(uid)} className="p-4 bg-slate-900/40 space-y-2">
                   <div className="flex items-center gap-3">
@@ -602,9 +691,6 @@ function UsersTab({
                     {user.college && (
                       <span className="col-span-2 text-slate-400">College: <span className="text-slate-200">{user.college}</span></span>
                     )}
-                    {date && (
-                      <span className="col-span-2 text-slate-500">Joined: {date}</span>
-                    )}
                   </div>
                 </div>
               );
@@ -614,6 +700,31 @@ function UsersTab({
       )}
     </div>
   );
+}
+
+// ─── Users Tab ── sort helpers ───────────────────────────────────────────────
+
+type UserSortKey = "newest" | "oldest" | "name-asc" | "name-desc" | "branch-asc" | "branch-desc" | "branch-name";
+
+function sortUsers(list: User[], key: UserSortKey): User[] {
+  return [...list].sort((a, b) => {
+    if (key === "name-asc" || key === "name-desc") {
+      const na = (a.name ?? "").toLowerCase();
+      const nb = (b.name ?? "").toLowerCase();
+      return key === "name-asc" ? na.localeCompare(nb) : nb.localeCompare(na);
+    }
+    if (key === "branch-asc" || key === "branch-desc" || key === "branch-name") {
+      const ba = (a.branch ?? "").toLowerCase();
+      const bb = (b.branch ?? "").toLowerCase();
+      const branchCmp = key === "branch-desc" ? bb.localeCompare(ba) : ba.localeCompare(bb);
+      if (branchCmp !== 0) return branchCmp;
+      // secondary: sort by name A→Z
+      return (a.name ?? "").toLowerCase().localeCompare((b.name ?? "").toLowerCase());
+    }
+    const da = new Date(a.createdAt ?? 0).getTime();
+    const db = new Date(b.createdAt ?? 0).getTime();
+    return key === "newest" ? db - da : da - db;
+  });
 }
 
 // ─── Registrations Tab ────────────────────────────────────────────────────────
@@ -665,6 +776,7 @@ function printRegistrations(registrations: Registration[], eventFilter: string) 
           <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
           <td>${esc(regDateTime)}</td>
           <td>${registrarCell}</td>
+          <td></td>
         </tr>`;
       }
       return members.map((m, mi) =>
@@ -678,6 +790,7 @@ function printRegistrations(registrations: Registration[], eventFilter: string) 
           <td>${esc(m.branch)}</td>
           <td>${esc(m.semester)}</td>
           ${mi === 0 ? `<td rowspan="${members.length}">${esc(regDateTime)}</td><td rowspan="${members.length}">${registrarCell}</td>` : ""}
+          <td style="min-width:90px"></td>
         </tr>`
       );
     });
@@ -712,6 +825,7 @@ function printRegistrations(registrations: Registration[], eventFilter: string) 
         <th>Roll No.</th><th>Member Name</th><th>Email</th><th>Mobile</th>
         <th>College</th><th>Branch</th><th>Sem</th>
         <th>Registered On</th><th>Registered By</th>
+        <th>Signature</th>
       </tr>
     </thead>
     <tbody>${rows.join("")}</tbody>

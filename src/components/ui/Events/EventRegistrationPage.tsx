@@ -74,11 +74,13 @@ function RegInput({
 
 // ── Deadline check ───────────────────────────────────────────────────────────
 function isAfterDeadlineIST(): boolean {
-  // Target: 10 March 2026, 23:59 IST (UTC+05:30) → UTC equivalent
-  const targetUTC = Date.UTC(2026, 2, 10, 18, 29, 59);
+  // Target: 11 March 2026, 10:59 AM IST (UTC+05:30)
+  // UTC equivalent: 11 March 2026, 05:29:00
+
+  const targetUTC = Date.UTC(2026, 2, 12, 2, 30, 0);
+
   return Date.now() >= targetUTC;
 }
-
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function EventRegistrationPage() {
   const { id } = useParams<{ id: string }>();
@@ -182,10 +184,10 @@ export default function EventRegistrationPage() {
     // Validate semester range
     const badSem = members.find((m) => {
       const s = Number(m.semester);
-      return !Number.isInteger(s) || s < 1 || s > 8;
+      return !Number.isInteger(s) || s < 1 || s > 10;
     });
     if (badSem) {
-      setError(`Invalid semester for ${badSem.name || "a member"} — must be 1 to 8.`);
+      setError(`Invalid semester for ${badSem.name || "a member"} — must be 1 to 10.`);
       return;
     }
 
@@ -493,7 +495,7 @@ export default function EventRegistrationPage() {
                           <RegInput
                             id={`semester-${index}`}
                             type="number"
-                            placeholder="1 – 8"
+                            placeholder="1 – 10"
                             value={member.semester}
                             onChange={(e) => updateMember(index, "semester", e.target.value)}
                             inputMode="numeric"

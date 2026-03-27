@@ -256,15 +256,15 @@ const eventCoordinatorsMap: Record<string, EventCoordinatorInfo> = {
   // ── RAMAN (Physics) ───────────────────────────────────────────────────────
   "Physi-Hunt": {
     department: "RAMAN (Physics)",
-    studentCoordinator: { name: "Dr Ashok Kumar", phone: "7056273692" },
+    studentCoordinator: { name: "Pankaj Kumar", phone: "8295523523" },
   },
   "The Escape Room": {
     department: "RAMAN (Physics)",
-    studentCoordinator: { name: "Dr Ashima", phone: "7988164698" },
+    studentCoordinator: { name: "Pankaj Kumar", phone: "8295523523" },
   },
   "Inno Vision": {
     department: "RAMAN (Physics)",
-    studentCoordinator: { name: "Dr Ravinder Kumar", phone: "" },
+    studentCoordinator: { name: "Pankaj Kumar", phone: "8295523523" },
   },
 
   // ── ECED Department ───────────────────────────────────────────────────────

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 // ── Registration deadline ─────────────────────────────────────────────────────
 // Update this date to match the real registration closing date/time (ISO 8601).
-const REGISTRATION_DEADLINE = new Date("2026-03-11T11:00:00+05:30");
+const REGISTRATION_DEADLINE = new Date("2026-03-12T08:00:00+05:30");
 
 function useCountdown(target: Date) {
   const calc = () => {

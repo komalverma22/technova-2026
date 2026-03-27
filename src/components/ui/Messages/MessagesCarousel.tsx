@@ -7,8 +7,8 @@ const messages = [
     {
         id: 1,
         role: 'VICE-CHANCELLOR',
-        fullTitle: "Hon’ble Vice-Chancellor",
-        name: 'Prof. (Dr.) Shree Prakash Singh (Hon’ble Vice-Chancellor)',
+        fullTitle: "Hon’ble Vice-Chancellor, DCRUST, Murthal",
+        name: 'Prof. (Dr.) Shree Prakash Singh',
         image: '/vc.webp',      // replace with actual image
         fallbackInitial: 'VC',
         message:
@@ -17,8 +17,8 @@ const messages = [
     {
         id: 2,
         role: 'DSW',
-        fullTitle: "Dean Student Welfare",
-        name: 'Prof. (Dr.) Suresh Verma (Dean Students’ Welfare) ',
+        fullTitle: "Dean Student's Welfare, DCRUST, Murthal",
+        name: 'Prof. (Dr.) Suresh Verma ',
         image: '/dsw.webp',     // replace with actual image
         fallbackInitial: 'DSW',
         message:
@@ -27,9 +27,9 @@ const messages = [
     {
         id: 3,
         role: 'REGISTRAR',
-        fullTitle: "Registrar",
-        name: 'Prof. (Dr.) Ashutosh Mishra (Worthy Registrar)',
-        image: '/registrar.jpeg', // replace with actual image
+        fullTitle: "Registrar, DCRUST, Murthal",
+        name: 'Prof. (Dr.) Ashutosh Mishra',
+        image: '/registrar.jpeg', 
         fallbackInitial: 'REG',
         message:
             "The Annual Technical Fest of DCRUST reflects our commitment to nurturing talent in line with the national missions of Digital India and Skill India. Scheduled for March 13–14, 2026, this fest will bring together bright minds from across Haryana and neighbouring states to showcase their technical skills, creativity, and problem-solving abilities. It is an opportunity for students to engage in healthy competition, build networks, and prepare themselves for the challenges of tomorrow. By participating, you contribute to the larger goal of building a skilled, digitally empowered, and self-reliant India. I extend my best wishes to all participants and assure them of a well-organized, enriching experience.",
